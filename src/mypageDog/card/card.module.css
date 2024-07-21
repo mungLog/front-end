@@ -1,0 +1,206 @@
+.scene {
+  perspective: 1000px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: beige;
+}
+
+.carousel {
+  width: 210px;
+  height: 300px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s ease-in-out;
+}
+
+.item {
+  width: 210px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+.card {
+  width: 180px;
+  height: 280px;
+  background-color: #d66b63;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  background-color: #ccc;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+.barWrapper {
+  width: 100%;
+  margin: 20px 0;
+  position: relative;
+}
+.maxBar {
+  width: 100%;
+  height: 20px;
+  background-color: red;
+  position: relative;
+}
+.metabolismBar {
+  width: 100%;
+  height: 20px;
+  background-color: #000;
+  z-index: 5;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.nowMeta {
+  position: absolute;
+  transform: translateX(-50%);
+}
+.maxMeta {
+  position: absolute;
+  right: 0;
+}
+.persent {
+  color: white;
+}
+.name,
+.label,
+.info {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.active .name,
+.active .label,
+.active .info {
+  opacity: 1;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.arrow:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.arrow:hover:not(:disabled) {
+  color: gray;
+}
+
+.arrow:first-of-type {
+  left: 10px;
+}
+
+.arrow:last-of-type {
+  right: 10px;
+}
+
+.expandedCard {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 600px;
+  background-color: pink;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  z-index: 2;
+}
+
+.closeButton {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.expandedContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.expandedAvatar {
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.expandedBarWrapper {
+  width: 100%;
+  margin: 20px 0;
+  position: relative;
+}
+
+.expandedMaxBar {
+  width: 100%;
+  height: 30px;
+  background-color: red;
+  position: relative;
+}
+
+.expandedMetabolismBar {
+  width: 100%;
+  height: 30px;
+  background-color: #000;
+  z-index: 5;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.expandedNowMeta {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.expandedMaxMeta {
+  position: absolute;
+  right: 0;
+}
+
+.expandedPersent {
+  color: white;
+}
+
+.expandedName,
+.expandedLabel,
+.expandedInfo {
+  margin: 5px 0;
+}
