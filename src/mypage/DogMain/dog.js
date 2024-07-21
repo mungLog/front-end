@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Card from "./../../mypageDog/card/card";
+//import Card from "./../../mypageDog/card/card";
 
 function DogMain() {
   const [selectDogpage, setSelectDogpage] = useState("check");
@@ -15,9 +15,9 @@ function DogMain() {
         <button onClick={() => setSelectDogpage("mbti")}>멍BIT 기록보기</button>
         <Link>로그아웃</Link>
       </div>
-      {selectDogpage === "check" && <Card />}
+      {/*{selectDogpage === "check" && <Card />}
       {selectDogpage === "plus" && <Card />}
-      {selectDogpage === "mbti" && <Card />}
+      {selectDogpage === "mbti" && <Card />}*/}
     </>
   );
 }

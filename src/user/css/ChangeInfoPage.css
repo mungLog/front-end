@@ -1,0 +1,206 @@
+.page {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 500px;
+  padding: 0 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: white;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.titleWrap {
+  margin-top: 40px;
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 1000;
+  color: #000000;
+  display: flex;
+  justify-content: center;
+}
+
+.inputTitle {
+  font-size: 20px;
+  font-weight: 1000;
+  color: #000000;
+  margin-bottom: 10px;
+  margin-top: 15px;
+}
+
+.inputTitleMessage {
+  font-size: 10px;
+  font-weight: 1000;
+  color: #000000;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: gray;
+}
+
+.inputWrapBig,
+.NickNameForm {
+  width: 500px;
+  height: 45px;
+  border: 1px solid gainsboro;
+  background-color: whitesmoke;
+}
+
+.emailBox,
+.phoneBox,
+.inputWrapIdBox,
+.radioButtonBox {
+  display: flex;
+  font-size: larger;
+  color: gray;
+}
+
+.haveIdBox {
+  display: flex;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.loginLink {
+  margin-left: 20px;
+}
+
+.inputWrapId {
+  width: 370px;
+  height: 45px;
+  border: 1px solid gainsboro;
+  background-color: whitesmoke;
+}
+
+.idButton {
+  width: 120px;
+  height: 47px;
+  margin-left: 10px;
+  border: 1px solid gold;
+  background-color: gold;
+}
+
+.inputWrapEmail {
+  width: 270px;
+  height: 45px;
+  border: 1px solid gainsboro;
+  background-color: whitesmoke;
+}
+
+.inputWrapEmail2 {
+  width: 200px;
+  height: 45px;
+  border: 1px solid gainsboro;
+  background-color: whitesmoke;
+}
+
+.EmailInputBox {
+  width: 95%;
+  height: 95%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  font-size: 17px;
+  color: gray;
+}
+
+.atSign {
+  margin-left: 7px;
+  margin-right: 7px;
+  margin-top: 8px;
+  font-size: large;
+  font-weight: 1000;
+}
+
+#email {
+  width: 95%;
+  height: 95%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  font-size: 17px;
+  color: gray;
+}
+
+.inputWrapPhoneNumberFirst,
+.inputWrapPhoneNumberMiddle,
+.inputWrapPhoneNumberLast {
+  width: 95px;
+  height: 45px;
+  border: 1px solid gainsboro;
+  background-color: whitesmoke;
+  font-size: 17px;
+  color: gray;
+}
+
+#phoneNumber {
+  width: 95%;
+  height: 95%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  font-size: 17px;
+  color: gray;
+}
+
+.telButton {
+  width: 110px;
+  height: 47px;
+  border: 1px solid black;
+  margin-left: 25px;
+  border: 1px solid gold;
+  background-color: gold;
+}
+
+.input {
+  width: 95%;
+  height: 95%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  font-size: 17px;
+  color: gray;
+  font-weight: 500;
+}
+
+.hypen {
+  margin-left: 15px;
+  margin-right: 15px;
+  font-size: large;
+  font-weight: 1000;
+  margin-top: 8px;
+}
+
+.inputTitleNickName {
+  font-size: 20px;
+  font-weight: 1000;
+  color: #000000;
+  margin-top: 10px;
+}
+
+.changeButton {
+  width: 500px;
+  height: 45px;
+  border: 1px solid gold;
+  background-color: gold;
+  margin-top: 40px;
+  font-size: 13px;
+  font-weight: 1000;
+  color: #000000;
+}
+
+.errorForm {
+  border: 1px solid red;
+}
+
+.errorMessageWrap {
+  color: red;
+  font-size: 15px;
+  margin-top: 5px;
+}
+
+.errorTitle {
+  color: red;
+}
