@@ -1,31 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import CommentForm from "./writeComment";
+import CreateComment from "./writeComment";
 import CommentList from "./listComment";
 
 function CommunityDetail() {
   const navigate = useNavigate();
   const { postId } = useParams();
   const [post, setPost] = useState(null);
-  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     axios
       .get(`/posts/${postId}`)
       .then((response) => {
         setPost(response.data.post);
-        setComments(response.data.comments);
       })
       .catch((error) => {
         console.error("게시물 실패", error);
       });
   }, [postId]);
-
-  const handleCommentAdd = (newComment) => {
-    setComments([...comments, newComment]);
-  };
-
   const handleUpdateClick = () => {
     navigate(`/community/posts/${postId}`, {
       state: {
@@ -48,7 +41,7 @@ function CommunityDetail() {
       });
   };
 
-  const isAuthor = post?.author === "접속자ID";
+  const isAuthor = post.userid === "접속자ID";
 
   return (
     <div>
@@ -64,8 +57,8 @@ function CommunityDetail() {
           <button onClick={handleDeleteClick}>삭제</button>
         </div>
       )}
-      <CommentForm postId={postId} onCommentAdded={handleCommentAdd} />
-      <CommentList comments={comments} />
+      <CreateComment postId={postId} />
+      <CommentList postId={postId} />
     </div>
   );
 }
