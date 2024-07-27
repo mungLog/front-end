@@ -5,7 +5,7 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import img from "./img/1.png";
 
 function Shop() {
-  const shJproducts = [
+  const productList = [
     { image: img, name: "간식1", price: "300", ctg: "간식" },
     { image: img, name: "사료1", price: "300", ctg: "사료" },
     { image: img, name: "장난감1", price: "300", ctg: "장난감" },
@@ -38,35 +38,30 @@ function Shop() {
   ];
 
   const [selectedCtg, setSelectedCtg] = useState("전체");
-  const [shJcurrentPage, setshJcurrentPage] = useState(1);
-  const shJproductsPerPage = 8; // 페이지당 상품 수
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 8; // 페이지당 상품 수
 
   // 페이지 변경 함수
-  const shJhandlePageChange = (page, totalPages) => {
+  const handlePageChange = (page, totalPages) => {
     if (page >= 1 && page <= totalPages) {
-      setshJcurrentPage(page);
+      setCurrentPage(page);
     }
   };
 
   // 필터링 및 페이지네이션 처리 함수
   const filterAndPaginateProducts = () => {
-    let filteredProducts = shJproducts;
+    let filteredProducts = productList;
     if (selectedCtg !== "전체") {
-      filteredProducts = shJproducts.filter(
+      filteredProducts = productList.filter(
         (product) => product.ctg === selectedCtg
       );
     }
-    const shJtotalPages = Math.ceil(
-      filteredProducts.length / shJproductsPerPage
-    );
-    const shJindexOfLastProduct = shJcurrentPage * shJproductsPerPage;
-    const shJindexOfFirstProduct = shJindexOfLastProduct - shJproductsPerPage;
+    const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     return {
-      products: filteredProducts.slice(
-        shJindexOfFirstProduct,
-        shJindexOfLastProduct
-      ),
-      totalPages: shJtotalPages,
+      products: filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct),
+      totalPages: totalPages,
     };
   };
 
@@ -74,15 +69,15 @@ function Shop() {
   const ctgList = ["전체", "간식", "사료", "장난감", "영양제", "리빙"];
   return (
     <>
-      <div className={style.shJproductWrapper}>
-        <h1 className={style.shJTitle}>상점</h1>
+      <div className={style.productWrapper}>
+        <h1 className={style.Title}>상점</h1>
         <>
           {ctgList.map((ctg) => (
             <button
               key={ctg}
               onClick={() => {
                 setSelectedCtg(ctg);
-                setshJcurrentPage(1);
+                setCurrentPage(1);
               }}
               className={`${selectedCtg === ctg ? style.selected : ""}`}
             >
@@ -90,33 +85,33 @@ function Shop() {
             </button>
           ))}
         </>
-        <div className={style.shJcolumns}>
+        <div className={style.columns}>
           {products.map((product, index) => (
-            <div className={style.shJcard} key={index}>
+            <div className={style.card} key={index}>
               <img src={product.image} alt="상품" />
-              <div className={style.shJname}>
-                <div className={style.shJtitle}>{product.name}</div>
-                <div className={style.shJpoint}>{product.price} Point</div>
+              <div className={style.name}>
+                <div className={style.title}>{product.name}</div>
+                <div className={style.point}>{product.price} Point</div>
               </div>
             </div>
           ))}
         </div>
       </div>
-      <div id={style.shJproductFoot}>
+      <div id={style.productFoot}>
         <FontAwesomeIcon
           icon={faAngleLeft}
-          onClick={() => shJhandlePageChange(shJcurrentPage - 1, totalPages)} // <을 클릭하면 현재 페이지 -1
-          disabled={shJcurrentPage === 1} //현재 페이지가 1 일때는 동작을 막음
-          className={style.shJicon}
+          onClick={() => handlePageChange(currentPage - 1, totalPages)} // <을 클릭하면 현재 페이지 -1
+          disabled={currentPage === 1} //현재 페이지가 1 일때는 동작을 막음
+          className={style.icon}
         />
 
         {[...Array(totalPages)].map((_, index) => (
           <div
             key={index}
-            className={`${style.shJbox} ${
-              shJcurrentPage === index + 1 ? style.shJactive : ""
+            className={`${style.box} ${
+              currentPage === index + 1 ? style.active : ""
             }`}
-            onClick={() => shJhandlePageChange(index + 1, totalPages)}
+            onClick={() => handlePageChange(index + 1, totalPages)}
           >
             {index + 1}
           </div>
@@ -124,9 +119,9 @@ function Shop() {
 
         <FontAwesomeIcon
           icon={faAngleRight}
-          onClick={() => shJhandlePageChange(shJcurrentPage + 1, totalPages)} // > 을 클릭하면 현재 페이지 +1
-          disabled={shJcurrentPage === totalPages} //현재 페이지가 마지막 페이지라면 동작 막음
-          className={style.shJicon}
+          onClick={() => handlePageChange(currentPage + 1, totalPages)} // > 을 클릭하면 현재 페이지 +1
+          disabled={currentPage === totalPages} //현재 페이지가 마지막 페이지라면 동작 막음
+          className={style.icon}
         />
       </div>
     </>
