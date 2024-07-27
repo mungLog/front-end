@@ -1,0 +1,309 @@
+/* MbtiPage.css */
+@import url("https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap");
+
+/* 시작페이지 CSS 구역*/
+.mbtiBody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.Startcontainer {
+  background-color: gold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* 세로 및 가로 중앙 정렬 */
+  text-align: center;
+  width: 500px;
+  height: 450px;
+}
+
+.StartTitle {
+  font-family: "Hi Melody", sans-serif;
+  line-height: 1.7;
+  background-color: white;
+  width: 250px;
+  height: 110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+}
+
+.StartPic {
+  width: 150px;
+  height: 150px;
+  background-color: dodgerblue;
+  border-radius: 50%;
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+.Startbutton {
+  border-radius: 50px;
+  width: 300px;
+  font-weight: 800;
+  border: 1px solid dodgerblue;
+  background-color: dodgerblue;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+
+  transition: background-color 0.3s;
+}
+/* 시작페이지 CSS 구역 끝*/
+
+/* 질문페이지 CSS 구역*/
+/* 질문박스 CSS */
+.QcontainerBig {
+  width: 1400px;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 수직 중앙 정렬 추가 */
+  flex-direction: column;
+  text-align: center;
+  border-radius: 50px;
+  border: 2px solid #ccc;
+  padding: 20px;
+  margin-top: 150px;
+  font-family: "Hi Melody", sans-serif;
+  background-color: gainsboro;
+  position: relative; /* 필요에 따라 위치를 상대적으로 설정 */
+}
+
+.QcontainerSmall {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 수평 가운데 정렬 */
+  justify-content: center; /* 수직 가운데 정렬 */
+  text-align: center;
+  width: auto;
+  background-color: transparent;
+  height: 800px;
+  padding: 30px;
+}
+
+.QTitlebox {
+  width: 800px;
+  height: 60px;
+  background-color: white;
+  border-radius: 15px;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 0.5;
+  margin: 0 auto; /* 수평 가운데 정렬 */
+}
+
+.Qpic {
+  background-color: gray;
+  width: 300px;
+  height: 300px;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto; /* 수평 가운데 정렬 */
+}
+
+/* 답변박스 CSS */
+
+.AcontainerBig {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background-color: transparent;
+}
+
+.Abutton {
+  font-family: "Hi Melody", sans-serif;
+  color: black;
+  text-align: center;
+  font-size: 25px;
+
+  margin: 25px;
+
+  width: 650px;
+  height: 60px;
+  border-radius: 15px;
+  border: 1px solid white;
+  background-color: white;
+
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.Abutton:hover {
+  background-color: whitesmoke;
+}
+/* 질문페이지 CSS 구역 끝*/
+
+/* 강아지 선택 페이지 CSS 구역 */
+.ChoseDogBox {
+  width: 1400px;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 수직 중앙 정렬 추가 */
+  flex-direction: column;
+  text-align: center;
+  border-radius: 50px;
+  border: 2px solid #ccc;
+  padding: 20px;
+  margin-top: 150px;
+  font-family: "Hi Melody", sans-serif;
+  background-color: gainsboro;
+  position: relative; /* 필요에 따라 위치를 상대적으로 설정 */
+}
+
+.ChoseTitle {
+  width: 800px;
+  height: 60px;
+  background-color: white;
+  border-radius: 15px;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 0.5;
+  margin: 0 auto; /* 수평 가운데 정렬 */
+}
+
+.Chose-start-button {
+  border-radius: 50px;
+  width: 150px;
+  font-weight: 800;
+  border: 1px solid dodgerblue;
+  background-color: dodgerblue;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+
+  transition: background-color 0.3s;
+}
+/* 강아지 선택 페이지 CSS 구역 임시*/
+
+/* 결과 페이지 CSS 구역 */
+.ResultOutBox {
+  background-color: gainsboro;
+
+  border-radius: 30px;
+
+  width: 850px;
+  height: 850px;
+
+  display: flex; /* Flexbox 사용 */
+  align-items: center; /* 수직 중앙 정렬 */
+  justify-content: center; /* 수평 중앙 정렬 */
+  flex-direction: column;
+  text-align: center;
+}
+
+.ResultInBox {
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  width: 600px;
+  height: 750px;
+}
+
+.ResultTitle {
+  font-family: "Hi Melody", sans-serif;
+  font-size: 20px;
+}
+
+.ResultPic {
+  background-color: green;
+
+  width: 100px;
+  height: 100px;
+
+  margin: 40px;
+  border-radius: 50px;
+}
+
+.ResultMbti {
+  font-family: "Hi Melody", sans-serif;
+  font-size: 60px;
+
+  border: 5px dashed dodgerblue;
+
+  width: 150px;
+  height: 50px;
+
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.ResultButton {
+  font-family: "Hi Melody", sans-serif;
+
+  border-radius: 5px;
+
+  border: 1px solid #007bff;
+  background-color: #007bff;
+  color: white;
+
+  padding: 10px 20px;
+  margin: 80px;
+
+  text-align: center;
+  font-size: 16px;
+
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.question {
+  margin-bottom: 20px;
+  font-family: "Hi Melody", sans-serif;
+}
+
+.header h1 {
+  font-family: "Hi Melody", sans-serif;
+  font-size: 2rem;
+}
+
+.header h2 {
+  font-family: "Hi Melody", sans-serif;
+  font-size: 1.5rem;
+}
+
+.button {
+  border-radius: 5px;
+  border: 1px solid #007bff;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  font-family: "Hi Melody", sans-serif;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.result {
+  text-align: center;
+  font-family: "Hi Melody", sans-serif;
+  font-size: 1.2rem;
+}
+
+.result p {
+  margin-top: 20px;
+}

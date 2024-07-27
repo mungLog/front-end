@@ -127,3 +127,19 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+:root {
+  --color-green: #285a2d;
+  --color-yellow: #fcd11d;
+  --font-lightGray: #bababa;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+#app {
+  display: flex;
+  flex-direction: column;
+}
+.nnn {
+  margin-top: 200px;
+}

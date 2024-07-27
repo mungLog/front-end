@@ -1,0 +1,92 @@
+#headerWrapper {
+  padding: 0 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 41px 0;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+#logo {
+  width: 82px;
+}
+.userIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 25px;
+  cursor: pointer;
+}
+#menu {
+  display: flex;
+}
+#nav {
+  background-color: var(--color-green);
+  width: 309px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 156px;
+  display: flex;
+  justify-content: space-around;
+}
+#nav li {
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+}
+#mypage {
+  position: relative;
+}
+.hover {
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 0;
+}
+.hover ul {
+  margin-top: 13px;
+  background-color: white;
+  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  width: 181px;
+  height: 99px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.hover li {
+  height: 17px;
+  line-height: 17px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  margin: 8px 0;
+  cursor: pointer;
+}
+.userIcon:hover + .hover {
+  display: flex;
+}
+#mypage:hover .hover {
+  display: flex;
+}
+#nav li a {
+  color: white;
+  padding: 5px 10px;
+  border-radius: 43px;
+}
+#nav li .active,
+.userIcon.active {
+  background-color: var(--color-yellow);
+  color: black;
+}
