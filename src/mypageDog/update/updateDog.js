@@ -4,7 +4,7 @@ import style from "./updateDog.module.css";
 
 function UpdateDog({ dog, onSave, onCancel }) {
   const [name, setName] = useState(dog.name);
-  const [sex, setSex] = useState(dog.sex);
+  const [gender, setGender] = useState(dog.gender);
   const [birth, setBirth] = useState(dog.birth);
   const [weight, setWeight] = useState(dog.weight);
   const [breed, setBreed] = useState(dog.breed || "");
@@ -16,7 +16,7 @@ function UpdateDog({ dog, onSave, onCancel }) {
     const updatedDog = {
       ...dog,
       name,
-      sex,
+      gender,
       birth,
       weight,
       breed,
@@ -87,18 +87,18 @@ function UpdateDog({ dog, onSave, onCancel }) {
           <label>
             <input
               type="radio"
-              value="수컷"
-              checked={sex === "수컷"}
-              onChange={(e) => setSex(e.target.value)}
+              value="1"
+              checked={gender === "1"}
+              onChange={(e) => setGender(e.target.value)}
             />
             수컷
           </label>
           <label>
             <input
               type="radio"
-              value="암컷"
-              checked={sex === "암컷"}
-              onChange={(e) => setSex(e.target.value)}
+              value="0"
+              checked={gender === "0"}
+              onChange={(e) => setGender(e.target.value)}
             />
             암컷
           </label>
@@ -109,18 +109,18 @@ function UpdateDog({ dog, onSave, onCancel }) {
           <label>
             <input
               type="radio"
-              value="true"
-              checked={neutered === "true"}
-              onChange={() => setNeutered("true")}
+              value="1"
+              checked={neutered === "1"}
+              onChange={() => setNeutered("1")}
             />
             예
           </label>
           <label>
             <input
               type="radio"
-              value="false"
-              checked={neutered === "false"}
-              onChange={() => setNeutered("false")}
+              value="0"
+              checked={neutered === "0"}
+              onChange={() => setNeutered("0")}
             />
             아니오
           </label>

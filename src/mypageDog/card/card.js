@@ -15,36 +15,36 @@ function Card({ onAddSchedule, selectedPetId, onUpdateDog, resetExpandedDog }) {
   //       name: "곰돌이",
   //       maxMetabolism: 1500,
   //       nowMetabolism: 1000,
-  //       sex: "수컷",
+  //       gender: "1",
   //       age: 42,
   //       weight: 14,
   //       breed: "시추",
   //       birth: "20150504",
-  //       neutered: "true",
+  //       neutered: "1",
   //     },
   //     {
   //       petId: 2,
   //       name: "토순이",
   //       maxMetabolism: 2000,
   //       nowMetabolism: 800,
-  //       sex: "암컷",
+  //       gender: "0",
   //       age: 14,
   //       weight: 8,
   //       breed: "푸들",
   //       birth: "20180905",
-  //       neutered: "true",
+  //       neutered: "1",
   //     },
   //     {
   //       petId: 3,
   //       name: "하루",
   //       maxMetabolism: 1000,
   //       nowMetabolism: 300,
-  //       sex: "암컷",
+  //       gender: "0",
   //       age: 2,
   //       weight: 3,
   //       breed: "말티즈",
   //       birth: "20240205",
-  //       neutered: "false",
+  //       neutered: "0",
   //     },
   //   ];
 
@@ -153,7 +153,9 @@ function Card({ onAddSchedule, selectedPetId, onUpdateDog, resetExpandedDog }) {
                 </span>
                 <span className={style.maxMeta}>{dog.maxMetabolism}</span>
               </div>
-              <div className={style.info}>{dog.sex}</div>
+              <div className={style.info}>
+                {dog.gender === "1" ? "수컷" : "암컷"}
+              </div>
               <div className={style.info}>{dog.age}</div>
               <div className={style.info}>{dog.weight}</div>
             </div>

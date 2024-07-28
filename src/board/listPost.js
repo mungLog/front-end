@@ -30,17 +30,18 @@ function CommunityList() {
   const awsIP = process.env.REACT_APP_BACKEND_URL;
   useEffect(() => {
     axios({
-      method: 'get',
-      url: `${awsIP}/posts`
+      method: "get",
+      url: `${awsIP}/posts`,
     })
-    .then((response) {
-      console.log(response);
-    })
-    .catch(error) {
-      console.log(error);
-    };
-    setList(sampleData);
-  }, []);
+      .then((response) => {
+        setList(response.data);
+        console.log("통신 성공");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [awsIP]);
+
   const commuWrite = () => {
     window.location.href = "/community/write";
   };

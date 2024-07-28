@@ -41,7 +41,8 @@ function CommunityDetail() {
       });
   };
 
-  const isAuthor = post.userid === "접속자ID";
+  // const isAuthor = post.userid === "접속자ID";
+  const isAuthor = true;
   return (
     <div>
       <div>제목 : {post.title}</div>
