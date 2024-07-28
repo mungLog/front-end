@@ -1,0 +1,12 @@
+#flex {
+  display: flex;
+}
+#left {
+  width: 30%;
+  background-color: pink;
+  display: flex;
+  flex-direction: column;
+}
+#right {
+  width: 70%;
+}

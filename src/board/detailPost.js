@@ -42,7 +42,6 @@ function CommunityDetail() {
   };
 
   const isAuthor = post.userid === "접속자ID";
-
   return (
     <div>
       <div>제목 : {post.title}</div>

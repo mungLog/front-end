@@ -1,60 +1,92 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import style from "./card.module.css";
+import DetailCard from "./detailCard";
 
-function Card() {
-  const dogs = [
-    {
-      name: "곰돌이",
-      maxMetabolism: 1500,
-      nowMetabolism: 1000,
-      sex: "수컷",
-      age: 42,
-      weight: 14,
-    },
-    {
-      name: "토순이",
-      maxMetabolism: 2000,
-      nowMetabolism: 800,
-      sex: "암컷",
-      age: 14,
-      weight: 8,
-    },
-    {
-      name: "하루",
-      maxMetabolism: 1000,
-      nowMetabolism: 300,
-      sex: "암컷",
-      age: 2,
-      weight: 3,
-    },
-  ];
-
+function Card({ onAddSchedule, selectedPetId, onUpdateDog, resetExpandedDog }) {
+  const [dogs, setDogs] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
   const [expandedDog, setExpandedDog] = useState(null);
 
-  const handleNext = () => {
-    if (!isAnimating) {
-      setIsAnimating(true);
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % dogs.length);
+  const awsIP = process.env.REACT_APP_BACKEND_URL;
+
+  useEffect(() => {
+    const initialDogs = [
+      {
+        petId: 1,
+        name: "곰돌이",
+        maxMetabolism: 1500,
+        nowMetabolism: 1000,
+        sex: "수컷",
+        age: 42,
+        weight: 14,
+        breed: "시추",
+        birth: "20150504",
+        neutered: "true",
+      },
+      {
+        petId: 2,
+        name: "토순이",
+        maxMetabolism: 2000,
+        nowMetabolism: 800,
+        sex: "암컷",
+        age: 14,
+        weight: 8,
+        breed: "푸들",
+        birth: "20180905",
+        neutered: "true",
+      },
+      {
+        petId: 3,
+        name: "하루",
+        maxMetabolism: 1000,
+        nowMetabolism: 300,
+        sex: "암컷",
+        age: 2,
+        weight: 3,
+        breed: "말티즈",
+        birth: "20240205",
+        neutered: "false",
+      },
+    ];
+
+    setDogs(initialDogs);
+  }, []);
+
+  // const familyId = 1;
+  // useEffect(() => {
+  //   const fetchDogs = async () => {
+  //     try {
+  //       const response = await axios.get(`${awsIP}/pets/${familyId}`);
+  //       setDogs(response.data);
+  //     } catch (error) {
+  //       console.error("반려견 데이터 불러오기 실패", error);
+  //     }
+  //   };
+  //   fetchDogs();
+  // }, []);
+  useEffect(() => {
+    console.log(selectedPetId);
+    if (selectedPetId !== null && selectedPetId !== undefined) {
+      const index = dogs.findIndex((dog) => dog.petId === selectedPetId);
+      if (index !== -1) {
+        setCurrentIndex(index);
+        if (resetExpandedDog) {
+          setExpandedDog(null);
+        } else {
+          setExpandedDog(dogs[index]);
+        }
+      }
     }
+  }, [selectedPetId, dogs, resetExpandedDog]);
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % dogs.length);
   };
 
   const handlePrev = () => {
-    if (!isAnimating) {
-      setIsAnimating(true);
-      setCurrentIndex(
-        (prevIndex) => (prevIndex - 1 + dogs.length) % dogs.length
-      );
-    }
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + dogs.length) % dogs.length);
   };
-
-  useEffect(() => {
-    if (isAnimating) {
-      const timer = setTimeout(() => setIsAnimating(false), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [isAnimating]);
 
   const handleCardClick = (dog) => {
     setExpandedDog(dog);
@@ -85,11 +117,7 @@ function Card() {
   return (
     <div className={style.scene}>
       {dogs.length > 1 && (
-        <button
-          className={`${style.arrow} ${style.left}`}
-          onClick={handlePrev}
-          disabled={isAnimating}
-        >
+        <button className={`${style.arrow} ${style.left}`} onClick={handlePrev}>
           &lt;
         </button>
       )}
@@ -104,6 +132,7 @@ function Card() {
             onClick={() => handleCardClick(dog)}
           >
             <div className={style.card}>
+              <button onClick={() => onUpdateDog(dog)}>정보 수정</button>
               <div className={style.avatar}></div>
               <div className={style.name}>{dog.name}</div>
               <div className={style.label}>기초대사량</div>
@@ -137,46 +166,16 @@ function Card() {
         <button
           className={`${style.arrow} ${style.right}`}
           onClick={handleNext}
-          disabled={isAnimating}
         >
           &gt;
         </button>
       )}
       {expandedDog && (
-        <div className={style.expandedCard}>
-          <button className={style.closeButton} onClick={handleClose}>
-            X
-          </button>
-          <div className={style.expandedContent}>
-            <div className={style.expandedAvatar}></div>
-            <div className={style.expandedName}>{expandedDog.name}</div>
-            <div className={style.expandedLabel}>기초대사량</div>
-            <div className={style.expandedBarWrapper}>
-              <div className={style.expandedMaxBar}>
-                <span
-                  className={style.expandedMetabolismBar}
-                  style={{ width: getMetabolismWidth(expandedDog) }}
-                >
-                  <span className={style.expandedPersent}>
-                    {getMetabolismWidth(expandedDog)}
-                  </span>
-                </span>
-              </div>
-              <span
-                className={style.expandedNowMeta}
-                style={{ left: getMetabolismWidth(expandedDog) }}
-              >
-                {expandedDog.nowMetabolism}
-              </span>
-              <span className={style.expandedMaxMeta}>
-                {expandedDog.maxMetabolism}
-              </span>
-            </div>
-            <div className={style.expandedInfo}>{expandedDog.sex}</div>
-            <div className={style.expandedInfo}>{expandedDog.age}</div>
-            <div className={style.expandedInfo}>{expandedDog.weight}</div>
-          </div>
-        </div>
+        <DetailCard
+          petId={expandedDog.petId}
+          onClose={handleClose}
+          onAddSchedule={onAddSchedule}
+        />
       )}
     </div>
   );
