@@ -8,10 +8,10 @@ function CommunityDetail() {
   const navigate = useNavigate();
   const { postId } = useParams();
   const [post, setPost] = useState(null);
-
+  const awsIP = process.env.REACT_APP_BACKEND_URL;
   useEffect(() => {
     axios
-      .get(`/posts/${postId}`)
+      .get(`${awsIP}/posts/${postId}`)
       .then((response) => {
         setPost(response.data.post);
       })
@@ -20,7 +20,7 @@ function CommunityDetail() {
       });
   }, [postId]);
   const handleUpdateClick = () => {
-    navigate(`/community/posts/${postId}`, {
+    navigate(`${awsIP}/community/posts/${postId}`, {
       state: {
         postId: postId,
         title: post.title,
@@ -31,7 +31,7 @@ function CommunityDetail() {
   };
   const handleDeleteClick = () => {
     axios
-      .delete(`/posts/delete/${postId}`)
+      .delete(`${awsIP}/posts/delete/${postId}`)
       .then(() => {
         console.log("글 삭제 성공");
         window.location.href = `/community`;

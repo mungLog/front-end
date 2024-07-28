@@ -22,9 +22,9 @@ function UpdateDog({ dog, onSave, onCancel }) {
       breed,
       neutered,
     };
-
+    const awsIP = process.env.REACT_APP_BACKEND_URL;
     try {
-      // await axios.put(`/pets/update/${dog.petId}`, updatedDog);
+      await axios.put(`${awsIP}/pets/update/${dog.petId}`, updatedDog);
       console.log("반려견 정보 수정 성공");
       onSave(updatedDog);
     } catch (error) {

@@ -7,7 +7,7 @@ function CommunityWrite() {
   const [updateMode, setUpdateMode] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-
+  const awsIP = process.env.REACT_APP_BACKEND_URL;
   useEffect(() => {
     if (location.state) {
       const { postId, title, content, category } = location.state;
@@ -25,8 +25,8 @@ function CommunityWrite() {
     }
 
     const url = updateMode
-      ? `/posts/update/${location.state.postId}`
-      : "/posts";
+      ? `${awsIP}/posts/update/${location.state.postId}`
+      : `${awsIP}/posts`;
     axios({
       url: url,
       method: "post",

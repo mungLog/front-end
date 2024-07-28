@@ -3,12 +3,12 @@ import axios from "axios";
 
 const CreateComment = ({ postId }) => {
   const [content, setContent] = useState("");
-
+  const awsIP = process.env.REACT_APP_BACKEND_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios({
-        url: `/posts/${postId}/comment`,
+        url: `${awsIP}/posts/${postId}/comment`,
         method: "post",
         data: {
           content: content,

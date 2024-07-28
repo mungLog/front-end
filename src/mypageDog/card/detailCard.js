@@ -51,10 +51,10 @@ function DetailCard({ petId, onClose, onAddSchedule }) {
   //     water_amount: "200ml",
   //   },
   // ];
-
+  const awsIP = process.env.REACT_APP_BACKEND_URL;
   const fetchPetDetails = async () => {
     try {
-      const response = await axios.get(`/pets/${petId}`);
+      const response = await axios.get(`${awsIP}/pets/${petId}`);
       setPetDetails(response.data);
     } catch (error) {
       console.error("반려견 정보 조회 에러", error);
@@ -63,7 +63,7 @@ function DetailCard({ petId, onClose, onAddSchedule }) {
 
   const fetchPetCareRecords = async () => {
     try {
-      const response = await axios.get(`/nutrition/${petId}`);
+      const response = await axios.get(`${awsIP}/nutrition/${petId}`);
       setPetCareRecords(response.data);
     } catch (error) {
       console.error("반려견 케어 기록 조회 에러", error);

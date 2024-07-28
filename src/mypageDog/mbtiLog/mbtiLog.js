@@ -24,43 +24,43 @@ function MbtiLog() {
     ENTJ: "결단력 있는 통솔자",
   };
 
-  useEffect(() => {
-    const initialDogs = [
-      {
-        petId: 1,
-        name: "곰돌이",
-        imgUrl: "abc",
-        mbti: "ESTP",
-      },
-      {
-        petId: 2,
-        name: "토순이",
-        imgUrl: "sdf",
-        mbti: "INFP",
-      },
-      {
-        petId: 3,
-        name: "하루",
-        imgUrl: "vcd",
-        mbti: "ISFJ",
-      },
-    ];
-
-    setDogs(initialDogs);
-  }, []);
-
-  const familyId = 1;
   // useEffect(() => {
-  //   const fetchDogs = async () => {
-  //     try {
-  //       const response = await axios.get(`/pets/${familyId}`);
-  //       setDogs(response.data);
-  //     } catch (error) {
-  //       console.error("반려견 데이터 불러오기 실패", error);
-  //     }
-  //   };
-  //   fetchDogs();
+  //   const initialDogs = [
+  //     {
+  //       petId: 1,
+  //       name: "곰돌이",
+  //       imgUrl: "abc",
+  //       mbti: "ESTP",
+  //     },
+  //     {
+  //       petId: 2,
+  //       name: "토순이",
+  //       imgUrl: "sdf",
+  //       mbti: "INFP",
+  //     },
+  //     {
+  //       petId: 3,
+  //       name: "하루",
+  //       imgUrl: "vcd",
+  //       mbti: "ISFJ",
+  //     },
+  //   ];
+
+  //   setDogs(initialDogs);
   // }, []);
+  const awsIP = process.env.REACT_APP_BACKEND_URL;
+  const familyId = 1;
+  useEffect(() => {
+    const fetchDogs = async () => {
+      try {
+        const response = await axios.get(`${awsIP}/pets/${familyId}`);
+        setDogs(response.data);
+      } catch (error) {
+        console.error("반려견 데이터 불러오기 실패", error);
+      }
+    };
+    fetchDogs();
+  }, []);
 
   return (
     <div>

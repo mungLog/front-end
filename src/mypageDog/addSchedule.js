@@ -31,7 +31,7 @@ function AddSchedule({ petId, onAddComplete }) {
     "발톱",
     "귀청소",
   ];
-
+  const awsIP = process.env.REACT_APP_BACKEND_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     const record = {
@@ -48,7 +48,7 @@ function AddSchedule({ petId, onAddComplete }) {
     };
 
     try {
-      // await axios.post(`/nutrition/${petId}`, record);
+      await axios.post(`${awsIP}/nutrition/${petId}`, record);
       console.log("일정 추가 성공");
       onAddComplete(petId);
     } catch (error) {
