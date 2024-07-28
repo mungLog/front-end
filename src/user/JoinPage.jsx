@@ -1,39 +1,49 @@
 import React, { useState } from "react";
-import "./css/JoinPage.css";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import * as S from "./style/JoinPage.Style";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-export default function JoinPage() {
+export default function Join() {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [email, setEmail] = useState("");
   const [emailDomain, setEmailDomain] = useState("");
+  const [nickname, setNickname] = useState("");
   const [nameError, setNameError] = useState("");
   const [idError, setIdError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [nicknameError, setNicknameError] = useState("");
   const [phonePrefix, setPhonePrefix] = useState("010");
   const [phoneMiddle, setPhoneMiddle] = useState("");
   const [phoneLast, setPhoneLast] = useState("");
-  const [phoneError, setPhoneError] = useState("");
+  const [isFamilyRepresentative, setIsFamilyRepresentative] = useState(null);
+  const [searchedUser, setSearchedUser] = useState(null);
+  const [searchError, setSearchError] = useState("");
+  const [searchId, setSearchId] = useState("");
+  const [idCheckMessage, setIdCheckMessage] = useState("");
+  const [idCheckStatus, setIdCheckStatus] = useState("");
+
+  const navigate = useNavigate();
 
   const regId = /^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{5,20}$/g;
   const regPass =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
 
   const handleNameBlur = () => {
-    if (!name.trim()) {
-      setNameError("필수 입력 사항입니다.");
-    } else {
-      setNameError("");
-    }
+    if (!name.trim()) setNameError("필수 입력 사항입니다.");
+    else setNameError("");
   };
 
   const handleIdBlur = () => {
-    if (!id.trim()) {
-      setIdError("필수 입력 사항입니다.");
-    } else if (!regId.test(id)) {
+    if (!id.trim()) setIdError("필수 입력 사항입니다.");
+    else if (!regId.test(id)) {
       setIdError(
         "아이디: 영문으로 시작하는 5~20자 길이의 영문자, 숫자를 사용해주세요."
       );
@@ -42,10 +52,31 @@ export default function JoinPage() {
     }
   };
 
+  //아이디 중복확인 axios
+  const handleIdCheck = async () => {
+    if (id.trim()) {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/user/idCheck/${id}`
+        );
+        if (response.data.isAvailable) {
+          setIdCheckMessage("사용 가능한 아이디입니다.");
+          setIdCheckStatus("available");
+        } else {
+          setIdCheckMessage("이미 사용 중인 아이디입니다.");
+          setIdCheckStatus("unavailable");
+        }
+      } catch (error) {
+        console.error("중복 확인 요청 실패:", error);
+        setIdCheckMessage("중복 확인 요청이 실패했습니다.");
+        setIdCheckStatus("unavailable");
+      }
+    }
+  };
+
   const handlePasswordBlur = () => {
-    if (!password.trim()) {
-      setPasswordError("필수 입력 사항입니다.");
-    } else if (!regPass.test(password)) {
+    if (!password.trim()) setPasswordError("필수 입력 사항입니다.");
+    else if (!regPass.test(password)) {
       setPasswordError(
         "비밀번호: 8~16자 길이의 영문자, 숫자 및 특수문자를 포함해야 합니다."
       );
@@ -55,11 +86,9 @@ export default function JoinPage() {
   };
 
   const handlePasswordConfirmBlur = () => {
-    if (passwordConfirm !== password) {
+    if (passwordConfirm !== password)
       setPasswordConfirmError("비밀번호가 일치하지 않습니다.");
-    } else {
-      setPasswordConfirmError("");
-    }
+    else setPasswordConfirmError("");
   };
 
   const handleEmailBlur = () => {
@@ -73,7 +102,7 @@ export default function JoinPage() {
   };
 
   const handlePhoneMiddleChange = (e) => {
-    const value = e.target.value.replace(/\D/g, ""); // 숫자만 추출
+    const value = e.target.value.replace(/\D/g, "");
     if (value.length <= 4) {
       setPhoneMiddle(value);
       validatePhone(value, phoneLast);
@@ -81,7 +110,7 @@ export default function JoinPage() {
   };
 
   const handlePhoneLastChange = (e) => {
-    const value = e.target.value.replace(/\D/g, ""); // 숫자만 추출
+    const value = e.target.value.replace(/\D/g, "");
     if (value.length <= 4) {
       setPhoneLast(value);
       validatePhone(phoneMiddle, value);
@@ -102,227 +131,313 @@ export default function JoinPage() {
     setEmailDomain(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    validatePhone(phoneMiddle, phoneLast); // 폼 제출 시 전화번호 검증
+  const handleSearchClick = async () => {
+    if (searchId.trim()) {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/user/search/${searchId}`
+        );
+        if (response.data.user) {
+          setSearchedUser(response.data.user);
+          setSearchError("");
+        } else {
+          setSearchedUser(null);
+          setSearchError("해당 아이디를 가진 사용자를 찾을 수 없습니다.");
+        }
+      } catch (error) {
+        console.error("검색 요청 실패:", error);
+        setSearchError("검색 요청이 실패했습니다.");
+      }
+    } else {
+      setSearchError("아이디를 입력해 주세요.");
+    }
+  };
 
-    // 모든 검증이 통과한 경우에만 폼 제출 처리
+  const handleSearchInputChange = (e) => {
+    setSearchId(e.target.value);
+  };
+
+  const handleNicknameBlur = () => {
+    if (!nickname.trim()) setNicknameError("필수 입력 사항입니다.");
+    else setNicknameError("");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    validatePhone(phoneMiddle, phoneLast);
+
     if (
       !nameError &&
       !idError &&
       !passwordError &&
       !passwordConfirmError &&
       !emailError &&
-      !phoneError
+      !phoneError &&
+      !searchError &&
+      !nicknameError &&
+      isFamilyRepresentative !== null
     ) {
-      // 여기에서 폼 데이터를 제출하는 로직을 추가하세요.
-      alert("회원가입이 완료되었습니다!");
-    } else {
-      alert("모든 필드를 올바르게 입력해 주세요.");
+      if (isFamilyRepresentative === false && !searchedUser) {
+        alert("가족대표가 아닌 경우, 검색된 사용자를 선택해야 합니다.");
+        return;
+      }
+
+      try {
+        const response = await axios.post("http://localhost:8080/register", {
+          userid: id,
+          password: password,
+          username: name,
+          phone: `${phonePrefix}${phoneMiddle}${phoneLast}`,
+          email: `${email}@${emailDomain}`,
+          nickname: nickname,
+          Roles: isFamilyRepresentative,
+        });
+        if (response.data.message === "회원가입 성공") {
+          alert("회원가입이 완료되었습니다!");
+          navigate("/login");
+        } else {
+          alert("회원가입에 실패했습니다.");
+        }
+      } catch (error) {
+        console.error("회원가입 요청 실패:", error);
+        alert("회원가입 요청이 실패했습니다.");
+      }
+    }
+  };
+
+  const handleRadioChange = (e) => {
+    const value = e.target.value;
+    setIsFamilyRepresentative(
+      value === "1" ? true : value === "0" ? false : null
+    );
+    if (value === "0") {
+      setSearchedUser(null);
+      setSearchId("");
     }
   };
 
   return (
-    <div className="page">
-      <div className="titleWrap">회원가입</div>
-
-      <div className="contentWrap">
+    <S.Page>
+      <S.TitleWrap>회원정보 수정</S.TitleWrap>
+      <S.ContentWrap>
         <form onSubmit={handleSubmit}>
           {/* 이름 입력 */}
-          <div className={`inputTitle ${nameError ? "errorTitle" : ""}`}>
-            이름
-          </div>
-          <div className={`inputWrapBig ${nameError ? "errorForm" : ""}`}>
-            <input
-              className="input"
+          <S.InputTitle error={!!nameError}>이름</S.InputTitle>
+          <S.InputWrapBig error={!!nameError}>
+            <S.Input
               type="text"
               placeholder="이름을 입력해주세요."
               value={name}
               onChange={(e) => setName(e.target.value)}
               onBlur={handleNameBlur}
             />
-          </div>
-          {nameError && <div className="errorMessageWrap">{nameError}</div>}
+          </S.InputWrapBig>
+          {nameError && <S.ErrorMessageWrap>{nameError}</S.ErrorMessageWrap>}
 
           {/* 아이디 입력 */}
-          <div className={`inputTitle ${idError ? "errorTitle" : ""}`}>
+          <S.InputTitleID
+            error={!!idError || idCheckStatus === "unavailable"}
+            success={idCheckStatus === "available"}
+          >
             아이디
-          </div>
-          <div className="inputWrapIdBox">
-            <div className={`inputWrapId ${idError ? "errorForm" : ""}`}>
-              <input
-                className="input"
+          </S.InputTitleID>
+          <S.InputWrapIdBox>
+            <S.InputWrapId
+              error={!!idError || idCheckStatus === "unavailable"}
+              success={idCheckStatus === "available"}
+            >
+              <S.Input
                 type="text"
                 placeholder="아이디를 입력해주세요."
                 value={id}
                 onChange={(e) => setId(e.target.value)}
                 onBlur={handleIdBlur}
               />
-            </div>
-            <button className="idButton" type="button">
+            </S.InputWrapId>
+            <S.IdButton type="button" onClick={handleIdCheck}>
               아이디 중복확인
-            </button>
-          </div>
-          {idError && <div className="errorMessageWrap">{idError}</div>}
+            </S.IdButton>
+          </S.InputWrapIdBox>
+          {idError && <S.ErrorMessageWrap>{idError}</S.ErrorMessageWrap>}
+          {idCheckMessage && (
+            <S.ErrorMessageWrap success={idCheckStatus === "available"}>
+              {idCheckMessage}
+            </S.ErrorMessageWrap>
+          )}
 
           {/* 비밀번호 입력 */}
-          <div className={`inputTitle ${passwordError ? "errorTitle" : ""}`}>
-            비밀번호
-          </div>
-          <div className={`inputWrapBig ${passwordError ? "errorForm" : ""}`}>
-            <input
-              className="input"
+          <S.InputTitle error={!!passwordError}>비밀번호</S.InputTitle>
+          <S.InputWrapBig error={!!passwordError}>
+            <S.Input
               type="password"
               placeholder="비밀번호를 입력해주세요."
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onBlur={handlePasswordBlur}
             />
-          </div>
+          </S.InputWrapBig>
           {passwordError && (
-            <div className="errorMessageWrap">{passwordError}</div>
+            <S.ErrorMessageWrap>{passwordError}</S.ErrorMessageWrap>
           )}
 
-          {/* 비밀번호 확인 입력 */}
-          <div
-            className={`inputTitle ${passwordConfirmError ? "errorTitle" : ""}`}
-          >
+          <S.InputTitle error={!!passwordConfirmError}>
             비밀번호 확인
-          </div>
-          <div
-            className={`inputWrapBig ${
-              passwordConfirmError ? "errorForm" : ""
-            }`}
-          >
-            <input
-              className="input"
+          </S.InputTitle>
+          <S.InputWrapBig error={!!passwordConfirmError}>
+            <S.Input
               type="password"
               placeholder="비밀번호를 입력해주세요."
               value={passwordConfirm}
               onChange={(e) => setPasswordConfirm(e.target.value)}
               onBlur={handlePasswordConfirmBlur}
             />
-          </div>
+          </S.InputWrapBig>
           {passwordConfirmError && (
-            <div className="errorMessageWrap">{passwordConfirmError}</div>
+            <S.ErrorMessageWrap>{passwordConfirmError}</S.ErrorMessageWrap>
           )}
 
           {/* 이메일 입력 */}
-          <div className={`inputTitle ${emailError ? "errorTitle" : ""}`}>
-            이메일
-          </div>
-          <div className="emailBox">
-            <div className={`inputWrapEmail ${emailError ? "errorForm" : ""}`}>
-              <input
-                className="EmailInputBox"
+          <S.InputTitle error={!!emailError}>이메일</S.InputTitle>
+          <S.EmailBox>
+            <S.InputWrapEmail error={!!emailError}>
+              <S.Input
                 type="text"
                 placeholder="이메일을 입력해주세요."
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={handleEmailBlur}
               />
-            </div>
-            <div className={`atSign ${emailError ? "errorTitle" : ""}`}>@</div>
-            <div className={`inputWrapEmail2 ${emailError ? "errorForm" : ""}`}>
-              <select
-                name="emailSelect"
-                id="email"
+            </S.InputWrapEmail>
+            <S.AtSign error={!!emailError}>@</S.AtSign>
+            <S.InputWrapEmail2 error={!!emailError}>
+              <S.Select
                 value={emailDomain}
                 onChange={handleEmailDomainChange}
+                error={!!emailError}
               >
                 <option value="">선택해 주세요.</option>
                 <option value="gmail.com">gmail.com</option>
                 <option value="naver.com">naver.com</option>
-                {/* 필요 시 다른 도메인 추가 */}
-              </select>
-            </div>
-          </div>
-          {emailError && <div className="errorMessageWrap">{emailError}</div>}
+              </S.Select>
+            </S.InputWrapEmail2>
+          </S.EmailBox>
+          {emailError && <S.ErrorMessageWrap>{emailError}</S.ErrorMessageWrap>}
 
           {/* 전화번호 입력 */}
-          <div className="inputTitle">전화번호</div>
-          <div className="phoneBox">
-            <div
-              className={`inputWrapPhoneNumberFirst ${
-                phoneError ? "errorForm" : ""
-              }`}
-            >
-              <select
+          <S.InputTitle error={!!phoneError}>전화번호</S.InputTitle>
+          <S.PhoneBox>
+            <S.InputWrapPhoneNumberFirst error={!!phoneError}>
+              <S.Select
                 name="phoneNumberSelect"
                 id="phoneNumber"
                 value={phonePrefix}
                 onChange={(e) => setPhonePrefix(e.target.value)}
               >
                 <option value="010">010</option>
-                {/* 다른 전화번호 선택 옵션 추가 가능 */}
-              </select>
-            </div>
-            <div className="hypen">-</div>
-            <div
-              className={`inputWrapPhoneNumberMiddle ${
-                phoneError ? "errorForm" : ""
-              }`}
-            >
-              <input
-                className="input"
+              </S.Select>
+            </S.InputWrapPhoneNumberFirst>
+            <S.Hyphen>-</S.Hyphen>
+            <S.InputWrapPhoneNumberMiddle error={!!phoneError}>
+              <S.Input
                 type="text"
                 value={phoneMiddle}
                 onChange={handlePhoneMiddleChange}
                 maxLength="4"
               />
-            </div>
-            <div className="hypen">-</div>
-            <div
-              className={`inputWrapPhoneNumberLast ${
-                phoneError ? "errorForm" : ""
-              }`}
-            >
-              <input
-                className="input"
+            </S.InputWrapPhoneNumberMiddle>
+            <S.Hyphen>-</S.Hyphen>
+            <S.InputWrapPhoneNumberLast error={!!phoneError}>
+              <S.Input
                 type="text"
                 value={phoneLast}
                 onChange={handlePhoneLastChange}
                 maxLength="4"
               />
-            </div>
-            <button className="telButton" type="button">
-              인증번호 받기
-            </button>
-          </div>
-          {phoneError && <div className="errorMessageWrap">{phoneError}</div>}
+            </S.InputWrapPhoneNumberLast>
+          </S.PhoneBox>
+          {phoneError && <S.ErrorMessageWrap>{phoneError}</S.ErrorMessageWrap>}
 
-          {/* 가족대표 여부 */}
-          <div className="inputTitle">가족대표 여부</div>
-          <div className="radioButtonBox">
-            <div className="radioButtonDiv">
-              <input type="radio" id="yes" name="option" value="1" />
-              <label htmlFor="yes">예</label>
-            </div>
-            <div>
-              <input type="radio" id="no" name="option" value="0" />
-              <label htmlFor="no">아니오</label>
-            </div>
-          </div>
-
-          {/* 아이디 검색 */}
-          <div className="inputTitle">아이디 검색</div>
-          <div className="inputWrapBig">
-            <input
-              className="input"
+          {/* 닉네임 입력 */}
+          <S.InputTitle error={!!nicknameError}>닉네임</S.InputTitle>
+          <S.InputWrapBig error={!!nicknameError}>
+            <S.Input
               type="text"
-              placeholder="아이디 검색하기"
+              placeholder="닉네임을 입력해주세요"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              onBlur={handleNicknameBlur}
             />
-          </div>
+          </S.InputWrapBig>
+          {nicknameError && (
+            <S.ErrorMessageWrap>{nicknameError}</S.ErrorMessageWrap>
+          )}
 
-          {/* 가입 버튼 */}
-          <input className="joinButton" type="submit" value="회원가입하기" />
+          {/* 가족대표여부 */}
+          <S.InputTitle>가족대표 여부</S.InputTitle>
+          <S.RadioButtonBox>
+            <S.RadioButtonDiv>
+              <S.RadioInput
+                type="radio"
+                id="yes"
+                name="option"
+                value="1"
+                onChange={handleRadioChange}
+              />
+              <S.Label htmlFor="yes">예</S.Label>
+            </S.RadioButtonDiv>
+            <S.RadioButtonDiv>
+              <S.RadioInput
+                type="radio"
+                id="no"
+                name="option"
+                value="0"
+                onChange={handleRadioChange}
+              />
+              <S.Label htmlFor="no">아니오</S.Label>
+            </S.RadioButtonDiv>
+          </S.RadioButtonBox>
 
-          <div className="haveIdBox">
+          {/* 가족대표 아이디 검색 */}
+          {isFamilyRepresentative === false && (
+            <>
+              <S.InputTitle>아이디 검색</S.InputTitle>
+              <S.InputWrapBig>
+                <S.Input
+                  className="input"
+                  type="text"
+                  placeholder="아이디 검색하기"
+                  value={searchId}
+                  onChange={handleSearchInputChange}
+                />
+                <S.SearchIconWrapper onClick={handleSearchClick}>
+                  <FontAwesomeIcon icon={faSearch} />
+                </S.SearchIconWrapper>
+              </S.InputWrapBig>
+              {searchError && (
+                <S.ErrorMessageWrap>{searchError}</S.ErrorMessageWrap>
+              )}
+              {searchedUser && (
+                <>
+                  <S.InputWrapId>
+                    <S.Input type="text" value={searchedUser.name} disabled />
+                  </S.InputWrapId>
+                </>
+              )}
+            </>
+          )}
+
+          {/* 회원가입 버튼 */}
+          <S.JoinButton type="submit">회원가입하기</S.JoinButton>
+
+          {/* 로그인 링크 이동 */}
+          <S.HaveIdBox>
             <div>이미 아이디가 있으신가요?</div>
-            <div className="loginLink">로그인</div>
-          </div>
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              <S.LoginLink>로그인</S.LoginLink>
+            </Link>
+          </S.HaveIdBox>
         </form>
-      </div>
-    </div>
+      </S.ContentWrap>
+    </S.Page>
   );
 }

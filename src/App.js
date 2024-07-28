@@ -8,27 +8,44 @@ import Main from "./main/main";
 // import CommunityWrite from "./board/writePost";
 import Header from "./header/header";
 import Mypage from "./mypage/mypage";
+import ChangeInfo from "./mypage/PersonMain/pages/ChangeInfoPage";
+import AddFamilyMember from "./mypage/PersonMain/pages/AddFamilyMemberPage";
+import PurchaseHistory from "./mypage/PersonMain/pages/PurchaseHistoryPage";
 import MbtiPage from "./mbti/mbtiPage";
-import Login from "./login/login";
+import Login from "./login/Login";
 import JoinPage from "./user/JoinPage";
+import FindIdPage from "./user/FindIdPage";
+import FindPasswordPage from "./user/FindPasswordPage";
+import AddDog from "./mypage/PersonMain/pages/AddDog"; // 임시 강아지 등록 페이지
 
 function App() {
   return (
-    <>
+    <div id="app">
       <Header />
-      <Routes>
-        <Route path="/" element={<Main />} />
-        {/* <Route path="/shop" element={<Shop />} />
+      <div className="nnn">
+        <Routes>
+          <Route path="/" element={<Main />} />
+          {/* <Route path="/shop" element={<Shop />} />
         <Route path="/card" element={<Card />} />
         <Route path="/community" element={<CommunityList />} />
         <Route path="/community/write" element={<CommunityWrite />} />
         <Route path="/community/posts/:postId" element={<CommunityDetail />} /> */}
-        <Route path="/mypage" element={<Mypage />} />
-        <Route path="/mbti" element={<MbtiPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/join" element={<JoinPage />} />
-      </Routes>
-    </>
+          <Route path="/mypage" element={<Mypage />}>
+            <Route path="changeinfopage" element={<ChangeInfo />} />
+            <Route path="addfamilymember" element={<AddFamilyMember />} />
+            <Route path="purchasehistory" element={<PurchaseHistory />} />
+            <Route path="adddog" element={<AddDog />} />
+            {/*임시*/}
+          </Route>
+          <Route path="/mbti" element={<MbtiPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/join" element={<JoinPage />} />
+          <Route path="/findidpage" element={<FindIdPage />} />
+          <Route path="/findpasswordpage" element={<FindPasswordPage />} />
+        </Routes>
+      </div>
+    </div>
   );
 }
+
 export default App;

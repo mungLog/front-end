@@ -1,121 +1,10 @@
 import React, { useState } from "react";
+import StartPage from "./StartPage";
+import DogSelectionPage from "./DogSelectionPage";
+import QuestionPage from "./QuestionPage";
+import ResultPage from "./ResultPage";
 import "./MbtiPage.css";
 
-// 시작 페이지
-const StartPage = ({ onStart }) => (
-  <div className="mbtiBody">
-    <div className="Startcontainer">
-      <div className="StartTitle">
-        <h1>
-          우리 집 강아지
-          <br />
-          멍! bti 테스트
-        </h1>
-      </div>
-      <div className="StartPic"></div>
-      <button className="Startbutton" onClick={onStart}>
-        테스트 시작하기
-      </button>
-    </div>
-  </div>
-);
-
-// 강아지 선택 페이지
-const DogSelectionPage = ({ onSelectDog }) => {
-  const [selectedDog, setSelectedDog] = useState(null); // 선택된 강아지 상태
-  const dogs = ["개1", "개2"]; // 강아지 목록
-
-  const handleDogSelect = (event) => {
-    setSelectedDog(event.target.value); // 강아지 선택
-  };
-
-  const handleStartClick = () => {
-    if (selectedDog) {
-      onSelectDog(selectedDog); // 선택된 강아지를 부모 컴포넌트로 전달
-    }
-  };
-
-  return (
-    <div className="mbtiBody">
-      <div className="ChoseDogBox">
-        <div className="ChoseTitle">
-          <h1>테스트를 진행할 반려동물을 선택해 주세요</h1>
-        </div>
-        <div className="dog-buttons">
-          {dogs.map((dog) => (
-            <label key={dog} className="dog-label">
-              <input
-                type="radio"
-                name="dog"
-                value={dog}
-                checked={dog === selectedDog}
-                onChange={handleDogSelect}
-              />
-              {dog}
-            </label>
-          ))}
-        </div>
-        <button
-          className="Chose-start-button"
-          onClick={handleStartClick}
-          disabled={!selectedDog} // 강아지가 선택되지 않았으면 버튼 비활성화
-        >
-          시작하기
-        </button>
-      </div>
-    </div>
-  );
-};
-
-// 질문 페이지
-const QuestionPage = ({ question, options, onAnswer }) => (
-  <div className="QcontainerBig">
-    <div className="QcontainerSmall">
-      <div className="QTitlebox">
-        <h2>{question.text}</h2>
-      </div>
-      <div className="Qpic"></div>
-    </div>
-    <div className="AcontainerBig">
-      {options.map((option, index) => (
-        <div key={index} className="option">
-          <button className="Abutton" onClick={() => onAnswer(option)}>
-            {option.text}
-          </button>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-// 결과 페이지
-const ResultPage = ({ result, dogName }) => {
-  const handleExit = () => {
-    // 페이지를 다른 URL로 이동합니다.
-    window.location.href = "https://www.example.com"; // 원하는 URL로 변경하세요
-  };
-
-  return (
-    <div className="mbtiBody">
-      <div className="ResultOutBox">
-        <div className="ResultInBox">
-          <div className="ResultTitle">
-            <h1>우리 집 강아지 {dogName}는!</h1>
-          </div>
-          <div className="ResultPic"></div>
-          <div className="ResultMbti">
-            <p>{result}</p>
-          </div>
-          <button className="ResultButton" onClick={handleExit}>
-            종료하기
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// 메인 컴포넌트
 const MbtiPage = () => {
   const [currentPage, setCurrentPage] = useState("start");
   const [answers, setAnswers] = useState([]);
@@ -240,7 +129,6 @@ const MbtiPage = () => {
     if (answers.length + 1 < questions.length) {
       setCurrentPage("questions");
     } else {
-      const result = calculateMbti([...answers, answer.value]);
       setCurrentPage("result");
     }
   };
@@ -300,7 +188,7 @@ const MbtiPage = () => {
         <ResultPage
           result={calculateMbti(answers)}
           dogName={selectedDog}
-          onRestart={handleRestart}
+          answers={answers}
         />
       )}
     </div>

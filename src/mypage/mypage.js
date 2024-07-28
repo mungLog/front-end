@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import PersonMain from "./PersonMain/person";
 import DogMain from "./DogMain/dog";
 
-function MyPage() {
-  const [selectMode, setSelectMode] = useState("person");
+function Mypage() {
+  const [selectMode, setSelectMode] = React.useState("person");
 
   return (
     <div>
@@ -20,4 +20,4 @@ function MyPage() {
   );
 }
 
-export default MyPage;
+export default Mypage;
