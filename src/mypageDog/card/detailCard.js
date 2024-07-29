@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import style from "./detailCard.module.css";
+import add from "./img/addSchedule.svg";
+import back from "./img/back.svg";
+import rotate from "./img/rotate.svg";
+import AddSchedule from "./../addSchedule";
+import boy from "./img/boyIcon.svg";
+import girl from "./img/girlIcon.svg";
+import line from "./img/yellowLine.svg";
+import walk from "./img/walk.png";
+import breedInfo from "./breedInfo";
+import user from "./img/user.svg";
 
 function DetailCard({ petId, onClose, onAddSchedule }) {
   const [petDetails, setPetDetails] = useState(null);
@@ -19,6 +29,7 @@ function DetailCard({ petId, onClose, onAddSchedule }) {
     gender: "1",
     birth: "20240105",
     weight: 10,
+    breed: "시추",
   };
 
   const testPetCareRecords = [
@@ -44,13 +55,36 @@ function DetailCard({ petId, onClose, onAddSchedule }) {
       memo: "개껌하나줬어",
     },
     {
+      author: "동생",
+      category: "간식",
+      TimeStamp: "2024-07-25T10:35:00Z",
+    },
+    {
+      author: "동생",
+      category: "발톱",
+      TimeStamp: "2024-07-25T10:45:00Z",
+    },
+    {
+      author: "동생",
+      category: "영양제",
+      TimeStamp: "2024-07-25T10:45:00Z",
+      memo: "xxx먹임",
+    },
+    {
       author: "엄마",
       category: "물",
       TimeStamp: "2024-07-25T12:00:00Z",
       memo: "미지근하게 줬어",
       water_amount: "200ml",
     },
+    {
+      author: "엄마",
+      category: "물",
+      TimeStamp: "2024-07-25T12:00:00Z",
+      water_amount: "200ml",
+    },
   ];
+
   const awsIP = process.env.REACT_APP_BACKEND_URL;
   const fetchPetDetails = async () => {
     try {
@@ -119,76 +153,206 @@ function DetailCard({ petId, onClose, onAddSchedule }) {
       return `${adjustedYears}살 ${adjustedMonths}개월`;
     }
   };
-
+  const getPercentageWidth = (current, max) => {
+    if (max === 0) return "0%";
+    const ratio = current / max;
+    const roundedPercentage = Math.round(ratio * 100);
+    return `${roundedPercentage}%`;
+  };
+  const getFormattedDate = () => {
+    const today = new Date();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    return `${month}/${day}`;
+  };
   return (
-    <div id={style.cardCenter}>
+    <div id={style.all}>
+      <div id={style.btnFlex}>
+        <button className={style.addBtn} onClick={handleAddSchedule}>
+          <img src={add} alt="일정 추가" />
+          일정 추가하기
+        </button>
+        <button className={style.closeBtn} onClick={onClose}>
+          나가기
+          <img src={back} alt="닫기" />
+        </button>
+      </div>
       <div className={`${style.cardWrapper} ${isFlipped ? style.flipped : ""}`}>
         <div className={style.frontCard}>
-          <div>{petId}</div>
-          <button onClick={handleFlip}>뒷면보기</button>
-          <button onClick={handleAddSchedule}>일정 추가</button>
-          <button className={style.closeButton} onClick={onClose}>
-            X
-          </button>
+          {/* <div>{petId}</div> */}
           {petDetails ? (
-            <div className={style.content}>
-              <div className={style.avatar}></div>
+            <>
+              <div className={style.avatarFlex}>
+                <div style={{ width: "123px" }}></div>
+                <div className={style.avatar}></div>
+                <button className={style.rotate} onClick={handleFlip}>
+                  기록일지 보기 <img src={rotate} alt="" />
+                </button>
+              </div>
               <div className={style.name}>{petDetails.name}</div>
-              <div className={style.info}>
-                기초대사량: {petDetails.nowMetabolism}/
-                {petDetails.maxMetabolism}
+              <div className={style.infoFlex}>
+                <div>
+                  {petDetails.gender === "1" ? (
+                    <div id={style.gender}>
+                      남아 <img src={boy} alt="남" />
+                    </div>
+                  ) : (
+                    <div id={style.gender}>
+                      여아 <img src={girl} alt="여" />
+                    </div>
+                  )}
+                </div>
+                <img src={line} alt="경계선 이미지" />
+                <div>{calculateAge(petDetails.birth)}</div>
+                <img src={line} alt="경계선 이미지" />
+                <div>{petDetails.weight}kg</div>
               </div>
-              <div className={style.info}>
-                음수량: {petDetails.nowWater}/{petDetails.maxWater}
+              <div className={style.kcalTitle}>총 섭취량</div>
+              <div className={style.maxBar}>
+                <span
+                  id={style.yellowBar}
+                  className={style.fillBar}
+                  style={{
+                    width: getPercentageWidth(
+                      petDetails.nowMetabolism,
+                      petDetails.maxMetabolism
+                    ),
+                  }}
+                ></span>
               </div>
-              <div className={style.info}>
-                산책량: {petDetails.nowWalk}/{petDetails.maxWalk}
+              <div id={style.persentFlex}>
+                <div>0%</div>
+                <div>50%</div>
+                <div>100%</div>
               </div>
-              <div className={style.info}>
-                성별: {petDetails.gender === "1" ? "수컷" : "암컷"}
+              <div id={style.maxMeta}>
+                {petDetails.nowMetabolism}/{petDetails.maxMetabolism}kcal
               </div>
-              <div className={style.info}>
-                나이: {calculateAge(petDetails.birth)}
+              <div className={style.infoDetail}>
+                <div id={style.detailLeft}>
+                  <div className={style.detailTitle}>권장 활동량</div>
+                  <div id={style.goodWalk}>
+                    <>
+                      <img src={walk} alt="산책 이미지" />
+                      30분 X 2
+                    </>
+                  </div>
+                  <div className={style.barTitle}>
+                    <span>산책량</span>
+                    <span>
+                      {petDetails.nowWalk}/{petDetails.maxWalk}분
+                    </span>
+                  </div>
+                  <div className={style.maxBar}>
+                    <span
+                      id={style.blueBar}
+                      className={style.fillBar}
+                      style={{
+                        width: getPercentageWidth(
+                          petDetails.nowWater,
+                          petDetails.maxWater
+                        ),
+                      }}
+                    ></span>
+                  </div>
+                  <div id={style.persentFlex}>
+                    <div>0%</div>
+                    <div>50%</div>
+                    <div>100%</div>
+                  </div>
+                  <div className={style.barTitle}>
+                    <span>음수량</span>
+                    <span>
+                      {petDetails.nowWater}/{petDetails.maxWater}ml
+                    </span>
+                  </div>
+                  <div className={style.maxBar}>
+                    <span
+                      id={style.blueBar}
+                      className={style.fillBar}
+                      style={{
+                        width: getPercentageWidth(
+                          petDetails.nowWalk,
+                          petDetails.maxWalk
+                        ),
+                      }}
+                    ></span>
+                  </div>
+                  <div id={style.persentFlex}>
+                    <div>0%</div>
+                    <div>50%</div>
+                    <div>100%</div>
+                  </div>
+                </div>
+                <svg
+                  width="2"
+                  height="202"
+                  viewBox="0 0 2 202"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M1 1L1.00001 201"
+                    stroke="#F7F8FB"
+                    stroke-width="1.3"
+                    stroke-linecap="round"
+                  ></path>
+                </svg>
+                <div id={style.detailRight}>
+                  <div className={style.detailTitle}>주의사항</div>
+                  <div id={style.caution}>{breedInfo[petDetails.breed]}</div>
+                </div>
               </div>
-              <div className={style.info}>무게: {petDetails.weight}</div>
-            </div>
+            </>
           ) : (
             <div>반려견 정보 로딩중</div>
           )}
         </div>
         <div className={style.backCard}>
-          <button onClick={handleAddSchedule}>일정 추가</button>
-          <button className={style.closeButton} onClick={onClose}>
-            X
-          </button>
-          <button onClick={handleFlip}>앞면보기</button>
           {petDetails ? (
-            <div>
-              <div>이름 : {petDetails.name}</div>
-              <div>사진 : {petDetails.imgUrl}</div>
-            </div>
+            <>
+              <div className={style.avatarFlex}>
+                <div style={{ width: "123px" }}></div>
+                <div className={style.avatar}></div>
+                <button className={style.rotate} onClick={handleFlip}>
+                  열량체크 하기 <img src={rotate} alt="" />
+                </button>
+              </div>
+              <div className={style.name}>{petDetails.name}</div>
+            </>
           ) : (
             <div>반려견 정보 로딩중</div>
           )}
           {petCareRecords.length > 0 ? (
-            <div className={style.content}>
+            <div className={style.backContent}>
+              <div id={style.today}>{getFormattedDate()}</div>
               {petCareRecords.map((record, index) => (
                 <div key={index} className={style.record}>
-                  <div className={style.info}>작성자: {record.author}</div>
-                  <div className={style.info}>카테고리: {record.category}</div>
-                  <div className={style.info}>
-                    시간: {formatTime(record.TimeStamp)}
+                  <div className={style.recordTop}>
+                    <div className={style.user}>
+                      <img src={user} alt="유저" />
+                      {record.author}
+                    </div>
+                    <div className={style.ctg}>{record.category}</div>
+                    <div className={style.time}>
+                      {formatTime(record.TimeStamp)}
+                    </div>
                   </div>
-                  <div className={style.info}>
-                    {record.category === "밥"
-                      ? `${record.meal_name} ${record.meal_amount} / ${record.memo}`
-                      : record.category === "물"
-                      ? `${record.water_amount} / ${record.memo}`
-                      : record.category === "산책"
-                      ? `${record.walk_duration} / ${record.memo}`
-                      : record.memo}
-                  </div>
-                  <br />
+                  {record.memo && (
+                    <>
+                      <div className={style.memoTitle}>메모</div>
+                      <div className={style.memoContent}>
+                        {record.category === "밥"
+                          ? `${record.meal_name} ${record.meal_amount} / ${record.memo}`
+                          : record.category === "물"
+                          ? `${record.water_amount} / ${record.memo}`
+                          : record.category === "산책"
+                          ? `${record.walk_duration} / ${record.memo}`
+                          : record.memo}
+                      </div>
+                    </>
+                  )}
                 </div>
               ))}
             </div>

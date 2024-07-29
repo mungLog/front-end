@@ -26,7 +26,6 @@ function Card({ onAddSchedule, selectedPetId, onUpdateDog, resetExpandedDog }) {
         maxMetabolism: 1500,
         nowMetabolism: 1000,
         gender: "1",
-        age: 42,
         weight: 14,
         breed: "시추",
         birth: "20150504",
@@ -38,7 +37,6 @@ function Card({ onAddSchedule, selectedPetId, onUpdateDog, resetExpandedDog }) {
         maxMetabolism: 2000,
         nowMetabolism: 800,
         gender: "0",
-        age: 14,
         weight: 8,
         breed: "푸들",
         birth: "20180905",
@@ -50,7 +48,6 @@ function Card({ onAddSchedule, selectedPetId, onUpdateDog, resetExpandedDog }) {
         maxMetabolism: 1000,
         nowMetabolism: 300,
         gender: "0",
-        age: 2,
         weight: 3,
         breed: "말티즈",
         birth: "20240205",
@@ -220,7 +217,7 @@ function Card({ onAddSchedule, selectedPetId, onUpdateDog, resetExpandedDog }) {
                     <div>50%</div>
                     <div>100%</div>
                   </div>
-                  <div id={style.mexMeta}>{dog.maxMetabolism}kcal</div>
+                  <div id={style.maxMeta}>{dog.maxMetabolism}kcal</div>
                 </div>
               </div>
             ))}
