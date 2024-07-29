@@ -1,16 +1,68 @@
-import "./main.css";
-import Header from "./../header/header";
-import Card from "./../mypageDog/card/card";
-import "./main.css";
+import React from "react";
+import style from "./main.module.css";
+import main from "./main.png";
+
 function Main() {
   return (
-    <div className="container">
-      <div className="item">1</div>
-      <div className="item">2</div>
-      <div className="item">3</div>
-      <div className="item">4</div>
-      <div className="item">5</div>
-    </div>
+    <>
+      <div id={style.mainCenter}>
+        <img src={main} alt="메인이미지" id={style.mainImg} />
+      </div>
+      <br />
+      adf Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
+      quisquam aperiam provident adipisci repudiandae, odit perspiciatis quos,
+      est maiores similique nemo dolor iste voluptates consequatur doloribus
+      soluta numquam ratione laboriosam.adf Lorem ipsum dolor sit amet
+      consectetur adipisicing elit. Mollitia quisquam aperiam provident adipisci
+      repudiandae, odit perspiciatis quos, est maiores similique nemo dolor iste
+      voluptat adf Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      Mollitia quisquam aperiam provident adipisci repudiandae, odit
+      perspiciatis quos, est maiores similique nemo dolor iste voluptates
+      consequatur doloribus soluta numquam ratione laboriosam.adf Lorem ipsum
+      dolor sit amet consectetur adipisicing elit. Mollitia quisquam aperiam
+      provident adipisci repudiandae, odit perspiciatis quos, est maiores
+      similique nemo dolor iste voluptates consequatur doloribus soluta numquam
+      ratione laboriosam.adf Lorem ipsum dolor sit amet consectetur adipisicing
+      elit. Mollitia quisquam aperiam provident adipisci repudiandae, odit
+      perspiciatis quos, est maiores similique nemo dolor iste voluptates
+      consequatur doloribus soluta numquam ratione laboriosam.adf Lorem ipsum
+      dolor sit amet consectetur adipisicing elit. Mollitia quisquam aperiam
+      provident adipisci repudiandae, odit perspiciatis quos, est maiores
+      similique nemo dolor iste voluptates consequatur doloribus soluta numquam
+      ratione laboriosam.adf Lorem ipsum dolor sit amet consectetur adipisicing
+      elit. Mollitia quisquam aperiam provident adipisci repudiandae, odit
+      perspiciatis quos, est maiores similique nemo dolor iste voluptates
+      consequatur doloribus soluta numquam ratione laboriosam. adf Lorem ipsum
+      dolor sit amet consectetur adipisicing elit. Mollitia quisquam aperiam
+      provident adipisci repudiandae, odit perspiciatis quos, est maiores
+      similique nemo dolor iste voluptates consequatur doloribus soluta numquam
+      ratione laboriosam.adf Lorem ipsum dolor sit amet consectetur adipisicing
+      elit. Mollitia quisquam aperiam provident adipisci repudiandae, odit
+      perspiciatis quos, est maiores similique nemo dolor iste voluptates
+      consequatur doloribus soluta numquam ratione laboriosam.adf Lorem ipsum
+      dolor sit amet consectetur adipisicing elit. Mollitia quisquam aperiam
+      provident adipisci repudiandae, odit perspiciatis quos, est maiores
+      similique nemo dolor iste voluptates consequatur doloribus soluta numquam
+      ratione laboriosam.adf Lorem ipsum dolor sit amet consectetur adipisicing
+      elit. Mollitia quisquam aperiam provident adipisci repudiandae, odit
+      perspiciatis quos, est maiores similique nemo dolor iste voluptates
+      consequatur doloribus soluta numquam ratione laboriosam.adf Lorem ipsum
+      dolor sit amet consectetur adipisicing elit. Mollitia quisquam aperiam
+      provident adipisci repudiandae, odit perspiciatis quos, est maiores
+      similique nemo dolor iste voluptates consequatur doloribus soluta numquam
+      ratione laboriosam.es consequatur doloribus soluta numquam ratione
+      laboriosam.adf Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      Mollitia quisquam aperiam provident adipisci repudiandae, odit
+      perspiciatis quos, est maiores similique nemo dolor iste voluptates
+      consequatur doloribus soluta numquam ratione laboriosam.adf Lorem ipsum
+      dolor sit amet consectetur adipisicing elit. Mollitia quisquam aperiam
+      provident adipisci repudiandae, odit perspiciatis quos, est maiores
+      similique nemo dolor iste voluptates consequatur doloribus soluta numquam
+      ratione laboriosam.adf Lorem ipsum dolor sit amet consectetur adipisicing
+      elit. Mollitia quisquam aperiam provident adipisci repudiandae, odit
+      perspiciatis quos, est maiores similique nemo dolor iste voluptates
+      consequatur doloribus soluta numquam ratione laboriosam.
+    </>
   );
 }
 export default Main;

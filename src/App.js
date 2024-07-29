@@ -1,5 +1,5 @@
 import "./reset.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Main from "./main/main";
 import Shop from "./shop/shop";
 import Card from "./mypageDog/card/card";
@@ -7,13 +7,14 @@ import CommunityList from "./board/listPost";
 import CommunityDetail from "./board/detailPost";
 import CommunityWrite from "./board/writePost";
 import Header from "./header/header";
+import HeaderMain from "./header/headerMain";
 import Mypage from "./mypage/mypage";
-// import UpdatePost from "./board/updatePost";
 
 function App() {
+  const location = useLocation();
   return (
     <>
-      <Header />
+      {location.pathname === "/" ? <HeaderMain /> : <Header />}
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/shop" element={<Shop />} />

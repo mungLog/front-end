@@ -10,7 +10,7 @@ function Header() {
   return (
     <div id={style.headerWrapper}>
       <Link to="/">
-        <img src={logo} alt="로고" id="logo" />
+        <img src={logo} alt="로고" id={style.logo} />
       </Link>
       <div id={style.menu}>
         <ul id={style.nav}>

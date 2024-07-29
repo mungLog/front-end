@@ -46,10 +46,16 @@ function DogMain() {
   return (
     <div id={style.flex}>
       <div id={style.left}>
-        <button onClick={() => setSelectDogpage("check")}>
+        <button
+          onClick={() => setSelectDogpage("check")}
+          className={selectDogpage === "check" ? style.selected : ""}
+        >
           열량체크/기록일지
         </button>
-        <button onClick={() => setSelectDogpage("mbtiLog")}>
+        <button
+          onClick={() => setSelectDogpage("mbtiLog")}
+          className={selectDogpage === "mbtiLog" ? style.selected : ""}
+        >
           멍BIT 기록보기
         </button>
         <Link>로그아웃</Link>

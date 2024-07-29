@@ -2,11 +2,32 @@
   display: flex;
 }
 #left {
-  width: 30%;
-  background-color: pink;
+  width: 342px;
+  padding-left: 60px;
+  box-sizing: border-box;
+  background-color: var(--color-background);
   display: flex;
   flex-direction: column;
+  padding-top: 47px;
+}
+#left button {
+  font-size: 16px;
+  color: #bababa;
+  background-color: transparent;
+  border: none;
+  margin-top: 36px;
+  text-align: left;
+  cursor: pointer;
+}
+#left button.selected {
+  color: var(--color-blue) !important;
+}
+#left a {
+  margin-top: 65px;
 }
 #right {
-  width: 70%;
+  width: 1039px;
+  background-color: white;
+  min-height: 865px;
+  margin-bottom: 85px;
 }
