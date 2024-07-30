@@ -9,6 +9,7 @@ import CommunityWrite from "./board/writePost";
 import Header from "./header/header";
 import HeaderMain from "./header/headerMain";
 import Mypage from "./mypage/mypage";
+import AddDog from "./mypageDog/addDog";
 
 function App() {
   const location = useLocation();
@@ -23,6 +24,7 @@ function App() {
         <Route path="/community/write" element={<CommunityWrite />} />
         <Route path="/community/posts/:postId" element={<CommunityDetail />} />
         <Route path="/mypage" element={<Mypage />} />
+        <Route path="/addDog" element={<AddDog />} />
       </Routes>
     </>
   );
