@@ -1,0 +1,36 @@
+body {
+  background-color: var(--color-background);
+}
+#maxWidth {
+  max-width: 1440px;
+  margin: auto;
+}
+#mypageTop {
+  margin-top: 66px;
+  display: flex;
+}
+#title {
+  font-size: 28px;
+  font-weight: 700;
+  box-sizing: border-box;
+  width: 342px;
+  padding-left: 60px;
+}
+#buttonWrap {
+  width: 1039px;
+}
+#buttonWrap button {
+  width: 50%;
+  padding-bottom: 15px;
+  font-size: 18px;
+  text-align: center;
+  color: #707070;
+  background-color: transparent;
+  border: none;
+  border-bottom: 4px solid #e1e1e1;
+  cursor: pointer;
+}
+.selected {
+  color: var(--color-blue) !important;
+  border-bottom: 4px solid var(--color-blue) !important;
+}

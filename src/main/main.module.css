@@ -1,0 +1,11 @@
+#mainCenter {
+  display: flex;
+  justify-content: center;
+}
+#mainImg {
+  width: calc(100% - 76px);
+  position: relative;
+  z-index: 1;
+  margin-top: -80.43px;
+  border-radius: 22px;
+}

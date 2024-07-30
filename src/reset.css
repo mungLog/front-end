@@ -130,7 +130,9 @@ table {
 :root {
   --color-green: #285a2d;
   --color-yellow: #fcd11d;
+  --color-blue: #009feb;
   --font-lightGray: #bababa;
+  --color-background: #f7f8fb;
 }
 a {
   text-decoration: none;
