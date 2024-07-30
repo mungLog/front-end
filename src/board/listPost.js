@@ -4,43 +4,47 @@ import { Link } from "react-router-dom";
 function CommunityList() {
   const [list, setList] = useState([]);
 
-  // const sampleData = [
-  //   {
-  //     postId: "1",
-  //     title: "첫 번째 게시물",
-  //     content: "이것은 첫 번째 게시물입니다.",
-  //     category: "공지사항",
-  //     timestamp: "2024-07-16",
-  //   },
-  //   {
-  //     postId: "2",
-  //     title: "두 번째 게시물",
-  //     content: "이것은 두 번째 게시물입니다.",
-  //     category: "일반",
-  //     timestamp: "2024-07-17",
-  //   },
-  //   {
-  //     postId: "3",
-  //     title: "세 번째 게시물",
-  //     content: "이것은 세 번째 게시물입니다.",
-  //     category: "질문",
-  //     timestamp: "2024-07-18",
-  //   },
-  // ];
-  const awsIP = process.env.REACT_APP_BACKEND_URL;
+  const sampleData = [
+    {
+      postId: "1",
+      title: "첫 번째 게시물",
+      content: "이것은 첫 번째 게시물입니다.",
+      category: "공지사항",
+      timestamp: "2024-07-16",
+    },
+    {
+      postId: "2",
+      title: "두 번째 게시물",
+      content: "이것은 두 번째 게시물입니다.",
+      category: "일반",
+      timestamp: "2024-07-17",
+    },
+    {
+      postId: "3",
+      title: "세 번째 게시물",
+      content: "이것은 세 번째 게시물입니다.",
+      category: "질문",
+      timestamp: "2024-07-18",
+    },
+  ];
   useEffect(() => {
-    axios({
-      method: "get",
-      url: `${awsIP}/posts`,
-    })
-      .then((response) => {
-        setList(response.data);
-        console.log("통신 성공");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [awsIP]);
+    setList(sampleData);
+  }, []);
+
+  // const awsIP = process.env.REACT_APP_BACKEND_URL;
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     url: `${awsIP}/posts`,
+  //   })
+  //     .then((response) => {
+  //       setList(response.data);
+  //       console.log("통신 성공");
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, [awsIP]);
 
   const commuWrite = () => {
     window.location.href = "/community/write";

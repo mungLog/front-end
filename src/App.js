@@ -21,7 +21,6 @@ function App() {
         <Route path="/card" element={<Card />} />
         <Route path="/community" element={<CommunityList />} />
         <Route path="/community/write" element={<CommunityWrite />} />
-        {/* <Route path="/community/update/:postId" element={<UpdatePost />} /> */}
         <Route path="/community/posts/:postId" element={<CommunityDetail />} />
         <Route path="/mypage" element={<Mypage />} />
       </Routes>

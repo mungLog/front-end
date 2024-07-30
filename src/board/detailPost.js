@@ -9,6 +9,22 @@ function CommunityDetail() {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const awsIP = process.env.REACT_APP_BACKEND_URL;
+  // 로그인한 사람 유저아이디로 바꿔야됨
+  const logId = "user1";
+
+  // useEffect(() => {
+  //   const sample = {
+  //     postId: 1,
+  //     title: "Sample Post Title",
+  //     author: "작성자",
+  //     category: "Sample Category",
+  //     timestamp: "2024-07-30",
+  //     content: "This is a sample post content.",
+  //     userid: "user1",
+  //   };
+  //   setPost(sample);
+  // }, [postId]);
+
   useEffect(() => {
     axios
       .get(`${awsIP}/posts/${postId}`)
@@ -19,6 +35,7 @@ function CommunityDetail() {
         console.error("게시물 실패", error);
       });
   }, [postId]);
+
   const handleUpdateClick = () => {
     navigate(`${awsIP}/community/posts/${postId}`, {
       state: {
@@ -41,14 +58,13 @@ function CommunityDetail() {
       });
   };
 
-  // const isAuthor = post.userid === "접속자ID";
-  const isAuthor = true;
+  const isAuthor = post.userid === logId;
   return (
     <div>
       <div>제목 : {post.title}</div>
       <div>작성자 : {post.author}</div>
       <div>카테고리 : {post.category}</div>
-      <div>작성일 : {post.tiemstamp}</div>
+      <div>작성일 : {post.timestamp}</div>
       <div>{post.content}</div>
 
       {isAuthor && (
@@ -58,7 +74,7 @@ function CommunityDetail() {
         </div>
       )}
       <CreateComment postId={postId} />
-      <CommentList postId={postId} />
+      <CommentList postId={postId} userId={logId} />
     </div>
   );
 }
