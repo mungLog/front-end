@@ -56,13 +56,13 @@ export default function Join() {
   const handleIdCheck = async () => {
     if (id.trim()) {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/user/idCheck/${id}`
-        );
-        if (response.data.isAvailable) {
+        const response = await axios.post(`http://localhost:8080/idCheck`, {
+          userId: id,
+        });
+        if (response.data.httpStatus === 200) {
           setIdCheckMessage("사용 가능한 아이디입니다.");
           setIdCheckStatus("available");
-        } else {
+        } else if (response.data.httpStatus === 400) {
           setIdCheckMessage("이미 사용 중인 아이디입니다.");
           setIdCheckStatus("unavailable");
         }
