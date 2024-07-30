@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios"; // axios 임포트
 import * as S from "./style/FindIdPage.Style";
 
+// 환경 변수에서 API URL 가져오기
+const apiUrl = process.env.REACT_APP_API_URL;
+
 export default function FindIdPage() {
   const [name, setName] = useState("");
   const [phonePrefix, setPhonePrefix] = useState("010");
@@ -51,7 +54,7 @@ export default function FindIdPage() {
     if (!nameError && !phoneError) {
       try {
         const response = await axios.post(
-          "http://localhost:8080/users/findid",
+          `${apiUrl}/users/findid`, // 환경 변수를 사용하여 API URL 설정
           {
             username: name,
             phone: `${phonePrefix}-${phoneMiddle}-${phoneLast}`,

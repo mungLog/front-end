@@ -1,33 +1,15 @@
 import React from "react";
-import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-} from "chart.js";
+import { useNavigate } from "react-router-dom"; // useNavigate 훅을 import 합니다
 import "./MbtiPage.css";
 
-// Chart.js 등록
-ChartJS.register(
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  CategoryScale,
-  LinearScale
-);
-
 const ResultPage = ({ result, dogName, answers }) => {
+  const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수를 얻습니다
+
   const handleExit = () => {
-    window.location.href = "https://www.example.com";
+    navigate("/mypage"); // /mypage로 이동합니다
   };
 
   // MBTI 데이터 계산
-  const totalAnswers = answers.length;
   const mbtiCounts = {
     I: answers.filter((answer) => answer === "I").length,
     E: answers.filter((answer) => answer === "E").length,
@@ -39,53 +21,29 @@ const ResultPage = ({ result, dogName, answers }) => {
     P: answers.filter((answer) => answer === "P").length,
   };
 
-  const percentage = (count) =>
-    totalAnswers === 0 ? 0 : (count / totalAnswers) * 100;
-
-  // 막대 그래프 데이터 준비
-  const data = {
-    labels: ["I vs E", "S vs N", "F vs T", "P vs J"],
-    datasets: [
-      {
-        label: "MBTI Result",
-        data: [
-          percentage(mbtiCounts.I) - percentage(mbtiCounts.E),
-          percentage(mbtiCounts.S) - percentage(mbtiCounts.N),
-          percentage(mbtiCounts.F) - percentage(mbtiCounts.T),
-          percentage(mbtiCounts.P) - percentage(mbtiCounts.J),
-        ],
-        backgroundColor: ["#FFCE56", "#FF6384", "#36A2EB", "#4BC0C0"],
-        borderColor: ["#F1C40F", "#F06292", "#36A2EB", "#4BC0C0"],
-        borderWidth: 1,
-      },
-    ],
+  const calculatePercentage = (count1, count2) => {
+    const total = count1 + count2;
+    return total === 0
+      ? [0, 0]
+      : [(count1 / total) * 100, (count2 / total) * 100];
   };
 
-  // 막대 그래프 옵션
-  const options = {
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: (context) => {
-            const label = context.label || "";
-            const value = context.raw.toFixed(2);
-            return `${label}: ${value}%`;
-          },
-        },
-      },
-      legend: {
-        position: "bottom",
-      },
-    },
-    scales: {
-      x: {
-        beginAtZero: true,
-      },
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
+  const [iPercentage, ePercentage] = calculatePercentage(
+    mbtiCounts.I,
+    mbtiCounts.E
+  );
+  const [sPercentage, nPercentage] = calculatePercentage(
+    mbtiCounts.S,
+    mbtiCounts.N
+  );
+  const [tPercentage, fPercentage] = calculatePercentage(
+    mbtiCounts.T,
+    mbtiCounts.F
+  );
+  const [jPercentage, pPercentage] = calculatePercentage(
+    mbtiCounts.J,
+    mbtiCounts.P
+  );
 
   return (
     <div className="mbtiBody">
@@ -98,8 +56,19 @@ const ResultPage = ({ result, dogName, answers }) => {
           <div className="ResultMbti">
             <p>{result}</p>
           </div>
-          <div style={{ width: "800px", height: "400px" }}>
-            <Bar data={data} options={options} />
+          <div className="ResultPercentages">
+            <p>
+              I: {iPercentage.toFixed(2)}% / E: {ePercentage.toFixed(2)}%
+            </p>
+            <p>
+              S: {sPercentage.toFixed(2)}% / N: {nPercentage.toFixed(2)}%
+            </p>
+            <p>
+              T: {tPercentage.toFixed(2)}% / F: {fPercentage.toFixed(2)}%
+            </p>
+            <p>
+              J: {jPercentage.toFixed(2)}% / P: {pPercentage.toFixed(2)}%
+            </p>
           </div>
           <button className="ResultButton" onClick={handleExit}>
             종료하기

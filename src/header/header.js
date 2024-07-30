@@ -1,16 +1,25 @@
-import style from "./header.module.css";
-import { useLocation, Link } from "react-router-dom";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import style from "./header.module.css"; // CSS 모듈 임포트
 import logo from "./img/logo.svg";
 import user from "./img/userIcon.svg";
+import { useAuth, logoutUser } from "./AuthContext";
+
 function Header() {
   const location = useLocation();
+  const { state, dispatch } = useAuth();
   const currentPath = location.pathname;
   const isActive = (paths) =>
     paths.some((path) => currentPath.startsWith(path));
+
+  const handleLogout = async () => {
+    await logoutUser(dispatch);
+  };
+
   return (
     <div id={style.headerWrapper}>
       <Link to="/">
-        <img src={logo} alt="로고" id="logo" />
+        <img src={logo} alt="로고" id={style.logo} />
       </Link>
       <div id={style.menu}>
         <ul id={style.nav}>
@@ -54,10 +63,15 @@ function Header() {
               <li>
                 <Link to="/mypage">마이페이지</Link>
               </li>
-              {/* 로그인인지 판단해서 로그아웃하는거 추가하기 */}
-              <li>
-                <Link to="/login">로그인</Link>
-              </li>
+              {state.isAuthenticated ? (
+                <li>
+                  <button onClick={handleLogout}>로그아웃</button>
+                </li>
+              ) : (
+                <li>
+                  <Link to="/login">로그인</Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -65,4 +79,5 @@ function Header() {
     </div>
   );
 }
+
 export default Header;

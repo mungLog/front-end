@@ -1,50 +1,62 @@
+// src/pages/ChangeInfoPage.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // axios 임포트
+import axios from "axios";
+import { useUser } from "../../../context/UserContext"; // UserContext 훅 import
 import * as S from "../styles/ChangeInfoPage.Style";
 
 export default function ChangeInfoPage() {
-  // 상태 정의
-  const [name, setName] = useState("");
-  const [id, setId] = useState("");
+  const { user, setUser } = useUser(); // UserContext에서 user 정보와 setUser 가져오기
+  const [name, setName] = useState(user?.name || "");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [email, setEmail] = useState("");
-  const [emailDomain, setEmailDomain] = useState("");
+  const [email, setEmail] = useState(user?.email.split("@")[0] || "");
+  const [emailDomain, setEmailDomain] = useState(
+    user?.email.split("@")[1] || ""
+  );
   const [passwordError, setPasswordError] = useState("");
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [phonePrefix, setPhonePrefix] = useState("010");
-  const [phoneMiddle, setPhoneMiddle] = useState("");
-  const [phoneLast, setPhoneLast] = useState("");
+  const [phonePrefix, setPhonePrefix] = useState(
+    user?.phone.substring(0, 3) || "010"
+  );
+  const [phoneMiddle, setPhoneMiddle] = useState(
+    user?.phone.substring(3, 7) || ""
+  );
+  const [phoneLast, setPhoneLast] = useState(user?.phone.substring(7) || "");
   const [phoneError, setPhoneError] = useState("");
 
   const navigate = useNavigate(); // useNavigate hook
+
+  // 환경 변수에서 API URL 가져오기
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   // 정규 표현식
   const regPass =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
 
   useEffect(() => {
-    // Function to fetch user info
-    const fetchUserInfo = async () => {
-      try {
-        const response = await axios.get("/user/info"); // 사용자 정보 요청
-        const { name, id, email, phone } = response.data;
-        setName(name);
-        setId(id);
-        setEmail(email.split("@")[0]);
-        setEmailDomain(email.split("@")[1]);
-        setPhonePrefix(phone.substring(0, 3));
-        setPhoneMiddle(phone.substring(3, 7));
-        setPhoneLast(phone.substring(7));
-      } catch (error) {
-        console.error("사용자 정보 가져오기 실패:", error);
-      }
-    };
+    // UserContext에서 user 정보가 없을 경우, 사용자 정보 요청
+    if (!user) {
+      const fetchUserInfo = async () => {
+        try {
+          const response = await axios.get(`${apiUrl}/user/info`); // 사용자 정보 요청
+          const { name, id, email, phone } = response.data;
+          setName(name);
+          setEmail(email.split("@")[0]);
+          setEmailDomain(email.split("@")[1]);
+          setPhonePrefix(phone.substring(0, 3));
+          setPhoneMiddle(phone.substring(3, 7));
+          setPhoneLast(phone.substring(7));
+          setUser(response.data); // UserContext에 정보 업데이트
+        } catch (error) {
+          console.error("사용자 정보 가져오기 실패:", error);
+        }
+      };
 
-    fetchUserInfo();
-  }, []);
+      fetchUserInfo();
+    }
+  }, [apiUrl, user, setUser]);
 
   const handlePasswordBlur = () => {
     if (!password.trim()) setPasswordError("필수 입력 사항입니다.");
@@ -109,19 +121,17 @@ export default function ChangeInfoPage() {
 
     if (!passwordError && !passwordConfirmError && !emailError && !phoneError) {
       try {
-        const response = await axios.post(
-          `http://localhost:8080/user/update/${id}`,
-          {
-            userid: id,
-            password,
-            username: name,
-            phone: `${phonePrefix}${phoneMiddle}${phoneLast}`,
-            email: `${email}@${emailDomain}`,
-          }
-        );
+        const response = await axios.post(`${apiUrl}/user/update/${user.id}`, {
+          userid: user.id,
+          password,
+          username: name,
+          phone: `${phonePrefix}${phoneMiddle}${phoneLast}`,
+          email: `${email}@${emailDomain}`,
+        });
 
         if (response.status === 200) {
           alert("회원정보 수정이 완료되었습니다!");
+          setUser(response.data); // UserContext 업데이트
           navigate("/login"); // 회원가입 완료 후 로그인 페이지로 이동
         } else {
           alert("정보 수정에 실패했습니다.");
@@ -158,8 +168,7 @@ export default function ChangeInfoPage() {
           <S.InputWrapId>
             <S.Input
               type="text"
-              value={id}
-              onChange={(e) => setId(e.target.value)}
+              value={user?.id || ""}
               disabled // 아이디 필드 수정 불가
             />
           </S.InputWrapId>

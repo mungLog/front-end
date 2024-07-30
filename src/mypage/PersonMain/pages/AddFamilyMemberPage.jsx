@@ -1,22 +1,38 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useUser } from "../../../context/UserContext"; // UserContext import
 import * as S from "../styles/AddFamilyMemberPage.Style";
 
 export default function AddFamilyMember() {
   const { fam_id } = useParams(); // URL에서 fam_id 가져오기
   const [requests, setRequests] = useState([]); // 여러 요청을 저장할 상태
   const [users, setUsers] = useState([]); // 사용자 데이터를 저장할 상태
+  const { user, isLoading } = useUser(); // UserContext에서 현재 사용자 정보 가져오기
+  const navigate = useNavigate(); // 페이지 리디렉션을 위한 navigate 훅
+
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 한 번의 요청으로 데이터 가져오기
-        const response = await axios.get(
-          `http://localhost:8080/family/${fam_id}`
-        );
-        const requestsData = response.data.requests; // 요청 데이터 배열로 가정
-        const usersData = response.data.users; // 사용자 데이터 배열로 가정
+        // 권한 확인
+        if (!user || isLoading) {
+          // 사용자 데이터 로딩 중이거나 데이터가 없으면 로딩 중 메시지 반환
+          return;
+        }
+
+        if (!user.isFamilyRepresentative) {
+          // 가족대표가 아니면 경고 후 리디렉션
+          alert("가족대표인 경우에만 사용 가능한 페이지입니다.");
+          navigate("/mypage");
+          return;
+        }
+
+        // 가족 관련 데이터 가져오기
+        const response = await axios.get(`${apiUrl}/family/${fam_id}`);
+        const requestsData = response.data.requests;
+        const usersData = response.data.users;
 
         setRequests(requestsData);
         setUsers(usersData);
@@ -27,38 +43,34 @@ export default function AddFamilyMember() {
     };
 
     fetchData();
-  }, [fam_id]); // fam_id가 변경될 때마다 fetchData가 다시 호출되도록 의존성 배열에 추가
+  }, [fam_id, apiUrl, navigate, user, isLoading]);
+
+  if (isLoading || !user) {
+    return <div>로딩 중...</div>; // 사용자 데이터 로딩 중일 때 로딩 메시지
+  }
 
   const handleAccept = async (name, date) => {
     try {
-      // 1. 가족 추가 요청을 수락하는 API 호출
-      const response = await axios.post("http://localhost:8080/family", {
+      const response = await axios.post(`${apiUrl}/family/accept`, {
         name,
         date,
       });
       if (response.data.success) {
-        // 2. 요청 수락이 성공한 경우
-
-        // 3. 수락된 요청을 requests 상태에서 제거
         setRequests((prevRequests) =>
           prevRequests.filter(
             (req) => !(req.name === name && req.date === date)
           )
         );
-
-        // 4. 새로운 사용자를 users 상태에 추가하기 위해 사용자 정보 요청
         const newUser = {
           id: name,
           name: name,
           nickname: response.data.nickname,
-        }; // 임의로 예시 데이터를 넣음
+        };
         setUsers((prevUsers) => [...prevUsers, newUser]);
       } else {
-        // 요청 수락이 실패한 경우 사용자에게 알림
         alert("요청 수락에 실패했습니다.");
       }
     } catch (error) {
-      // 5. 에러 처리
       console.error("요청 수락 실패:", error);
       alert("요청 수락에 실패했습니다.");
     }
@@ -66,12 +78,11 @@ export default function AddFamilyMember() {
 
   const handleReject = async (name, date) => {
     try {
-      const response = await axios.post("http://localhost:8080/family", {
+      const response = await axios.post(`${apiUrl}/family/reject`, {
         name,
         date,
       });
       if (response.data.success) {
-        // 요청 상태 업데이트
         setRequests((prevRequests) =>
           prevRequests.filter(
             (req) => !(req.name === name && req.date === date)
@@ -88,7 +99,6 @@ export default function AddFamilyMember() {
 
   return (
     <S.Page>
-      {/* 가족추가칸 */}
       <S.ContentWrap>
         <S.TitleWrap>가족추가 알림</S.TitleWrap>
         <S.Content>
@@ -134,7 +144,6 @@ export default function AddFamilyMember() {
         </S.Content>
       </S.ContentWrap>
 
-      {/* 가족구성원 정보/추가칸 */}
       <S.ContentWrap>
         <S.TitleWrap>가족구성원 정보 / 추가</S.TitleWrap>
         <S.Content>

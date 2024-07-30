@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios"; // axios 임포트
 import * as S from "./style/FindPasswordPage.Style";
 
+// 환경 변수에서 API URL 가져오기
+const apiUrl = process.env.REACT_APP_API_URL;
+
 export default function FindPasswordPage() {
   // 상태 정의
   const [name, setName] = useState("");
@@ -69,9 +72,8 @@ export default function FindPasswordPage() {
     if (!nameError && !idError && !phoneError) {
       try {
         const response = await axios.post(
-          "http://localhost:8080/users/findpw",
+          `${apiUrl}/users/findpw`, // 환경 변수를 사용하여 API URL 설정
           {
-            // axios로 요청
             userid: id,
             username: name,
             phone: `${phonePrefix}-${phoneMiddle}-${phoneLast}`,
@@ -160,7 +162,7 @@ export default function FindPasswordPage() {
           </S.PhoneBox>
           {phoneError && <S.ErrorMessageWrap>{phoneError}</S.ErrorMessageWrap>}
 
-          {/* 확인버튼*/}
+          {/* 확인 버튼 */}
           <S.OkayButton type="submit">확인</S.OkayButton>
         </form>
       </S.ContentWrap>

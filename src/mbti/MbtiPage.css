@@ -53,7 +53,6 @@
   cursor: pointer;
   text-align: center;
   font-size: 16px;
-
   transition: background-color 0.3s;
 }
 /* 시작페이지 CSS 구역 끝*/
@@ -110,7 +109,6 @@
 }
 
 /* 답변박스 CSS */
-
 .AcontainerBig {
   display: flex;
   justify-content: center;
@@ -123,15 +121,12 @@
   color: black;
   text-align: center;
   font-size: 25px;
-
   margin: 25px;
-
   width: 650px;
   height: 60px;
   border-radius: 15px;
   border: 1px solid white;
   background-color: white;
-
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -143,8 +138,8 @@
 
 /* 강아지 선택 페이지 CSS 구역 */
 .ChoseDogBox {
-  width: 1400px;
-  height: 600px;
+  width: 1084px;
+  height: 640px;
   display: flex;
   justify-content: center;
   align-items: center; /* 수직 중앙 정렬 추가 */
@@ -168,6 +163,7 @@
   font-weight: 300;
   line-height: 0.5;
   margin: 0 auto; /* 수평 가운데 정렬 */
+  margin-bottom: 90px;
 }
 
 .Chose-start-button {
@@ -181,20 +177,86 @@
   cursor: pointer;
   text-align: center;
   font-size: 16px;
-
   transition: background-color 0.3s;
 }
-/* 강아지 선택 페이지 CSS 구역 임시*/
+
+.dogcardform {
+  display: flex;
+  align-items: center; /* 카드들을 가운데 정렬 */
+  gap: 20px; /* 카드 간의 간격 */
+}
+
+.dogcard {
+  display: flex;
+  align-items: center; /* 카드 내 요소들을 가운데 정렬 */
+}
+
+.dog-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 42px;
+  padding: 10px;
+  background-color: white;
+  transition: box-shadow 0.3s;
+  width: 188px; /* 카드의 너비 */
+  height: 270px; /* 카드의 높이 */
+  margin: 20px;
+}
+
+.dogbutton {
+  margin-left: 145px;
+  margin-top: 10px;
+  width: 24px;
+  height: 24px;
+}
+.dog-label:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dog-image {
+  width: 82px; /* 프로필 이미지 너비 */
+  height: 82px; /* 프로필 이미지 높이 */
+  border-radius: 50%; /* 원형 이미지 */
+  object-fit: cover;
+  margin-bottom: 5px;
+}
+
+.dog-info span {
+  font-family: "Hi Melody", sans-serif;
+  font-size: 14px;
+  color: black;
+}
+
+.DogName {
+  margin-bottom: 50px;
+}
+
+.Chose-start-button {
+  margin-top: 20px;
+  border-radius: 50px;
+  width: 150px;
+  font-weight: 800;
+  border: 1px solid dodgerblue;
+  background-color: dodgerblue;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+/* 강아지 선택 페이지 CSS 구역 끝*/
 
 /* 결과 페이지 CSS 구역 */
 .ResultOutBox {
   background-color: gainsboro;
-
   border-radius: 30px;
-
   width: 850px;
   height: 850px;
-
   display: flex; /* Flexbox 사용 */
   align-items: center; /* 수직 중앙 정렬 */
   justify-content: center; /* 수평 중앙 정렬 */
@@ -204,14 +266,11 @@
 
 .ResultInBox {
   background-color: white;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   border-radius: 15px;
-
   width: 600px;
   height: 750px;
 }
@@ -223,10 +282,8 @@
 
 .ResultPic {
   background-color: green;
-
   width: 100px;
   height: 100px;
-
   margin: 40px;
   border-radius: 50px;
 }
@@ -234,12 +291,9 @@
 .ResultMbti {
   font-family: "Hi Melody", sans-serif;
   font-size: 60px;
-
   border: 5px dashed dodgerblue;
-
   width: 150px;
   height: 50px;
-
   padding-top: 8px;
   display: flex;
   align-items: center;
@@ -249,19 +303,14 @@
 
 .ResultButton {
   font-family: "Hi Melody", sans-serif;
-
   border-radius: 5px;
-
   border: 1px solid #007bff;
   background-color: #007bff;
   color: white;
-
   padding: 10px 20px;
   margin: 80px;
-
   text-align: center;
   font-size: 16px;
-
   cursor: pointer;
   transition: background-color 0.3s;
 }

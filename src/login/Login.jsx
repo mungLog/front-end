@@ -1,6 +1,8 @@
+// src/pages/LoginPage.js
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useUser } from "../context/UserContext";
 import * as S from "./Login.Style";
 
 const regId = /^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{5,20}$/g;
@@ -14,6 +16,7 @@ export default function LoginPage() {
   const [passwordError, setPasswordError] = useState("");
 
   const navigate = useNavigate();
+  const { refreshUser } = useUser(); // UserContext에서 refreshUser 함수 가져오기
 
   const handleUseridBlur = () => {
     if (!userid.trim()) {
@@ -68,6 +71,7 @@ export default function LoginPage() {
 
         if (response.status === 200) {
           alert("로그인 성공!");
+          await refreshUser(); // 로그인 후 사용자 정보 새로고침
           navigate("/"); // 로그인 후 리디렉션
         } else {
           alert("로그인에 실패했습니다. 다시 시도해주세요.");
