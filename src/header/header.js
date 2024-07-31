@@ -1,21 +1,22 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import style from "./header.module.css"; // CSS 모듈 임포트
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import style from "./header.module.css";
 import logo from "./img/logo.svg";
 import user from "./img/userIcon.svg";
-import { useAuth, logoutUser } from "./AuthContext";
+import { useAuth } from "./AuthContext";
 
 function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { state, dispatch } = useAuth();
   const currentPath = location.pathname;
   const isActive = (paths) =>
     paths.some((path) => currentPath.startsWith(path));
 
-  const handleLogout = async () => {
-    await logoutUser(dispatch);
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    navigate("/login");
   };
-
   return (
     <div id={style.headerWrapper}>
       <Link to="/">
@@ -60,13 +61,15 @@ function Header() {
           </div>
           <div className={style.hover}>
             <ul>
-              <li>
-                <Link to="/mypage">마이페이지</Link>
-              </li>
               {state.isAuthenticated ? (
-                <li>
-                  <button onClick={handleLogout}>로그아웃</button>
-                </li>
+                <>
+                  <li>
+                    <Link to="/mypage">마이페이지</Link>
+                  </li>
+                  <li>
+                    <button onClick={handleLogout}>로그아웃</button>
+                  </li>
+                </>
               ) : (
                 <li>
                   <Link to="/login">로그인</Link>

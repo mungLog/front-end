@@ -1,12 +1,21 @@
 import style from "./headerMain.module.css";
-import { useLocation, Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "./img/mainLogo.svg";
 import user from "./img/userIcon.svg";
+import { useAuth } from "./AuthContext";
+
 function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { state, dispatch } = useAuth();
   const currentPath = location.pathname;
   const isActive = (paths) =>
     paths.some((path) => currentPath.startsWith(path));
+
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    navigate("/login");
+  };
   return (
     <div id={style.headerFixed}>
       <div id={style.headerWrapper}>
@@ -52,13 +61,20 @@ function Header() {
             </div>
             <div className={style.hover}>
               <ul>
-                <li>
-                  <Link to="/mypage">마이페이지</Link>
-                </li>
-                {/* 로그인인지 판단해서 로그아웃하는거 추가하기 */}
-                <li>
-                  <Link to="/login">로그인</Link>
-                </li>
+                {state.isAuthenticated ? (
+                  <>
+                    <li>
+                      <Link to="/mypage">마이페이지</Link>
+                    </li>
+                    <li>
+                      <button onClick={handleLogout}>로그아웃</button>
+                    </li>
+                  </>
+                ) : (
+                  <li>
+                    <Link to="/login">로그인</Link>
+                  </li>
+                )}
               </ul>
             </div>
           </div>

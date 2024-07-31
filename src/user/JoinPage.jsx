@@ -22,7 +22,7 @@ export default function Join() {
     searchedUser: null,
     searchId: "",
   });
-
+  const apiUrl = process.env.REACT_APP_BACKEND_URL;
   const [errors, setErrors] = useState({});
   const [idCheckMessage, setIdCheckMessage] = useState("");
   const [idCheckStatus, setIdCheckStatus] = useState("");
@@ -33,8 +33,6 @@ export default function Join() {
   const regId = /^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{5,20}$/;
   const regPass =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
-
-  const apiUrl = process.env.REACT_APP_API_URL;
 
   // 입력 필드 검증 함수
   const validateFields = () => {
@@ -172,9 +170,10 @@ export default function Join() {
     e.preventDefault();
 
     if (validateFields()) {
-      try {
-        setLoading(true);
-        const response = await axios.post(`${apiUrl}/register`, {
+      setLoading(true);
+
+      axios
+        .post(`${apiUrl}/register`, {
           userid: formState.id,
           password: formState.password,
           username: formState.name,
@@ -182,19 +181,17 @@ export default function Join() {
           email: `${formState.email}@${formState.emailDomain}`,
           nickname: formState.nickname,
           Roles: formState.isFamilyRepresentative,
-        });
-        if (response.data.message === "회원가입 성공") {
-          alert("회원가입이 완료되었습니다!");
+        })
+        .then((response) => {
           navigate("/login");
-        } else {
-          alert("회원가입에 실패했습니다.");
-        }
-      } catch (error) {
-        console.error("회원가입 요청 실패:", error);
-        alert("회원가입 요청이 실패했습니다.");
-      } finally {
-        setLoading(false);
-      }
+          console.log("성공");
+        })
+        .catch((error) => {
+          console.error("회원가입 요청 실패:", error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   };
 

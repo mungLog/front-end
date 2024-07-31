@@ -1,30 +1,24 @@
-// src/pages/LoginPage.js
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useUser } from "../context/UserContext";
+import { useAuth } from "../header/AuthContext.js";
 import * as S from "./Login.Style";
 
 const regId = /^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{5,20}$/g;
 const regPass =
   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
 
-export default function LoginPage() {
+function LoginPage() {
   const [userid, setUserid] = useState("");
   const [password, setPassword] = useState("");
   const [useridError, setUseridError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
+  const { state, dispatch } = useAuth();
   const navigate = useNavigate();
-  const { refreshUser } = useUser(); // UserContext에서 refreshUser 함수 가져오기
 
   const handleUseridBlur = () => {
     if (!userid.trim()) {
       setUseridError("아이디는 필수 입력 사항입니다.");
-    } else if (!regId.test(userid)) {
-      setUseridError(
-        "아이디: 영문으로 시작하며, 5~20자 길이의 영문자, 숫자를 사용해주세요."
-      );
     } else {
       setUseridError("");
     }
@@ -33,10 +27,6 @@ export default function LoginPage() {
   const handlePasswordBlur = () => {
     if (!password.trim()) {
       setPasswordError("비밀번호는 필수 입력 사항입니다.");
-    } else if (!regPass.test(password)) {
-      setPasswordError(
-        "비밀번호: 8~16자 길이의 영문자, 숫자 및 특수문자를 포함해야 합니다."
-      );
     } else {
       setPasswordError("");
     }
@@ -52,34 +42,34 @@ export default function LoginPage() {
     // 유효성 검사
     if (!userid.trim()) {
       setUseridError("아이디는 필수 입력 사항입니다.");
-    } else if (!regId.test(userid)) {
-      setUseridError(
-        "아이디: 영문으로 시작하며, 5~20자 길이의 영문자, 숫자를 사용해주세요."
-      );
-    } else if (!password.trim()) {
-      setPasswordError("비밀번호는 필수 입력 사항입니다.");
-    } else if (!regPass.test(password)) {
-      setPasswordError(
-        "비밀번호: 8~16자 길이의 영문자, 숫자 및 특수문자를 포함해야 합니다."
-      );
+      return;
     } else {
-      try {
-        const response = await axios.post("http://localhost:8080/login", {
-          userid,
-          password,
-        });
+      setUseridError("");
+    }
 
-        if (response.status === 200) {
-          alert("로그인 성공!");
-          await refreshUser(); // 로그인 후 사용자 정보 새로고침
-          navigate("/"); // 로그인 후 리디렉션
-        } else {
-          alert("로그인에 실패했습니다. 다시 시도해주세요.");
-        }
-      } catch (error) {
-        console.error("로그인 요청 실패:", error);
-        alert("로그인에 실패했습니다. 서버 오류가 발생했습니다.");
+    if (!password.trim()) {
+      setPasswordError("비밀번호는 필수 입력 사항입니다.");
+      return;
+    } else {
+      setPasswordError("");
+    }
+
+    try {
+      const response = await axios.post("http://localhost:8080/login", {
+        userid,
+        password,
+      });
+      if (response.status === 200) {
+        const { id, userid, username, nickname, accessToken } = response.data;
+        dispatch({
+          type: "LOGIN",
+          payload: { user: { id, userid, username, nickname }, accessToken },
+        });
+        navigate("/");
       }
+    } catch (error) {
+      console.error("로그인 요청 실패:", error);
+      alert("로그인에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -118,3 +108,4 @@ export default function LoginPage() {
     </S.Page>
   );
 }
+export default LoginPage;

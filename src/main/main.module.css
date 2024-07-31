@@ -1,6 +1,7 @@
 #mainCenter {
   display: flex;
   justify-content: center;
+  position: relative;
 }
 #mainImg {
   width: calc(100% - 76px);
@@ -8,4 +9,13 @@
   z-index: 1;
   margin-top: -80.43px;
   border-radius: 22px;
+}
+#mainCenter h1 {
+  position: absolute;
+  top: 20%;
+  left: 11%;
+  z-index: 2;
+  font-size: 2vw;
+  font-weight: 600;
+  line-height: 3.5vw;
 }
