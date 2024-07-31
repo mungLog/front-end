@@ -1,25 +1,28 @@
 import styled from "styled-components";
 
-// 전체 페이지
 export const Page = styled.div`
   position: absolute;
   top: 0;
-  bottom: 0;
-  width: 100%;
-  max-width: 500px;
-  padding: 0 20px;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 650px; /* 최대 너비는 500px로 제한 */
+  padding: 0 20px; /* 좌우 패딩 */
   background-color: white;
-  overflow: hidden;
+  overflow: auto; /* 콘텐츠가 넘칠 경우 스크롤 추가 */
   display: flex;
   flex-direction: column;
-  margin-top: 150px;
+  margin-top: 150px; /* 상단 여백을 150px로 설정 */
+  box-sizing: border-box; /* 패딩과 테두리 크기를 전체 크기에 포함 */
+  border-radius: 15px;
 `;
 
 // 내용 랩
 export const ContentWrap = styled.div`
   background-color: white;
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: center;
 `;
 
 // 제목 랩
@@ -44,8 +47,8 @@ export const InputTitle = styled.div`
 
 // 큰 입력 랩
 export const InputWrapBig = styled.div`
-  width: 100%;
-  height: 45px;
+  width: 460px;
+  height: 50px;
   border: 1px solid ${(props) => (props.error ? "red" : "gainsboro")}; // 에러 시 빨간색
   background-color: whitesmoke;
   display: flex;
@@ -74,8 +77,8 @@ export const Select = styled.select`
 
 // 전화번호 입력 박스 (첫번째, 중간, 마지막)
 export const InputWrapPhoneNumberFirst = styled.div`
-  width: 100px;
-  height: 45px;
+  width: 93px;
+  height: 50px;
   border: 1px solid ${(props) => (props.error ? "red" : "gainsboro")}; // 에러 시 빨간색
   background-color: whitesmoke;
   font-size: 17px;
@@ -87,8 +90,8 @@ export const InputWrapPhoneNumberFirst = styled.div`
 `;
 
 export const InputWrapPhoneNumberMiddle = styled.div`
-  width: 165px;
-  height: 45px;
+  width: 145px;
+  height: 50px;
   border: 1px solid ${(props) => (props.error ? "red" : "gainsboro")}; // 에러 시 빨간색
   background-color: whitesmoke;
   font-size: 17px;
@@ -100,8 +103,8 @@ export const InputWrapPhoneNumberMiddle = styled.div`
 `;
 
 export const InputWrapPhoneNumberLast = styled.div`
-  width: 165px;
-  height: 45px;
+  width: 145px;
+  height: 50px;
   border: 1px solid ${(props) => (props.error ? "red" : "gainsboro")}; // 에러 시 빨간색
   background-color: whitesmoke;
   font-size: 17px;
@@ -144,8 +147,8 @@ export const Hyphen = styled.div`
 
 // 가입 버튼
 export const OkayButton = styled.button`
-  width: 100%;
-  height: 45px;
+  width: 460px;
+  height: 50px;
   border: 1px solid gold;
   background-color: gold;
   margin-top: 40px;

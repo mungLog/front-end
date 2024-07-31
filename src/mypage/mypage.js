@@ -1,4 +1,3 @@
-// src/mypage/Mypage.js
 import React from "react";
 import { useUser } from "../context/UserContext"; // UserContext 훅을 import
 import PersonMain from "./PersonMain/person";
@@ -31,7 +30,7 @@ function Mypage() {
         </div>
       </div>
       <div>
-        {selectMode === "person" && <PersonMain userInfo={user} />}
+        {selectMode === "person" && <PersonMain />}
         {selectMode === "dog" && <DogMain />}
       </div>
     </div>

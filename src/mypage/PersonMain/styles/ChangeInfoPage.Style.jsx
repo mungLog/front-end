@@ -1,31 +1,19 @@
 import styled from "styled-components";
 
 // 전체 페이지
-export const Page = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  max-width: 500px;
-  padding: 0 20px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  background-color: white;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  margin-top: 150px;
-`;
+export const Page = styled.div``;
 
 // 내용 랩
 export const ContentWrap = styled.div`
-  background-color: white;
+  display: flex;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center;
 `;
 
 // 제목 랩
 export const TitleWrap = styled.div`
-  margin-top: 40px;
   margin-bottom: 15px;
+  margin-top: 50px;
   font-size: 20px;
   font-weight: 1000;
   color: #000000;
@@ -44,8 +32,8 @@ export const InputTitle = styled.div`
 
 // 큰 입력 랩
 export const InputWrapBig = styled.div`
-  width: 100%;
-  height: 45px;
+  width: 552px;
+  height: 50px;
   border: 1px solid ${(props) => (props.error ? "red" : "gainsboro")}; // 에러 시 빨간색
   background-color: whitesmoke;
   display: flex;
@@ -79,9 +67,14 @@ export const InputWrapIdBox = styled.div`
 
 // 아이디 입력 박스
 export const InputWrapId = styled.div`
-  width: 100%;
-  height: 45px;
-  border: 1px solid ${(props) => (props.error ? "red" : "gainsboro")}; // 에러 시 빨간색
+  width: 394px;
+  height: 50px;
+  border: 1px solid;
+  border-color: ${({ error, success }) => {
+    if (error) return "red";
+    if (success) return "blue";
+    return "gainsboro";
+  }};
   background-color: whitesmoke;
   display: flex;
   align-items: center;
@@ -91,8 +84,8 @@ export const InputWrapId = styled.div`
 
 // 이메일 입력 박스
 export const InputWrapEmail = styled.div`
-  width: 270px;
-  height: 45px;
+  width: 307px;
+  height: 50px;
   border: 1px solid ${(props) => (props.error ? "red" : "gainsboro")}; // 에러 시 빨간색
   background-color: whitesmoke;
   display: flex;
@@ -103,15 +96,15 @@ export const InputWrapEmail = styled.div`
 
 export const InputWrapEmail2 = styled.div`
   width: 200px;
-  height: 45px;
+  height: 50px;
   border: 1px solid ${(props) => (props.error ? "red" : "gainsboro")}; // 에러 시 빨간색
   background-color: whitesmoke;
 `;
 
 // '@' 기호
 export const AtSign = styled.div`
-  margin-left: 7px;
-  margin-right: 7px;
+  margin-left: 12px;
+  margin-right: 12px;
   margin-top: 8px;
   font-size: large;
   font-weight: 1000;
@@ -130,8 +123,8 @@ export const Select = styled.select`
 
 // 전화번호 입력 박스 (첫번째, 중간, 마지막)
 export const InputWrapPhoneNumberFirst = styled.div`
-  width: 100px;
-  height: 45px;
+  width: 120px;
+  height: 50px;
   border: 1px solid ${(props) => (props.error ? "red" : "gainsboro")}; // 에러 시 빨간색
   background-color: whitesmoke;
   font-size: 17px;
@@ -143,8 +136,8 @@ export const InputWrapPhoneNumberFirst = styled.div`
 `;
 
 export const InputWrapPhoneNumberMiddle = styled.div`
-  width: 165px;
-  height: 45px;
+  width: 177px;
+  height: 50px;
   border: 1px solid ${(props) => (props.error ? "red" : "gainsboro")}; // 에러 시 빨간색
   background-color: whitesmoke;
   font-size: 17px;
@@ -156,8 +149,8 @@ export const InputWrapPhoneNumberMiddle = styled.div`
 `;
 
 export const InputWrapPhoneNumberLast = styled.div`
-  width: 165px;
-  height: 45px;
+  width: 177px;
+  height: 50px;
   border: 1px solid ${(props) => (props.error ? "red" : "gainsboro")}; // 에러 시 빨간색
   background-color: whitesmoke;
   font-size: 17px;
@@ -219,12 +212,13 @@ export const Hyphen = styled.div`
 `;
 
 // 가입 버튼
-export const JoinButton = styled.button`
-  width: 100%;
-  height: 45px;
+export const ChangeButton = styled.button`
+  width: 552px;
+  height: 50px;
   border: 1px solid gold;
   background-color: gold;
   margin-top: 40px;
+  margin-bottom: 50px;
   font-size: 13px;
   font-weight: 1000;
   color: #000000;
@@ -239,4 +233,21 @@ export const ErrorMessageWrap = styled.div`
   color: red;
   font-size: 15px;
   margin-top: 5px;
+`;
+
+export const InputTitleID = styled.div`
+  font-size: 20px;
+  font-weight: 1000;
+  margin-bottom: 15px;
+  margin-top: 20px;
+  ${({ error, success }) =>
+    error ? "color: red;" : success ? "color: blue;" : ""};
+`;
+
+export const IdButton = styled.button`
+  width: 148px;
+  height: 50px;
+  margin-left: 10px;
+  border: 1px solid gold;
+  background-color: gold;
 `;

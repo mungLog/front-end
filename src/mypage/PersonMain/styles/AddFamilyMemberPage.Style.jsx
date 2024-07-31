@@ -1,27 +1,14 @@
 import styled from "styled-components";
 
 // 전체 페이지
-export const Page = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: auto;
-  height: 80vh;
-  width: 100%;
-  max-width: 900px;
-  padding: 0 20px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  margin-top: 150px;
-  background-color: yellow;
-`;
+export const Page = styled.div``;
 
 // 내용 랩
 export const ContentWrap = styled.div`
-  background-color: white;
-  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center;
 `;
 
 // 제목 랩

@@ -45,9 +45,10 @@ export default function AddFamilyMember() {
     fetchData();
   }, [fam_id, apiUrl, navigate, user, isLoading]);
 
-  if (isLoading || !user) {
-    return <div>로딩 중...</div>; // 사용자 데이터 로딩 중일 때 로딩 메시지
-  }
+  // 로딩 상태 주석 처리
+  // if (isLoading || !user) {
+  //   return <div>로딩 중...</div>; // 사용자 데이터 로딩 중일 때 로딩 메시지
+  // }
 
   const handleAccept = async (name, date) => {
     try {

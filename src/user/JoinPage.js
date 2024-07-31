@@ -210,9 +210,9 @@ export default function Join() {
   };
 
   return (
-    <S.Page>
-      <S.TitleWrap>회원정보 수정</S.TitleWrap>
+    <S.Wrapper>
       <S.ContentWrap>
+        <S.TitleWrap>회원가입</S.TitleWrap>
         <form onSubmit={handleSubmit}>
           {/* 이름 입력 */}
           <S.InputTitle error={!!errors.name}>이름</S.InputTitle>
@@ -527,6 +527,6 @@ export default function Join() {
           </S.HaveIdBox>
         </form>
       </S.ContentWrap>
-    </S.Page>
+    </S.Wrapper>
   );
 }
