@@ -21,19 +21,17 @@ export const Wrapper = styled.div`
 // 내용 랩
 export const ContentWrap = styled.div`
   background-color: white;
-  padding-bottom: 40px; /* 하단 패딩 */
+  padding-bottom: 40px;
   display: flex;
-  justify-content: center; /* 세로 방향 가운데 정렬 */
-  align-items: center; /* 가로 방향 가운데 정렬 */
-  flex-direction: column; /* 자식 요소를 세로 방향으로 배치 */
-  min-height: 100vh; /* 부모 요소의 높이를 화면 전체로 설정 */
-  box-sizing: border-box; /* 패딩과 테두리 크기를 전체 크기에 포함 */
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
 
 // 제목 랩
 export const TitleWrap = styled.div`
   margin-top: 40px;
-  margin-bottom: 50px;
+  margin-bottom: 15px;
   font-size: 20px;
   font-weight: 1000;
   color: #000000;

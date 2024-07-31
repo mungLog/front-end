@@ -28,7 +28,7 @@ export const ContentWrap = styled.div`
 
 // 제목 랩
 export const TitleWrap = styled.div`
-  margin-top: 60px;
+  margin-top: 40px;
   margin-bottom: 15px;
   font-size: 20px;
   font-weight: 1000;
