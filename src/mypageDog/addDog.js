@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "../header/AuthContext";
+import { useLocation, useNavigate } from "react-router-dom";
 export default function AddDog() {
+  const location = useLocation();
   const navigate = useNavigate();
+  const { state } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -34,43 +36,31 @@ export default function AddDog() {
     e.preventDefault();
     if (validateForm()) {
       const data = new FormData();
-      data.append(
-        "pet",
-        new Blob(
-          [
-            JSON.stringify({
-              name: formData.name,
-              userId: 1, // 예시로 1 사용
-              familyId: 1, // 예시로 1 사용
-              breed: formData.breed,
-              age: parseInt(formData.birthdate),
-              weight: parseFloat(formData.weight),
-              neutered: parseInt(formData.neutered),
-              gender: parseInt(formData.gender),
-              dailyKcal: 0, // 예시로 0 사용
-              date: new Date().toISOString().split("T")[0], // 현재 날짜를 'yyyy-MM-dd' 형식으로
-              timestamp: new Date().toISOString(),
-            }),
-          ],
-          { type: "application/json" }
-        )
-      );
+      data.append("name", formData.name);
+      data.append("breed", formData.breed);
+      data.append("age", formData.birthdate);
+      data.append("weight", formData.weight);
+      data.append("neutered", formData.neutered);
+      data.append("gender", formData.gender);
+
       if (formData.photo) {
         data.append("file", formData.photo);
       }
 
       try {
-        const response = await axios.post("http://localhost:8080/pets", data);
-        if (response.status === 200) {
-          navigate(`/`);
-        }
+        const response = await axios.post("http://localhost:8080/pets", data, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${state.accessToken}`,
+          },
+        });
+        alert("등록에 성공하셨습니다.");
+        navigate("/mypage?mode=dog");
       } catch (error) {
-        console.error("서버에 데이터를 보내는 중 오류 발생:", error);
-        alert("등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+        console.error("등록 요청 실패:", error);
       }
     }
   };
-
   const validateForm = () => {
     const { name, birthdate, weight, breed, gender, neutered } = formData;
     if (!name || !birthdate || !weight || !breed || !gender || !neutered) {

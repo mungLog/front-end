@@ -18,7 +18,7 @@ export default function Join() {
     phonePrefix: "010",
     phoneMiddle: "",
     phoneLast: "",
-    isFamilyRepresentative: null,
+    roles: null,
     searchedUser: null,
     searchId: "",
   });
@@ -46,7 +46,7 @@ export default function Join() {
       phoneMiddle,
       phoneLast,
       nickname,
-      isFamilyRepresentative,
+      roles,
       searchedUser,
     } = formState;
     const newErrors = {};
@@ -76,7 +76,7 @@ export default function Join() {
 
     if (!nickname.trim()) newErrors.nickname = "필수 입력 사항입니다.";
 
-    if (isFamilyRepresentative === false && !searchedUser)
+    if (roles === false && !searchedUser)
       newErrors.search =
         "가족대표가 아닌 경우, 검색된 사용자를 선택해야 합니다.";
 
@@ -138,7 +138,7 @@ export default function Join() {
         if (response.data) {
           setFormState((prevState) => ({
             ...prevState,
-            searchedUser: response.data.username,
+            searchedUser: response.data.userid,
           }));
           setErrors((prevErrors) => ({ ...prevErrors, search: "" }));
         } else {
@@ -168,10 +168,8 @@ export default function Join() {
   // 제출 처리
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (validateFields()) {
       setLoading(true);
-
       axios
         .post(`${apiUrl}/register`, {
           userid: formState.id,
@@ -180,12 +178,7 @@ export default function Join() {
           phone: `${formState.phonePrefix}${formState.phoneMiddle}${formState.phoneLast}`,
           email: `${formState.email}@${formState.emailDomain}`,
           nickname: formState.nickname,
-          roles:
-            formState.isFamilyRepresentative === true
-              ? 1
-              : formState.isFamilyRepresentative === false
-              ? 0
-              : null,
+          roles: formState.roles,
         })
         .then((response) => {
           alert("회원가입에 성공하였습니다. 환영합니다.");
@@ -204,8 +197,7 @@ export default function Join() {
     const value = e.target.value;
     setFormState((prevState) => ({
       ...prevState,
-      isFamilyRepresentative:
-        value === "1" ? true : value === "0" ? false : null,
+      roles: value === "1" ? 1 : value === "0" ? 0 : null,
       searchedUser: value === "0" ? null : prevState.searchedUser,
       searchId: value === "0" ? "" : prevState.searchId,
     }));
@@ -454,7 +446,6 @@ export default function Join() {
             <S.ErrorMessageWrap>{errors.nickname}</S.ErrorMessageWrap>
           )}
 
-          {/* 가족대표 여부 */}
           <S.InputTitle>가족대표 여부</S.InputTitle>
           <S.RadioButtonBox>
             <S.RadioButtonDiv>
@@ -463,7 +454,7 @@ export default function Join() {
                 id="yes"
                 name="option"
                 value="1"
-                checked={formState.isFamilyRepresentative === true}
+                checked={formState.roles === 1}
                 onChange={handleRadioChange}
               />
               <S.Label htmlFor="yes">예</S.Label>
@@ -474,7 +465,7 @@ export default function Join() {
                 id="no"
                 name="option"
                 value="0"
-                checked={formState.isFamilyRepresentative === false}
+                checked={formState.roles === 0}
                 onChange={handleRadioChange}
               />
               <S.Label htmlFor="no">아니오</S.Label>
@@ -482,7 +473,7 @@ export default function Join() {
           </S.RadioButtonBox>
 
           {/* 가족대표 아이디 검색 */}
-          {formState.isFamilyRepresentative === false && (
+          {formState.roles === 0 && (
             <>
               <S.InputTitle>아이디 검색</S.InputTitle>
               <S.InputWrapBig>

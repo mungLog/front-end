@@ -4,6 +4,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import CreateComment from "./writeComment";
 import CommentList from "./listComment";
 import { useAuth } from "../header/AuthContext";
+import style from "./css/detail.module.css";
+import { Link } from "react-router-dom";
+import user from "./img/userIcon.svg";
+import updateIcon from "./img/updateIcon.svg";
+import deleteIcon from "./img/deleteIcon.svg";
 
 function CommunityDetail() {
   const navigate = useNavigate();
@@ -59,22 +64,46 @@ function CommunityDetail() {
   const isAuthor = post?.userId === logId;
 
   return (
-    <>
-      {/* <div>제목 : {post.title}</div>
-      <div>작성자 : {post.userId}</div>
-      <div>카테고리 : {post.category}</div>
-      <div>작성일 : {post.timestamp}</div>
-      <div>{post.content}</div> */}
+    <div id={style.whiteBack}>
+      <div id={style.contentWrap}>
+        <h1>멍뮤니티-게시글 작성</h1>
+        <div id={style.contentFlex}>
+          <div id={style.content}>
+            <div className={style.infoFlex}>
+              <div className={style.infoWrap}>
+                <img src={user} alt="유저아이콘" />
+                <span>{post.author}</span>
+              </div>
+              <span>{post.timestamp}</span>
+            </div>
+            {isAuthor && (
+              <div id={style.updelBtn}>
+                <>
+                  <button onClick={handleUpdateClick}>
+                    <img src={updateIcon} alt="수정" />
+                  </button>
+                  <button onClick={handleDeleteClick}>
+                    <img src={deleteIcon} alt="삭제" />
+                  </button>
+                </>
+              </div>
+            )}
+            <div id={style.ctg}>{post.category}</div>
+            <div id={style.title}>{post.title}</div>
+            <hr id={style.line} />
+            <div className={style.content}>{post.content}</div>
+            <CreateComment postId={post_id} />
+            <CommentList postId={post_id} userId={logId} />
+          </div>
 
-      {isAuthor && (
-        <div>
-          <button onClick={handleUpdateClick}>수정</button>
-          <button onClick={handleDeleteClick}>삭제</button>
+          <div className={style.sideBar}>
+            <Link to={`/community/write`}>게시글 작성</Link>
+            <Link to={`/community/posts`}>내가 작성한 게시물</Link>
+            <Link to={`/community/posts`}>내가 작성한 댓글</Link>
+          </div>
         </div>
-      )}
-      <CreateComment postId={post_id} />
-      <CommentList postId={post_id} userId={logId} />
-    </>
+      </div>
+    </div>
   );
 }
 
