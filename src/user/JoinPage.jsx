@@ -133,12 +133,12 @@ export default function Join() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${apiUrl}/user/search/${formState.searchId}`
+          `${apiUrl}/family/search/${formState.searchId}`
         );
-        if (response.data.user) {
+        if (response.data) {
           setFormState((prevState) => ({
             ...prevState,
-            searchedUser: response.data.user,
+            searchedUser: response.data.username,
           }));
           setErrors((prevErrors) => ({ ...prevErrors, search: "" }));
         } else {
@@ -180,11 +180,16 @@ export default function Join() {
           phone: `${formState.phonePrefix}${formState.phoneMiddle}${formState.phoneLast}`,
           email: `${formState.email}@${formState.emailDomain}`,
           nickname: formState.nickname,
-          Roles: formState.isFamilyRepresentative,
+          roles:
+            formState.isFamilyRepresentative === true
+              ? 1
+              : formState.isFamilyRepresentative === false
+              ? 0
+              : null,
         })
         .then((response) => {
+          alert("회원가입에 성공하였습니다. 환영합니다.");
           navigate("/login");
-          console.log("성공");
         })
         .catch((error) => {
           console.error("회원가입 요청 실패:", error);

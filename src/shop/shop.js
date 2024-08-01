@@ -2,39 +2,98 @@ import React, { useState } from "react";
 import style from "./shop.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import img from "./img/1.png";
+import food1 from "./img/food/1.png";
+import food2 from "./img/food/2.png";
+import food3 from "./img/food/3.png";
+import food4 from "./img/food/4.png";
+import toy1 from "./img/toy/1.png";
+import toy2 from "./img/toy/2.png";
+import toy3 from "./img/toy/3.png";
+import toy4 from "./img/toy/4.png";
+import snack1 from "./img/snack/1.png";
+import snack2 from "./img/snack/2.png";
+import snack3 from "./img/snack/3.png";
+import snack4 from "./img/snack/4.png";
+import vitamin1 from "./img/vitamin/1.png";
+import vitamin2 from "./img/vitamin/2.png";
+import vitamin3 from "./img/vitamin/3.png";
+import vitamin4 from "./img/vitamin/4.png";
+import living1 from "./img/living/1.png";
+import living2 from "./img/living/2.png";
+import living3 from "./img/living/3.png";
+import living4 from "./img/living/4.png";
 
 function Shop() {
   const productList = [
-    { image: img, name: "간식1", price: "300", ctg: "간식" },
-    { image: img, name: "사료1", price: "300", ctg: "사료" },
-    { image: img, name: "장난감1", price: "300", ctg: "장난감" },
-    { image: img, name: "영양제1", price: "300", ctg: "영양제" },
-    { image: img, name: "리빙1", price: "300", ctg: "리빙" },
-    { image: img, name: "간식2", price: "300", ctg: "간식" },
-    { image: img, name: "사료2", price: "300", ctg: "사료" },
-    { image: img, name: "장난감2", price: "300", ctg: "장난감" },
-    { image: img, name: "영양제2", price: "300", ctg: "영양제" },
-    { image: img, name: "리빙2", price: "300", ctg: "리빙" },
-    { image: img, name: "간식3", price: "300", ctg: "간식" },
-    { image: img, name: "사료3", price: "300", ctg: "사료" },
-    { image: img, name: "장난감3", price: "300", ctg: "장난감" },
-    { image: img, name: "영양제3", price: "300", ctg: "영양제" },
-    { image: img, name: "리빙3", price: "300", ctg: "리빙" },
-    { image: img, name: "간식4", price: "300", ctg: "간식" },
-    { image: img, name: "사료4", price: "300", ctg: "사료" },
-    { image: img, name: "장난감4", price: "300", ctg: "장난감" },
-    { image: img, name: "영양제4", price: "300", ctg: "영양제" },
-    { image: img, name: "리빙4", price: "300", ctg: "리빙" },
-    { image: img, name: "간식5", price: "300", ctg: "간식" },
-    { image: img, name: "사료5", price: "300", ctg: "사료" },
-    { image: img, name: "장난감5", price: "300", ctg: "장난감" },
-    { image: img, name: "영양제5", price: "300", ctg: "영양제" },
-    { image: img, name: "리빙5", price: "300", ctg: "리빙" },
-    { image: img, name: "사료6", price: "300", ctg: "사료" },
-    { image: img, name: "사료7", price: "300", ctg: "사료" },
-    { image: img, name: "사료8", price: "300", ctg: "사료" },
-    { image: img, name: "사료9", price: "300", ctg: "사료" },
+    { image: food1, name: "ROYAL CANIN", price: "30,500", ctg: "사료" },
+    { image: food2, name: "ROYAL CANIN POODLE", price: "39,900", ctg: "사료" },
+    { image: food3, name: "잘먹잘싸", price: "19,800", ctg: "사료" },
+    { image: food4, name: "건강백서 포메라니언", price: "28,900", ctg: "사료" },
+
+    {
+      image: vitamin1,
+      name: "닥터바이 브레스 호흡기",
+      price: "38,000",
+      ctg: "영양제",
+    },
+    { image: vitamin2, name: "오메가3", price: "29,000", ctg: "영양제" },
+    {
+      image: vitamin3,
+      name: "닥터바이 조인트",
+      price: "42,000",
+      ctg: "영양제",
+    },
+    {
+      image: vitamin4,
+      name: "보호리 바이탈Q 뉴트리냠냠 강아지 기관지 심장 영양제 협착증 기침 150g",
+      price: "31,000",
+      ctg: "영양제",
+    },
+
+    {
+      image: toy1,
+      name: "콩 클래식 강아지 장난감",
+      price: "15,000",
+      ctg: "장난감",
+    },
+    { image: toy2, name: "노즈워크 무밭", price: "25,000", ctg: "장난감" },
+    { image: toy3, name: "노즈워크북", price: "12,000", ctg: "장난감" },
+    { image: toy4, name: "나나오토슨", price: "36,000", ctg: "장난감" },
+
+    { image: snack1, name: "육포 비프야채 300g", price: "15,000", ctg: "간식" },
+    { image: snack2, name: "연어트릿", price: "35,000", ctg: "간식" },
+    { image: snack3, name: "말랑 큐브 소고기", price: "42,000", ctg: "간식" },
+    {
+      image: snack4,
+      name: "영양쑥쑥 면역력 강화",
+      price: "26,000",
+      ctg: "간식",
+    },
+
+    {
+      image: living1,
+      name: "볼빨간 곰돌이 쿨매트",
+      price: "12,800",
+      ctg: "리빙",
+    },
+    {
+      image: living2,
+      name: "댕댕이 발자국 하우스",
+      price: "42,000",
+      ctg: "리빙",
+    },
+    {
+      image: living3,
+      name: "리빙 하우스 인디핑크",
+      price: "32,000",
+      ctg: "리빙",
+    },
+    {
+      image: living4,
+      name: "커브형 강아지 계단",
+      price: "43,000",
+      ctg: "리빙",
+    },
   ];
 
   const [selectedCtg, setSelectedCtg] = useState("전체");
@@ -68,10 +127,9 @@ function Shop() {
   const { products, totalPages } = filterAndPaginateProducts();
   const ctgList = ["전체", "간식", "사료", "장난감", "영양제", "리빙"];
   return (
-    <>
+    <div id={style.backgroundWhite}>
       <div className={style.productWrapper}>
-        <h1 className={style.Title}>상점</h1>
-        <>
+        <div id={style.shopBtn}>
           {ctgList.map((ctg) => (
             <button
               key={ctg}
@@ -84,14 +142,17 @@ function Shop() {
               {ctg}
             </button>
           ))}
-        </>
+        </div>
         <div className={style.columns}>
           {products.map((product, index) => (
             <div className={style.card} key={index}>
-              <img src={product.image} alt="상품" />
+              <div className={style.cardImg}>
+                <img src={product.image} alt="상품" />
+              </div>
               <div className={style.name}>
                 <div className={style.title}>{product.name}</div>
-                <div className={style.point}>{product.price} Point</div>
+                <div className={style.ctg}>{product.ctg}</div>
+                <div className={style.price}>{product.price}원</div>
               </div>
             </div>
           ))}
@@ -100,8 +161,8 @@ function Shop() {
       <div id={style.productFoot}>
         <FontAwesomeIcon
           icon={faAngleLeft}
-          onClick={() => handlePageChange(currentPage - 1, totalPages)} // <을 클릭하면 현재 페이지 -1
-          disabled={currentPage === 1} //현재 페이지가 1 일때는 동작을 막음
+          onClick={() => handlePageChange(currentPage - 1, totalPages)}
+          disabled={currentPage === 1}
           className={style.icon}
         />
 
@@ -119,12 +180,12 @@ function Shop() {
 
         <FontAwesomeIcon
           icon={faAngleRight}
-          onClick={() => handlePageChange(currentPage + 1, totalPages)} // > 을 클릭하면 현재 페이지 +1
-          disabled={currentPage === totalPages} //현재 페이지가 마지막 페이지라면 동작 막음
+          onClick={() => handlePageChange(currentPage + 1, totalPages)}
+          disabled={currentPage === totalPages}
           className={style.icon}
         />
       </div>
-    </>
+    </div>
   );
 }
 

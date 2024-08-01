@@ -17,7 +17,7 @@ import ChangeInfo from "./mypage/PersonMain/pages/ChangeInfoPage";
 import AddFamilyMember from "./mypage/PersonMain/pages/AddFamilyMemberPage";
 import PurchaseHistory from "./mypage/PersonMain/pages/PurchaseHistoryPage";
 import MbtiPage from "./mbti/mbtiPage";
-import JoinPage from "./user/JoinPage";
+import JoinPage from "./user/JoinPage.jsx";
 import FindIdPage from "./user/FindIdPage";
 import FindPasswordPage from "./user/FindPasswordPage";
 import AddDog from "./mypageDog/addDog"; // 임시 강아지 등록 페이지

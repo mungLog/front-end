@@ -1,3 +1,7 @@
+#backgroundWhite {
+  background-color: white;
+  padding-bottom: 175px;
+}
 #mainCenter {
   display: flex;
   justify-content: center;
@@ -18,4 +22,132 @@
   font-size: 2vw;
   font-weight: 600;
   line-height: 3.5vw;
+}
+#mainCenter a {
+  position: absolute;
+  width: 17vw;
+  top: 50%;
+  left: 11%;
+  z-index: 2;
+}
+#mainCenter a img {
+  width: 100%;
+}
+.contentWrap {
+  width: 1099px;
+  margin: auto;
+}
+.product {
+  margin: 103px 0 110px;
+  display: flex;
+  justify-content: space-between;
+}
+.product h2 {
+  font-size: 22px;
+  font-weight: 600;
+  text-align: left;
+  line-height: 50px;
+  margin-top: 35px;
+}
+#shopBtn img {
+  width: 158px;
+  margin-top: 40px;
+}
+#prdFlex {
+  display: flex;
+  width: 747px;
+}
+.card {
+  width: 223px;
+  margin: auto;
+  cursor: pointer;
+}
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+.card .name .title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 15px;
+}
+.card .name .ctg {
+  font-size: 15px;
+  font-weight: 500;
+  color: #bababa;
+  margin-top: 10px;
+}
+.card .name .price {
+  font-size: 16px;
+  font-weight: 500;
+  text-align: right;
+}
+#ad {
+  width: 1099px;
+}
+#commu {
+  background-color: var(--color-background);
+  padding: 55px 0 44px;
+  margin-top: 85px;
+}
+#commu h2 {
+  font-size: 25px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+#commu h3 {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-blue);
+}
+.commu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 18px;
+  margin-bottom: 25px;
+}
+#commuBtn {
+  text-align: right;
+  margin-bottom: 25px;
+}
+#commuBtn img {
+  width: 174px;
+}
+.titleFlex {
+  display: flex;
+  align-items: center;
+}
+.commu .ctg {
+  padding: 5px 15px;
+  font-size: 17px;
+  font-weight: 600;
+  border-radius: 36px;
+  border: 1px solid var(--color-blue);
+  color: var(--color-blue);
+  margin-right: 20px;
+}
+.commu .title {
+  font-size: 17px;
+  font-weight: 600;
+}
+.commu .content {
+  font-size: 17px;
+  font-weight: 500;
+  color: #8a8a8a;
+  margin: 20px 0 25px;
+}
+.commu .date {
+  font-size: 13px;
+  font-weight: 500;
+  color: #8a8a8a;
+}
+.commu img {
+  width: 94px;
+  height: 94px;
+  border-radius: 5px;
 }

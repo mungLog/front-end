@@ -1,17 +1,22 @@
 import React, { useEffect } from "react";
-import { useUser } from "../context/UserContext"; // UserContext 훅을 import
 import PersonMain from "./PersonMain/person";
 import DogMain from "./DogMain/dog";
 import style from "./mypage.module.css";
 import { useAuth } from "../header/AuthContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Mypage() {
   const { state } = useAuth();
   const [selectMode, setSelectMode] = React.useState("person");
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!state.isAuthenticated) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+    }
+
     const queryParams = new URLSearchParams(location.search);
     const mode = queryParams.get("mode");
     if (mode === "dog") {
@@ -19,8 +24,10 @@ function Mypage() {
     } else {
       setSelectMode("person");
     }
-  }, [location.search]);
-
+  }, [location.search, navigate, state.isAuthenticated]);
+  if (!state.isAuthenticated || !state.user) {
+    return null;
+  }
   return (
     <div id={style.maxWidth}>
       <div id={style.mypageTop}>
