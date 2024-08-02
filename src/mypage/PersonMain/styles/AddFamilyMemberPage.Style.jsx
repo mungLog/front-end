@@ -30,7 +30,7 @@ export const Content = styled.div`
 export const Titleform = styled.div`
   display: flex;
   margin: 35px 10px 0px 10px;
-  border-bottom: 3px solid gray;
+  border-bottom: 3px solid #cbcbcb;
 `;
 
 export const date = styled.div`
@@ -79,14 +79,14 @@ export const request = styled.div`
 export const dataform = styled.div`
   display: flex;
   margin: 0px 10px 0px 10px;
-  border-bottom: 1px solid gray;
+  border-bottom: 2px solid #e7e7e7;
 `;
 
 export const datadate = styled.div`
   border: none;
   height: 90px;
   width: 130px;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 15px;
   display: flex;
   justify-content: center;
@@ -98,7 +98,7 @@ export const dataname = styled.div`
   border: none;
   height: 90px;
   width: 130px;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 15px;
   display: flex;
   justify-content: center;
@@ -110,7 +110,7 @@ export const datamessage = styled.div`
   border: none;
   height: 90px;
   width: 390px;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 15px;
   display: flex;
   justify-content: center;
@@ -130,18 +130,40 @@ export const datarequest = styled.div`
   line-height: 70px;
 `;
 
-export const Button = styled.button`
-  padding: 10px 20px;
-  margin: 0 5px;
+export const ButtonOkay = styled.button`
+  height: 34px;
+  width: 100px;
   border: none;
-  background-color: #007bff;
-  color: white;
+  background-color: #fcd11d;
+  color: black;
   font-size: 16px;
   cursor: pointer;
-
+  marginr-right: 10px;
+  border-radius: 5px;
   &:hover {
     background-color: #0056b3;
   }
+`;
+
+export const ButtonNo = styled.button`
+  height: 34px;
+  width: 100px;
+  border: none;
+  background-color: #f4f6f8;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 5px;
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+export const emptybox = styled.div`
+  border-bottom: 1px solid #e7e7e7;
+  height: 75px;
+  width: 658px;
 `;
 
 export const Status = styled.div`
@@ -163,20 +185,38 @@ export const nodataform = styled.div`
 
 export const personform = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  grid-auto-rows: min-content;
-  gap: 10px;
+  grid-template-columns: repeat(2, 1fr); // 한 줄에 두 개의 컬럼
+  gap: 40px;
   max-width: 880px;
+  width: 100%;
+`;
+
+export const ProfileIconWrapper = styled.div`
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-right: 10px;
+  font-size: 24px; /* 아이콘 크기 조정 */
 `;
 
 export const User = styled.div`
-  background-color: blue;
-  width: 390px;
-  height: 100px;
-  margin: 30px;
+  background-color: #f4f6f8;
+  width: 400px; // 그리드 아이템이 그리드 셀의 너비를 가득 채우도록
+  height: 166px;
+  margin: 30px 0; // 세로 마진만 추가
+  border-radius: 20px;
+  display: flex;
 `;
 
-export const UserName = styled.div``;
+export const pic = styled.div`
+  height: 56px;
+  width: 56px;
+`;
+
+export const UserName = styled.div`
+  padding-top: 50px;
+  font-weight: bold;
+  font-size: 20px;
+`;
 
 export const UserNickname = styled.div``;
 

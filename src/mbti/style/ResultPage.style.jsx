@@ -110,7 +110,7 @@ export const ResultPercentages = styled.div`
   width: 398px;
   height: 453px;
   margin: 30px;
-  margin-right: 60px;
+  margin-right: 60px;npm 
   background-color: #ececec;
 `;
 

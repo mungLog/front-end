@@ -3,10 +3,15 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { useUser } from "../../../context/UserContext"; // UserContext import
 import * as S from "../styles/AddFamilyMemberPage.Style";
+import defaultUserImage from "../img/user.png"; // 기본 프로필 이미지
 
 export default function AddFamilyMember() {
   const { fam_id } = useParams(); // URL에서 fam_id 가져오기
-  const [requests, setRequests] = useState([]); // 여러 요청을 저장할 상태
+  const [requests, setRequests] = useState([
+    // 임시 하드코딩
+    { name: "John Doe", date: "2023-08-01", status: null },
+    { name: "Jane Smith", date: "2023-08-02", status: null },
+  ]);
   const [users, setUsers] = useState([]); // 사용자 데이터를 저장할 상태
   const { user, isLoading } = useUser(); // UserContext에서 현재 사용자 정보 가져오기
   const navigate = useNavigate(); // 페이지 리디렉션을 위한 navigate 훅
@@ -44,11 +49,6 @@ export default function AddFamilyMember() {
 
     fetchData();
   }, [fam_id, apiUrl, navigate, user, isLoading]);
-
-  // 로딩 상태 주석 처리
-  // if (isLoading || !user) {
-  //   return <div>로딩 중...</div>; // 사용자 데이터 로딩 중일 때 로딩 메시지
-  // }
 
   const handleAccept = async (name, date) => {
     try {
@@ -101,6 +101,7 @@ export default function AddFamilyMember() {
   return (
     <S.Page>
       <S.ContentWrap>
+        {/*가족 추가 알림*/}
         <S.TitleWrap>가족추가 알림</S.TitleWrap>
         <S.Content>
           <S.Titleform>
@@ -120,16 +121,16 @@ export default function AddFamilyMember() {
                 <S.datarequest>
                   {req.status === null ? (
                     <>
-                      <S.Button
+                      <S.ButtonOkay
                         onClick={() => handleAccept(req.name, req.date)}
                       >
                         수락
-                      </S.Button>
-                      <S.Button
+                      </S.ButtonOkay>
+                      <S.ButtonNo
                         onClick={() => handleReject(req.name, req.date)}
                       >
                         거절
-                      </S.Button>
+                      </S.ButtonNo>
                     </>
                   ) : (
                     <S.Status status={req.status}>
@@ -143,24 +144,46 @@ export default function AddFamilyMember() {
             <S.nodataform>요청된 정보가 없습니다.</S.nodataform>
           )}
         </S.Content>
+        <S.emptybox></S.emptybox>
       </S.ContentWrap>
 
+      {/*가족구성원 정보/ 추가*/}
       <S.ContentWrap>
         <S.TitleWrap>가족구성원 정보 / 추가</S.TitleWrap>
-        <S.Content>
-          <S.personform>
-            {users.length > 0 ? (
-              users.map((user) => (
+        {users.length > 0 ? (
+          <S.Content>
+            <S.personform>
+              {users.map((user) => (
                 <S.User key={user.id}>
-                  <S.UserName>{user.name}</S.UserName>
-                  <S.UserNickname>{user.nickname}</S.UserNickname>
+                  <S.ProfileIconWrapper>
+                    <img src={defaultUserImage} alt="User Profile" />
+                  </S.ProfileIconWrapper>
+                  <S.UserName>
+                    {user.name} ({user.nickname})
+                  </S.UserName>
                 </S.User>
-              ))
-            ) : (
-              <S.NoUser>가족을 추가하세요</S.NoUser>
-            )}
-          </S.personform>
-        </S.Content>
+              ))}
+            </S.personform>
+          </S.Content>
+        ) : (
+          <S.Content>
+            <S.personform>
+              {/* 임시 하드코딩된 사용자 */}
+              <S.User key="1">
+                <S.ProfileIconWrapper>
+                  <img src={defaultUserImage} alt="User Profile" />
+                </S.ProfileIconWrapper>
+                <S.UserName>홍길동 (길동이)</S.UserName>
+              </S.User>
+              <S.User key="2">
+                <S.ProfileIconWrapper>
+                  <img src={defaultUserImage} alt="User Profile" />
+                </S.ProfileIconWrapper>
+                <S.UserName>김철수 (철수)</S.UserName>
+              </S.User>
+            </S.personform>
+          </S.Content>
+        )}
       </S.ContentWrap>
     </S.Page>
   );
