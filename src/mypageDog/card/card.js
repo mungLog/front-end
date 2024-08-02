@@ -12,7 +12,7 @@ import left from "./img/leftArrow.svg";
 import right from "./img/rightArrow.svg";
 
 import chu from "./img/시추.png";
-import pu from "./img/말티즈.png";
+import pu from "./img/푸들.png";
 import tiz from "./img/말티즈.png";
 
 // 반려동물 추가하기 링크 추가

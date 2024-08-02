@@ -108,3 +108,28 @@
 .result p {
   margin-top: 20px;
 }
+
+/* mbti 결과 페이지 */
+#mbtiResult h1 {
+  font-size: 27px;
+  text-align: center;
+}
+#mbtiResult > div span:first-child {
+  font-size: 19px;
+  font-weight: 700;
+  width: 62px;
+}
+#mbtiResult > div {
+  margin: 25px 0;
+  display: flex;
+  align-items: center;
+}
+#mbtiResult > div span:last-child {
+  font-size: 19px;
+  padding: 10px 24px;
+  width: 300px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  background: #fff;
+  display: inline-block;
+}

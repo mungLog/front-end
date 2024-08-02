@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import style from "./mbtiLog.module.css";
+import * as S from "../../mbti/style/DogSelectionPage.style";
+import chu from "../card/img/시추.png";
+import pu from "../card/img/푸들.png";
+import tiz from "../card/img/말티즈.png";
+import re from "./re.svg";
+
 //코드 합치고 테스트 다시하기 루트 구현
 function MbtiLog() {
   const [dogs, setDogs] = useState([]);
@@ -24,59 +30,62 @@ function MbtiLog() {
     ENTJ: "결단력 있는 통솔자",
   };
 
-  // useEffect(() => {
-  //   const initialDogs = [
-  //     {
-  //       petId: 1,
-  //       name: "곰돌이",
-  //       imgUrl: "abc",
-  //       mbti: "ESTP",
-  //     },
-  //     {
-  //       petId: 2,
-  //       name: "토순이",
-  //       imgUrl: "sdf",
-  //       mbti: "INFP",
-  //     },
-  //     {
-  //       petId: 3,
-  //       name: "하루",
-  //       imgUrl: "vcd",
-  //       mbti: "ISFJ",
-  //     },
-  //   ];
+  useEffect(() => {
+    const initialDogs = [
+      {
+        petId: 1,
+        name: "아추",
+        imgUrl: chu,
+        mbti: "ESTP",
+      },
+      {
+        petId: 2,
+        name: "하루",
+        imgUrl: tiz,
+        mbti: null,
+      },
+      {
+        petId: 3,
+        name: "밀크",
+        imgUrl: pu,
+        mbti: "INFP",
+      },
+    ];
 
-  //   setDogs(initialDogs);
-  // }, []);
+    setDogs(initialDogs);
+  }, []);
   const awsIP = process.env.REACT_APP_BACKEND_URL;
   const familyId = 1;
-  useEffect(() => {
-    const fetchDogs = async () => {
-      try {
-        const response = await axios.get(`${awsIP}/pets/${familyId}`);
-        setDogs(response.data);
-      } catch (error) {
-        console.error("반려견 데이터 불러오기 실패", error);
-      }
-    };
-    fetchDogs();
-  }, []);
+  // useEffect(() => {
+  //   const fetchDogs = async () => {
+  //     try {
+  //       const response = await axios.get(`${awsIP}/pets/${familyId}`);
+  //       setDogs(response.data);
+  //     } catch (error) {
+  //       console.error("반려견 데이터 불러오기 실패", error);
+  //     }
+  //   };
+  //   fetchDogs();
+  // }, []);
 
   return (
-    <div>
-      {dogs.map((dog, index) => (
-        <div key={index}>
-          <div className={style.card}>
-            <div className={style.avatar}></div>
-            <div className={style.name}>{dog.name}</div>
-            <div className={style.info}>{dog.mbti}</div>
+    <div id={style.mbtiLog}>
+      <h1>멍BTI 기록보기</h1>
+      <div id={style.mbtiFlex}>
+        {dogs.map((dog, index) => (
+          <S.DogMbtiLog key={dog.id}>
+            <S.DogInfo>
+              <S.DogImage src={dog.imgUrl} alt={dog.name} />
+              <S.DogName>{dog.name}</S.DogName>
+              <S.Result>{dog.mbti || "-"}</S.Result>
+            </S.DogInfo>
             <div className={style.info}>{mbtiDetails[dog.mbti]}</div>
-            <div className={style.info}>{dog.imgUrl}</div>
-            <button>테스트 다시하기</button>
-          </div>
-          <br />
-        </div>
-      ))}
+            <div className={style.re}>
+              테스트 다시하기 <img src={re} alt="" />
+            </div>
+          </S.DogMbtiLog>
+        ))}
+      </div>
     </div>
   );
 }

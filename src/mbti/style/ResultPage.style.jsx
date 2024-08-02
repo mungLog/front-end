@@ -32,10 +32,20 @@ export const ResultTitle = styled.div`
 `;
 
 export const ResultPic = styled.div`
-  background-color: green;
   width: 82px;
   height: 82px;
-  border-radius: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+`;
+
+export const ResultPicImage = styled.img`
+  width: 82px;
+  height: 82px;
+  object-fit: cover;
+  border-radius: 50%;
 `;
 
 export const ResultMbti = styled.div`
@@ -90,7 +100,7 @@ export const ResultTitle2 = styled.div`
 export const ResultTitle3 = styled.div`
   font-family: "Hi Melody", sans-serif;
   font-size: 25px;
-  margin-bottom: 100px;
+  margin-bottom: 3 0px;
 `;
 
 export const box1 = styled.div`
@@ -115,7 +125,6 @@ export const ResultPercentages = styled.div`
 
 export const point = styled.div`
   width: 400px;
-  height: 200px;
   margin: 30px;
   margin-left: 60px;
   padding: 20px 30px;

@@ -95,6 +95,25 @@ export const DogLabel = styled.label`
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 `;
+export const DogMbtiLog = styled.label`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid gold;
+  border-radius: 42px;
+  padding: 36px 0 58px;
+  background-color: #fff9df;
+  transition: box-shadow 0.3s;
+  width: 300px; /* 카드의 너비 */
+  box-sizing: border-box;
+  margin: 20px;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+`;
 
 // 강아지 버튼 스타일
 export const DogButton = styled.input`

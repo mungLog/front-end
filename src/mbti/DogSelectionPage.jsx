@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./style/DogSelectionPage.style";
 import chu from "../mypageDog/card/img/시추.png";
 import tiz from "../mypageDog/card/img/말티즈.png";
-import pu from "../mypageDog/card/img/말티즈.png";
+import pu from "../mypageDog/card/img/푸들.png";
 
 // 예시 강아지 데이터 (하드코딩)
 const hardcodedDogs = [
@@ -38,9 +38,7 @@ const DogSelectionPage = ({ onSelectDog, dogs = [] }) => {
   const handleStartClick = () => {
     if (selectedDog) {
       // 선택된 강아지와 MBTI 검사 결과를 저장하고 페이지를 변경하는 함수 호출
-      const dummyResult = "INFP"; // 임시 검사 결과
-      setMbtiResult(dummyResult);
-      onSelectDog(selectedDog, dummyResult);
+      onSelectDog(selectedDog);
     }
   };
 
