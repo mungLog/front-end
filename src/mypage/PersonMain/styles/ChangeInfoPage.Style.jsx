@@ -251,3 +251,8 @@ export const IdButton = styled.button`
   border: 1px solid gold;
   background-color: gold;
 `;
+export const NoUpdate = styled.div`
+  width: 394px;
+  height: 50px;
+  line-height: 50px;
+`;

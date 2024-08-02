@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import style from "./css/comment.module.css";
 
 const CommentList = ({ postId, userId }) => {
   const [comments, setComments] = useState([]);
@@ -30,16 +31,16 @@ const CommentList = ({ postId, userId }) => {
   //   },
   // ];
   // setComments(sampleComments);
-  useEffect(() => {
-    axios
-      .get(`${awsIP}/posts/${postId}/comments`)
-      .then((response) => {
-        setComments(response.data.comments);
-      })
-      .catch((error) => {
-        console.error("댓글 불러오기 실패", error);
-      });
-  }, [postId]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${awsIP}/posts/${postId}/comments`)
+  //     .then((response) => {
+  //       setComments(response.data.comments);
+  //     })
+  //     .catch((error) => {
+  //       console.error("댓글 불러오기 실패", error);
+  //     });
+  // }, [postId]);
 
   const handleUpdateComment = (commentId, currentContent) => {
     setUpdateCommentId(commentId);

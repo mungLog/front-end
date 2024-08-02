@@ -20,6 +20,9 @@
   display: flex;
   align-items: center;
   margin: 55.29px 0 0 133.29px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 .addDog img {
   width: 40px;

@@ -1,0 +1,43 @@
+#purchase {
+  padding: 0 46px;
+}
+#purchase h2 {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  margin: 85px 0 60px;
+}
+#purchase div {
+  font-size: 17px;
+}
+#purchase .flex {
+  display: flex;
+  border-top: 1px solid #e7e7e7;
+  border-bottom: 1px solid #e7e7e7;
+  padding: 20px 0 20px 18px;
+  margin-bottom: 70px;
+  cursor: pointer;
+}
+#purchase .flex div {
+  width: 100%;
+}
+#purchase .date {
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+#purchase img {
+  width: 104px;
+  height: 104px;
+  border-radius: 5px;
+  margin-right: 24px;
+}
+#purchase .ctg {
+  color: #bababa;
+}
+#purchase .price {
+  text-align: right;
+  margin-top: 26px;
+}
+#purchase .title {
+  margin: 7px 0 12px;
+}

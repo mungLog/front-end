@@ -113,7 +113,6 @@ export const InputWrapId = styled.div`
   align-items: center;
   padding: 0 10px;
   box-sizing: border-box;
-  border: 1px solid;
   border-color: ${({ error, success }) => {
     if (error) return "red";
     if (success) return "blue";
@@ -322,4 +321,19 @@ export const SearchIconWrapper = styled.div`
   color: gray;
   margin-left: auto;
   margin-right: 10px;
+  cursor: pointer;
+`;
+
+export const SearchResult = styled.div`
+  width: 329px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-color: ${({ error, success }) => {
+    if (error) return "red";
+    if (success) return "blue";
+    return "gainsboro";
+  }};
 `;

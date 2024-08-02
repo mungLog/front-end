@@ -13,66 +13,72 @@ import right from "./img/rightArrow.svg";
 
 // 반려동물 추가하기 링크 추가
 
-function Card({ onAddSchedule, selectedPetId, onUpdateDog, resetExpandedDog }) {
+function Card({
+  onAddSchedule,
+  selectedPetId,
+  onUpdateDog,
+  resetExpandedDog,
+  onAddDog,
+}) {
   const [dogs, setDogs] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [expandedDog, setExpandedDog] = useState(null);
 
-  // useEffect(() => {
-  //   const initialDogs = [
-  //     {
-  //       petId: 1,
-  //       name: "곰돌이",
-  //       maxMetabolism: 1500,
-  //       nowMetabolism: 1000,
-  //       gender: "1",
-  //       weight: 14,
-  //       breed: "시추",
-  //       birth: "20150504",
-  //       neutered: "1",
-  //     },
-  //     {
-  //       petId: 2,
-  //       name: "토순이",
-  //       maxMetabolism: 2000,
-  //       nowMetabolism: 800,
-  //       gender: "0",
-  //       weight: 8,
-  //       breed: "푸들",
-  //       birth: "20180905",
-  //       neutered: "1",
-  //     },
-  //     {
-  //       petId: 3,
-  //       name: "하루",
-  //       maxMetabolism: 1000,
-  //       nowMetabolism: 300,
-  //       gender: "0",
-  //       weight: 3,
-  //       breed: "말티즈",
-  //       birth: "20240205",
-  //       neutered: "0",
-  //     },
-  //   ];
-
-  //   setDogs(initialDogs);
-  // }, []);
-  const awsIP = process.env.REACT_APP_BACKEND_URL;
-  const familyId = 1;
   useEffect(() => {
-    const fetchDogs = async () => {
-      try {
-        const response = await axios.get(
-          `${awsIP}/families/${familyId}/animals`
-        );
-        setDogs(response.data);
-        console.log(response);
-      } catch (error) {
-        console.error("반려견 데이터 불러오기 실패", error);
-      }
-    };
-    fetchDogs();
+    const initialDogs = [
+      {
+        petId: 1,
+        name: "곰돌이",
+        maxMetabolism: 1500,
+        nowMetabolism: 1000,
+        gender: "1",
+        weight: 14,
+        breed: "시추",
+        birth: "20150504",
+        neutered: "1",
+      },
+      {
+        petId: 2,
+        name: "토순이",
+        maxMetabolism: 2000,
+        nowMetabolism: 800,
+        gender: "0",
+        weight: 8,
+        breed: "푸들",
+        birth: "20180905",
+        neutered: "1",
+      },
+      {
+        petId: 3,
+        name: "하루",
+        maxMetabolism: 1000,
+        nowMetabolism: 300,
+        gender: "0",
+        weight: 3,
+        breed: "말티즈",
+        birth: "20240205",
+        neutered: "0",
+      },
+    ];
+
+    setDogs(initialDogs);
   }, []);
+  // const awsIP = process.env.REACT_APP_BACKEND_URL;
+  // const familyId = 1;
+  // useEffect(() => {
+  //   const fetchDogs = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${awsIP}/families/${familyId}/animals`
+  //       );
+  //       setDogs(response.data);
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.error("반려견 데이터 불러오기 실패", error);
+  //     }
+  //   };
+  //   fetchDogs();
+  // }, []);
 
   useEffect(() => {
     console.log(selectedPetId);
@@ -151,10 +157,10 @@ function Card({ onAddSchedule, selectedPetId, onUpdateDog, resetExpandedDog }) {
   return (
     <div className={style.wrapper}>
       <h2 className={style.title}>열량체크/기록일지</h2>
-      <Link to="/addDog" className={style.addDog}>
+      <button onClick={() => onAddDog()} className={style.addDog}>
         <img src={addDog} alt="반려동물 추가 아이콘" />
         반려동물 추가하기
-      </Link>
+      </button>
       {dogs.length === 0 ? (
         <div className={style.noPetsMessage}>
           등록된 반려견이 없습니다. <br />

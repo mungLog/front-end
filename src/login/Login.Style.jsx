@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 // 전체 페이지
 export const background = styled.div`
-  background-color: dodgerblue;
+  background-color: var(--color-blue);
   width: 100vw;
   height: 100vh;
   margin: 0;
@@ -94,8 +94,8 @@ export const LoginButton = styled.button`
   width: 360px;
   height: 50px;
   border-radius: 48px;
-  border: 1px solid dodgerblue;
-  background-color: dodgerblue;
+  border: 1px solid var(--color-blue);
+  background-color: var(--color-blue);
   margin-top: 40px;
   font-size: 16px;
   color: white;
@@ -141,7 +141,7 @@ export const message2 = styled.div`
 `;
 
 export const messagedog = styled.div`
-  color: dodgerblue;
+  color: var(--color-blue);
   font-size: 25px;
   margin-left: 5px;
   font-weight: 900;

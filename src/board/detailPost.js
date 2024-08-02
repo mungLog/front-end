@@ -3,52 +3,55 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import CreateComment from "./writeComment";
 import CommentList from "./listComment";
+import { useAuth } from "../header/AuthContext";
+import style from "./css/detail.module.css";
+import { Link } from "react-router-dom";
+import user from "./img/userIcon.svg";
+import updateIcon from "./img/updateIcon.svg";
+import deleteIcon from "./img/deleteIcon.svg";
 
 function CommunityDetail() {
   const navigate = useNavigate();
-  const { postId } = useParams();
+  const { post_id } = useParams();
   const [post, setPost] = useState(null);
+  const { state } = useAuth();
+
+  const logId = state.user ? state.user.id : null;
+  const token = state.accessToken;
   const awsIP = process.env.REACT_APP_BACKEND_URL;
-  // 로그인한 사람 유저아이디로 바꿔야됨
-  const logId = "user1";
-
-  // useEffect(() => {
-  //   const sample = {
-  //     postId: 1,
-  //     title: "Sample Post Title",
-  //     author: "작성자",
-  //     category: "Sample Category",
-  //     timestamp: "2024-07-30",
-  //     content: "This is a sample post content.",
-  //     userid: "user1",
-  //   };
-  //   setPost(sample);
-  // }, [postId]);
-
   useEffect(() => {
     axios
-      .get(`${awsIP}/posts/${postId}`)
+      .get(`${awsIP}/posts/${post_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
-        setPost(response.data.post);
+        setPost(response.data);
       })
       .catch((error) => {
         console.error("게시물 실패", error);
       });
-  }, [postId]);
+  }, [post_id, token, awsIP]);
 
   const handleUpdateClick = () => {
-    navigate(`${awsIP}/community/posts/${postId}`, {
+    navigate(`/community/posts/${post_id}`, {
       state: {
-        postId: postId,
+        post_id: post.id,
         title: post.title,
         content: post.content,
         category: post.category,
       },
     });
   };
+
   const handleDeleteClick = () => {
     axios
-      .delete(`${awsIP}/posts/delete/${postId}`)
+      .delete(`${awsIP}/posts/delete/${post_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then(() => {
         console.log("글 삭제 성공");
         window.location.href = `/community`;
@@ -57,24 +60,49 @@ function CommunityDetail() {
         console.error("글 삭제 실패", error);
       });
   };
+  console.log(post);
+  const isAuthor = post?.userId === logId;
 
-  const isAuthor = post.userid === logId;
   return (
-    <div>
-      <div>제목 : {post.title}</div>
-      <div>작성자 : {post.author}</div>
-      <div>카테고리 : {post.category}</div>
-      <div>작성일 : {post.timestamp}</div>
-      <div>{post.content}</div>
+    <div id={style.whiteBack}>
+      <div id={style.contentWrap}>
+        <h1>멍뮤니티-게시글 작성</h1>
+        <div id={style.contentFlex}>
+          <div id={style.content}>
+            <div className={style.infoFlex}>
+              <div className={style.infoWrap}>
+                <img src={user} alt="유저아이콘" />
+                <span>{post.author}</span>
+              </div>
+              <span>{post.timestamp}</span>
+            </div>
+            {isAuthor && (
+              <div id={style.updelBtn}>
+                <>
+                  <button onClick={handleUpdateClick}>
+                    <img src={updateIcon} alt="수정" />
+                  </button>
+                  <button onClick={handleDeleteClick}>
+                    <img src={deleteIcon} alt="삭제" />
+                  </button>
+                </>
+              </div>
+            )}
+            <div id={style.ctg}>{post.category}</div>
+            <div id={style.title}>{post.title}</div>
+            <hr id={style.line} />
+            <div className={style.content}>{post.content}</div>
+            <CreateComment postId={post_id} />
+            <CommentList postId={post_id} userId={logId} />
+          </div>
 
-      {isAuthor && (
-        <div>
-          <button onClick={handleUpdateClick}>수정</button>
-          <button onClick={handleDeleteClick}>삭제</button>
+          <div className={style.sideBar}>
+            <Link to={`/community/write`}>게시글 작성</Link>
+            <Link to={`/community/posts`}>내가 작성한 게시물</Link>
+            <Link to={`/community/posts`}>내가 작성한 댓글</Link>
+          </div>
         </div>
-      )}
-      <CreateComment postId={postId} />
-      <CommentList postId={postId} userId={logId} />
+      </div>
     </div>
   );
 }

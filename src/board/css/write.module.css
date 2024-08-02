@@ -1,0 +1,96 @@
+#whiteBack {
+  width: 100%;
+  height: calc(100vh - 104px);
+  background-color: white;
+}
+#contentWrap {
+  width: 1202px;
+  margin: auto;
+}
+#whiteBack h1 {
+  font-size: 20px;
+  font-weight: 600;
+}
+#contentFlex {
+  display: flex;
+  justify-content: space-between;
+}
+.sideBar {
+  width: 231px;
+  height: 204px;
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid var(--color-blue);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0;
+  box-sizing: border-box;
+  margin-top: 35px;
+}
+.sideBar a {
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.sideBar a:first-child {
+  color: var(--color-blue);
+}
+#formContent {
+  width: 950px;
+  padding: 30px 45px;
+  box-sizing: border-box;
+  border-radius: 18px;
+  background: #f4f6f8;
+  margin: 35px 0 60px;
+}
+.blueName {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-blue);
+  margin-bottom: 14px;
+}
+.writeSelect,
+.writeInput,
+.writeTextarea,
+.customFileText {
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background: #fff;
+  padding: 15px 20px;
+  font-size: 16px;
+  height: 50px;
+  border: none;
+  box-sizing: border-box;
+}
+.writeSelect {
+  width: 159px;
+}
+.writeInput,
+.writeTextarea {
+  width: 100%;
+}
+.hiddenFileInput {
+  display: none;
+}
+.customFileText {
+  cursor: pointer;
+}
+.writeTextarea {
+  height: 124px;
+}
+#contentFlex button {
+  font-size: 16px;
+  font-weight: 700;
+  width: 100%;
+  height: 50px;
+  border-radius: 8px;
+  background: var(--color-blue);
+  text-align: center;
+  line-height: 50px;
+  color: white;
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}

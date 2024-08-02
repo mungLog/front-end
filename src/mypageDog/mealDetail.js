@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import style from "./addSchedule.module.css";
 function MealDetail({
   mealType,
   setMealType,
@@ -43,62 +43,67 @@ function MealDetail({
   }, [mealType]);
 
   return (
-    <div>
-      <div>
-        <label>
-          식사 종류:
-          <select
-            value={mealType}
-            onChange={(e) => setMealType(e.target.value)}
-          >
-            {mealTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-        </label>
+    <div id={style.wrapper}>
+      <div className={style.addTable}>
+        <span>식사 종류</span>
+        <select value={mealType} onChange={(e) => setMealType(e.target.value)}>
+          <option>종류를 선택해주세요.</option>
+          {mealTypes.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
       </div>
-      <div>
-        <label>
-          사료 이름:
-          <input
-            type="text"
-            value={foodName}
-            onChange={(e) => setFoodName(e.target.value)}
-            required
-          />
-        </label>
+      <div className={style.addTable}>
+        <span>사료 이름</span>
+        <input
+          type="text"
+          value={foodName}
+          onChange={(e) => setFoodName(e.target.value)}
+          required
+          id={style.foodName}
+          placeholder="이름을 입력해주세요."
+        />
       </div>
-      <div>
-        <label>
-          배당량 (g):
-          <input
-            type="number"
-            value={portion}
-            onChange={handlePortionChange}
-            required
-          />
-        </label>
-      </div>
-      {mealType === "기타" && (
+      <div className={style.addTable}>
+        <span>배당량</span>
         <div>
-          <label>
-            1g당 칼로리 (kcal):
+          <div className={style.inputWrap}>
             <input
-              type="number"
-              value={customCalories}
-              onChange={handleCustomCaloriesChange}
+              type="text"
+              value={portion}
+              onChange={handlePortionChange}
               required
             />
-          </label>
+            g
+          </div>
+        </div>
+      </div>
+      {mealType === "기타" && (
+        <div className={style.addTable}>
+          <span>1g당 kcal</span>
+          <div>
+            <div className={style.inputWrap}>
+              <input
+                type="number"
+                value={customCalories}
+                onChange={handleCustomCaloriesChange}
+                required
+              />
+              kcal
+            </div>
+          </div>
         </div>
       )}
-      <div>
-        <label>
-          총 칼로리 (kcal):
-          <input type="number" value={calories} readOnly />
-        </label>
+      <div className={style.addTable}>
+        <span>칼로리 계산</span>
+        <div>
+          <div className={style.inputWrap}>
+            <input type="number" value={calories} readOnly />
+            kcal
+          </div>
+        </div>
       </div>
     </div>
   );
