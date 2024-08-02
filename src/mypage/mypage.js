@@ -1,25 +1,43 @@
-import React from "react";
-import { useUser } from "../context/UserContext"; // UserContext 훅을 import
+import React, { useEffect } from "react";
 import PersonMain from "./PersonMain/person";
 import DogMain from "./DogMain/dog";
 import style from "./mypage.module.css";
+import { useAuth } from "../header/AuthContext";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Mypage() {
-  const { user } = useUser(); // UserContext에서 user 정보 가져오기
+  const { state } = useAuth();
   const [selectMode, setSelectMode] = React.useState("person");
+  const location = useLocation();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!state.isAuthenticated) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+    }
+
+    const queryParams = new URLSearchParams(location.search);
+    const mode = queryParams.get("mode");
+    if (mode === "dog") {
+      setSelectMode("dog");
+    } else {
+      setSelectMode("person");
+    }
+  }, [location.search, navigate, state.isAuthenticated]);
+  if (!state.isAuthenticated || !state.user) {
+    return null;
+  }
   return (
     <div id={style.maxWidth}>
       <div id={style.mypageTop}>
         <h1 id={style.title}>마이페이지</h1>
         <div id={style.buttonWrap}>
-          {/* 나중에 닉네임 받아오는걸로 바꾸기 */}
           <button
             onClick={() => setSelectMode("person")}
             className={selectMode === "person" ? style.selected : ""}
           >
-            {user ? user.nickname : "닉네임"}{" "}
-            {/* UserContext에서 가져온 nickname 사용 */}
+            {state.user.nickname}
           </button>
           <button
             onClick={() => setSelectMode("dog")}
@@ -30,7 +48,7 @@ function Mypage() {
         </div>
       </div>
       <div>
-        {selectMode === "person" && <PersonMain />}
+        {selectMode === "person" && <PersonMain userInfo={state.user} />}
         {selectMode === "dog" && <DogMain />}
       </div>
     </div>

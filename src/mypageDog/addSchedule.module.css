@@ -1,0 +1,149 @@
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#wrapper > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#title {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  margin: 85px 0 96px;
+}
+
+.addTable {
+  height: 50px;
+  margin-bottom: 25px;
+}
+
+.addTable span {
+  width: 100px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.addTable > div {
+  width: 552px;
+}
+
+#author {
+  height: 50px;
+  background: #ececec;
+  color: #848484;
+  padding-left: 13px;
+  box-sizing: border-box;
+  line-height: 50px;
+}
+
+#time input {
+  background-color: none;
+  border: none;
+  border-bottom: 1px solid #e1e2e4;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 15px 13px;
+  box-sizing: border-box;
+}
+
+#exercise {
+  height: 192px;
+}
+#wrapper #exercise {
+  align-items: flex-start;
+}
+#exercise > span {
+  margin-top: 7px;
+}
+.exerciseGrid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.activityLabel {
+  width: calc(100% / 6);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  margin-bottom: 31px;
+}
+.activityLabel div {
+  text-align: left;
+}
+.activityLabel img {
+  width: 35px;
+  margin-left: 16px;
+  margin-bottom: 8px;
+}
+
+.activityLabel span {
+  font-size: 16px;
+  font-weight: 500;
+  color: #707070;
+}
+
+.activityLabel.selected span {
+  color: var(--color-blue);
+}
+#wrapper #memo {
+  width: 552px;
+  height: 141px;
+  background: #f4f6f8;
+  padding: 21px 17px;
+  box-sizing: border-box;
+  border: none;
+}
+#wrapper #memoWrap {
+  align-items: flex-start;
+  height: 141px;
+}
+#addBtn {
+  height: 50px;
+  background: #fcd11d;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  width: 552px;
+  line-height: 50px;
+  border: none;
+  margin: 40px 0;
+}
+
+/* 식사 */
+.addTable select,
+#foodName {
+  width: 552px;
+  height: 50px;
+  background: #f4f6f8;
+  padding-left: 13px;
+  border: none;
+  box-sizing: border-box;
+}
+.inputWrap {
+  width: 206px;
+  height: 50px;
+  background: #f4f6f8;
+  font-size: 16px;
+  font-weight: 500;
+  color: #707070;
+  padding: 13px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+.inputWrap input {
+  width: 125px;
+  font-size: 16px;
+  font-weight: 500;
+  background: none;
+  border: none;
+}
+.inputWrap input:focus {
+  outline: none;
+}

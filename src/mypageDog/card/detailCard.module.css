@@ -282,6 +282,13 @@
 }
 .ctg {
   width: 150px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+.ctg img {
+  width: 23px;
+  margin-right: 10px;
 }
 .time {
   font-weight: 500;

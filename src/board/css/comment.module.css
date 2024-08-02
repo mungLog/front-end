@@ -1,0 +1,28 @@
+#writeComment {
+  background-color: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  font-size: 17px;
+}
+#writeComment textarea {
+  height: 50px;
+  margin-bottom: 0;
+}
+#writeComment textarea:focus {
+  outline: none;
+}
+#writeComment button {
+  height: 31px;
+  line-height: 31px;
+  width: 92px;
+  border-radius: 49px;
+  background: var(--color-blue);
+  color: white;
+  text-align: center;
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+#buttonRight {
+  text-align: right;
+}

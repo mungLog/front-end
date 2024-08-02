@@ -111,7 +111,6 @@ export const ResultPercentages = styled.div`
   height: 453px;
   margin: 30px;
   margin-right: 60px;
-  background-color: #ececec;
 `;
 
 export const point = styled.div`
@@ -119,11 +118,12 @@ export const point = styled.div`
   height: 200px;
   margin: 30px;
   margin-left: 60px;
-  padding: 10px;
+  padding: 20px 30px;
   background-color: #f4f6f8;
   border-radius: 15px;
   font-family: "Hi Melody", sans-serif;
   font-size: 20px;
+  box-sizing: border-box;
 
   /* 중앙 정렬을 위한 추가 스타일 */
   display: flex;
@@ -137,8 +137,8 @@ export const ResultButton = styled.button`
   width: 226px;
   height: 56px;
   font-weight: 800;
-  border: 1px solid dodgerblue;
-  background-color: dodgerblue;
+  border: 1px solid var(--color-blue);
+  background-color: var(--color-blue);
   color: white;
   padding: 10px 20px;
   cursor: pointer;

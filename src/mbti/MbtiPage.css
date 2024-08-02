@@ -13,7 +13,9 @@
   flex-direction: column;
   text-align: center;
 }
-
+.mbtiBody {
+  padding-bottom: 100px;
+}
 .ResultInBox {
   background-color: white;
   display: flex;
@@ -41,7 +43,7 @@
 .ResultMbti {
   font-family: "Hi Melody", sans-serif;
   font-size: 60px;
-  border: 5px dashed dodgerblue;
+  border: 5px dashed var(--color-blue);
   width: 150px;
   height: 50px;
   padding-top: 8px;

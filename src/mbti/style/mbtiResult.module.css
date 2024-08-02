@@ -1,0 +1,41 @@
+.percentageContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.cylinderWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.cylinderWrapper span {
+  font-size: 50px;
+  color: var(--color-blue);
+  margin: 0 26px;
+  font-family: "Hi Melody", sans-serif;
+}
+
+.cylinderContainer {
+  position: relative;
+  width: 268px;
+  background-color: #e5e5e5;
+  height: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.cylinder {
+  position: absolute;
+  height: 10px;
+  border-radius: 10px;
+}
+
+.persentFlex {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Hi Melody", sans-serif;
+  font-size: 20px;
+  color: var(--color-blue);
+  margin-bottom: 20px;
+}

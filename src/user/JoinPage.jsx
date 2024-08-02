@@ -22,7 +22,7 @@ export default function Join() {
     searchedUser: null,
     searchId: "",
   });
-
+  const apiUrl = process.env.REACT_APP_BACKEND_URL;
   const [errors, setErrors] = useState({});
   const [idCheckMessage, setIdCheckMessage] = useState("");
   const [idCheckStatus, setIdCheckStatus] = useState("");
@@ -33,8 +33,6 @@ export default function Join() {
   const regId = /^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{5,20}$/;
   const regPass =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
-
-  const awsIP = process.env.REACT_APP_BACKEND_URL;
 
   // 입력 필드 검증 함수
   const validateFields = () => {
@@ -92,7 +90,7 @@ export default function Join() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${awsIP}/user/idCheck/${formState.id}`
+          `${apiUrl}/user/idCheck/${formState.id}`
         );
         if (response.data.isAvailable) {
           setIdCheckMessage("사용 가능한 아이디입니다.");
@@ -129,18 +127,17 @@ export default function Join() {
     }
   };
 
-  // 검색 처리
   const handleSearchClick = async () => {
     if (formState.searchId.trim()) {
       try {
         setLoading(true);
-        const response = await axios.get(
-          `${awsIP}/user/search/${formState.searchId}`
-        );
-        if (response.data.user) {
+        const response = await axios.get(`${apiUrl}/family/search`, {
+          params: { userId: formState.searchId },
+        });
+        if (response.data) {
           setFormState((prevState) => ({
             ...prevState,
-            searchedUser: response.data.user,
+            searchedUser: response.data,
           }));
           setErrors((prevErrors) => ({ ...prevErrors, search: "" }));
         } else {
@@ -166,35 +163,39 @@ export default function Join() {
       }));
     }
   };
-  console.log("API Base URL:", awsIP);
+
   // 제출 처리
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validateFields()) {
-      try {
-        setLoading(true);
-        const response = await axios.post(`${awsIP}/register`, {
+      setLoading(true);
+
+      axios
+        .post(`${apiUrl}/register`, {
           userid: formState.id,
           password: formState.password,
           username: formState.name,
           phone: `${formState.phonePrefix}${formState.phoneMiddle}${formState.phoneLast}`,
           email: `${formState.email}@${formState.emailDomain}`,
           nickname: formState.nickname,
-          Roles: formState.isFamilyRepresentative,
-        });
-        if (response.data.message === "회원가입 성공") {
-          alert("회원가입이 완료되었습니다!");
+          roles:
+            formState.isFamilyRepresentative === true
+              ? 1
+              : formState.isFamilyRepresentative === false
+              ? 0
+              : null,
+        })
+        .then((response) => {
+          alert("회원가입에 성공하였습니다. 환영합니다.");
           navigate("/login");
-        } else {
-          alert("회원가입에 실패했습니다.");
-        }
-      } catch (error) {
-        console.error("회원가입 요청 실패:", error);
-        alert("회원가입 요청이 실패했습니다.");
-      } finally {
-        setLoading(false);
-      }
+        })
+        .catch((error) => {
+          console.error("회원가입 요청 실패:", error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   };
 
@@ -503,14 +504,10 @@ export default function Join() {
               {errors.search && (
                 <S.ErrorMessageWrap>{errors.search}</S.ErrorMessageWrap>
               )}
-              {formState.searchedUser && (
-                <S.InputWrapId>
-                  <S.Input
-                    type="text"
-                    value={formState.searchedUser.name}
-                    disabled
-                  />
-                </S.InputWrapId>
+              {formState.searchedUser && !errors.search && (
+                <S.SearchResult>
+                  <div>매칭이 완료되었습니다.</div>
+                </S.SearchResult>
               )}
             </>
           )}

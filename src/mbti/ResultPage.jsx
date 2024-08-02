@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./style/ResultPage.style";
+import style from "./style/mbtiResult.module.css";
 
 const personalityTraits = {
   ISFJ: "섬세하고 예민한 성격을 가졌어으며, 견주의 감정을 잘 파악하는 아이예요, 질투심이 많으니 질투심 유발은 금물! ",
@@ -64,6 +65,14 @@ const ResultPage = ({ result, dogName, answers }) => {
     mbtiCounts.P
   );
 
+  const getStyle = (percentageA, percentageB) => {
+    if (percentageA > percentageB) {
+      return { width: `${percentageA}%`, backgroundColor: "#FCD11D", left: 0 };
+    } else {
+      return { width: `${percentageB}%`, backgroundColor: "#FCD11D", right: 0 };
+    }
+  };
+
   const traits = personalityTraits[result];
 
   return (
@@ -82,18 +91,69 @@ const ResultPage = ({ result, dogName, answers }) => {
               <h1>성격분석</h1>
             </S.ResultTitle2>
             <S.ResultPercentages>
-              <p>
-                I: {iPercentage.toFixed(2)}% / E: {ePercentage.toFixed(2)}%
-              </p>
-              <p>
-                S: {sPercentage.toFixed(2)}% / N: {nPercentage.toFixed(2)}%
-              </p>
-              <p>
-                T: {tPercentage.toFixed(2)}% / F: {fPercentage.toFixed(2)}%
-              </p>
-              <p>
-                J: {jPercentage.toFixed(2)}% / P: {pPercentage.toFixed(2)}%
-              </p>
+              {/* I vs E */}
+              <div className={style.cylinderWrapper}>
+                <span>I</span>
+                <div className={style.cylinderContainer}>
+                  <div
+                    className={style.cylinder}
+                    style={getStyle(iPercentage, ePercentage)}
+                  ></div>
+                </div>
+                <span>E</span>
+              </div>
+              <div className={style.persentFlex}>
+                <div>내향형 ({iPercentage.toFixed(2)}%)</div>
+                <div>외향형 ({ePercentage.toFixed(2)}%)</div>
+              </div>
+
+              {/* S vs N */}
+              <div className={style.cylinderWrapper}>
+                <span>S</span>
+                <div className={style.cylinderContainer}>
+                  <div
+                    className={style.cylinder}
+                    style={getStyle(sPercentage, nPercentage)}
+                  ></div>
+                </div>
+                <span>N</span>
+              </div>
+              <div className={style.persentFlex}>
+                <div>현실주의형 ({sPercentage.toFixed(2)}%)</div>
+                <div>직관형 ({nPercentage.toFixed(2)}%)</div>
+              </div>
+
+              {/* T vs F */}
+              <div className={style.cylinderWrapper}>
+                <span>T</span>
+                <div className={style.cylinderContainer}>
+                  <div
+                    className={style.cylinder}
+                    style={getStyle(tPercentage, fPercentage)}
+                  ></div>
+                </div>
+                <span>F</span>
+              </div>
+              <div className={style.persentFlex}>
+                <div>원칙주의형 ({tPercentage.toFixed(2)}%)</div>
+                <div>이성적사고형 ({fPercentage.toFixed(2)}%)</div>
+              </div>
+
+              {/* J vs P */}
+              <div className={style.cylinderWrapper}>
+                <span>J</span>
+                <div className={style.cylinderContainer}>
+                  <div
+                    className={style.cylinder}
+                    style={getStyle(jPercentage, pPercentage)}
+                  ></div>
+                </div>
+                <span>P</span>
+              </div>
+              <div className={style.persentFlex}>
+                <div>계획형 ({jPercentage.toFixed(2)}%)</div>
+                <div>탐색형 ({pPercentage.toFixed(2)}%)</div>
+              </div>
             </S.ResultPercentages>
           </S.box1>
           <S.box2>

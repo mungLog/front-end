@@ -8,15 +8,38 @@ import AddSchedule from "./../addSchedule";
 import boy from "./img/boyIcon.svg";
 import girl from "./img/girlIcon.svg";
 import line from "./img/yellowLine.svg";
-import walk from "./img/walk.png";
+import goodWalk from "./img/walk.png";
 import breedInfo from "./breedInfo";
 import user from "./img/user.svg";
+import food from "./img/cardIcon/food.svg";
+import bath from "./img/cardIcon/bath.svg";
+import ear from "./img/cardIcon/ear.svg";
+import foot from "./img/cardIcon/foot.svg";
+import hospital from "./img/cardIcon/hospital.svg";
+import injection from "./img/cardIcon/injection.svg";
+import medi from "./img/cardIcon/medi.svg";
+import snack from "./img/cardIcon/snack.svg";
+import tooth from "./img/cardIcon/tooth.svg";
+import walk from "./img/cardIcon/walk.svg";
+import water from "./img/cardIcon/water.svg";
 
 function DetailCard({ petId, onClose, onAddSchedule }) {
   const [petDetails, setPetDetails] = useState(null);
   const [petCareRecords, setPetCareRecords] = useState([]);
   const [isFlipped, setIsFlipped] = useState(false);
-
+  const categoryIcons = {
+    밥: food,
+    물: water,
+    산책: walk,
+    "약/영양제": medi,
+    병원: hospital,
+    예방접종: injection,
+    간식: snack,
+    양치: tooth,
+    목욕: bath,
+    발톱: foot,
+    귀청소: ear,
+  };
   const testPetDetails = {
     name: "곰돌이",
     imgUrl: "abc",
@@ -66,7 +89,7 @@ function DetailCard({ petId, onClose, onAddSchedule }) {
     },
     {
       author: "동생",
-      category: "영양제",
+      category: "약/영양제",
       TimeStamp: "2024-07-25T10:45:00Z",
       memo: "xxx먹임",
     },
@@ -233,7 +256,7 @@ function DetailCard({ petId, onClose, onAddSchedule }) {
                   <div className={style.detailTitle}>권장 활동량</div>
                   <div id={style.goodWalk}>
                     <>
-                      <img src={walk} alt="산책 이미지" />
+                      <img src={goodWalk} alt="산책 이미지" />
                       30분 X 2
                     </>
                   </div>
@@ -334,7 +357,15 @@ function DetailCard({ petId, onClose, onAddSchedule }) {
                       <img src={user} alt="유저" />
                       {record.author}
                     </div>
-                    <div className={style.ctg}>{record.category}</div>
+                    <div className={style.ctg}>
+                      {categoryIcons[record.category] && (
+                        <img
+                          src={categoryIcons[record.category]}
+                          alt={record.category}
+                        />
+                      )}
+                      {record.category}
+                    </div>
                     <div className={style.time}>
                       {formatTime(record.TimeStamp)}
                     </div>

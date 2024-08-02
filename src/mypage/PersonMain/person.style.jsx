@@ -39,7 +39,7 @@ export const Button = styled.button`
 
 export const logoutButton = styled.button`
   font-size: 16px;
-  color: black;
+  color: #bababa;
   background-color: transparent;
   border: none;
   margin-top: 60px;

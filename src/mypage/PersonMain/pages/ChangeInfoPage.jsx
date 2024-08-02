@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import * as S from "../styles/ChangeInfoPage.Style";
+import { useAuth } from "../../../header/AuthContext.js";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function EditProfile() {
   // 상태 정의
@@ -22,9 +23,10 @@ export default function EditProfile() {
   const [idCheckMessage, setIdCheckMessage] = useState("");
   const [idCheckStatus, setIdCheckStatus] = useState("");
 
+  const location = useLocation();
   const navigate = useNavigate();
+  const { state } = useAuth();
 
-  const regId = /^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{5,20}$/;
   const regPass =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
 
@@ -43,12 +45,6 @@ export default function EditProfile() {
       phoneLast,
     } = formState;
     const newErrors = {};
-
-    if (!name.trim()) newErrors.name = "필수 입력 사항입니다.";
-    if (!id.trim()) newErrors.id = "필수 입력 사항입니다.";
-    else if (!regId.test(id))
-      newErrors.id =
-        "아이디: 영문으로 시작하는 5~20자 길이의 영문자, 숫자를 사용해주세요.";
 
     if (!password.trim())
       newErrors.password = "비밀번호는 필수 입력 사항입니다.";
@@ -90,56 +86,6 @@ export default function EditProfile() {
     }
   };
 
-  // 초기 데이터 로딩 (예: 사용자 정보 조회)
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`${awsIP}/user/profile`);
-        setFormState({
-          name: response.data.name,
-          id: response.data.id,
-          email: response.data.email.split("@")[0],
-          emailDomain: response.data.email.split("@")[1],
-          phonePrefix: response.data.phone.substring(0, 3),
-          phoneMiddle: response.data.phone.substring(3, 7),
-          phoneLast: response.data.phone.substring(7),
-        });
-      } catch (error) {
-        console.error("정보 로딩 실패:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, [awsIP]);
-
-  // 아이디 중복 확인
-  const handleIdCheck = async () => {
-    if (formState.id.trim()) {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `${awsIP}/user/idCheck/${formState.id}`
-        );
-        if (response.data.isAvailable) {
-          setIdCheckMessage("사용 가능한 아이디입니다.");
-          setIdCheckStatus("available");
-        } else {
-          setIdCheckMessage("이미 사용 중인 아이디입니다.");
-          setIdCheckStatus("unavailable");
-        }
-      } catch (error) {
-        console.error("중복 확인 요청 실패:", error);
-        setIdCheckMessage("중복 확인 요청이 실패했습니다.");
-        setIdCheckStatus("unavailable");
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
-
   // 제출 처리
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -147,102 +93,41 @@ export default function EditProfile() {
     if (validateFields()) {
       try {
         setLoading(true);
-        const response = await axios.put(`${awsIP}/user/profile`, {
-          userid: formState.id,
-          password: formState.password,
-          username: formState.name,
-          phone: `${formState.phonePrefix}${formState.phoneMiddle}${formState.phoneLast}`,
-          email: `${formState.email}@${formState.emailDomain}`,
-        });
-        if (response.data.message === "정보 수정 성공") {
-          alert("정보 수정이 완료되었습니다!");
-          navigate("/profile"); // 수정 후 리디렉션
-        } else {
-          alert("정보 수정에 실패했습니다.");
-        }
+        const response = await axios.put(
+          `${awsIP}/user/update/${state.user.id}`,
+          {
+            userid: state.user.userid,
+            password: formState.password,
+            username: state.user.username,
+            phone: `${formState.phonePrefix}${formState.phoneMiddle}${formState.phoneLast}`,
+            email: `${formState.email}@${formState.emailDomain}`,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${state.accessToken}`,
+            },
+          }
+        );
       } catch (error) {
         console.error("정보 수정 요청 실패:", error);
         alert("정보 수정 요청이 실패했습니다.");
-      } finally {
-        setLoading(false);
       }
     } else {
-      alert("입력된 정보가 유효하지 않거나 아이디가 중복되었습니다.");
+      alert("입력된 정보가 유효하지 않습니다.");
     }
   };
-
+  console.log(state);
   return (
     <S.Page>
       <S.TitleWrap>회원정보 수정</S.TitleWrap>
       <S.ContentWrap>
         <form onSubmit={handleSubmit}>
           {/* 이름 입력 */}
-          <S.InputTitle error={!!errors.name}>이름</S.InputTitle>
-          <S.InputWrapBig error={!!errors.name}>
-            <S.Input
-              type="text"
-              placeholder="이름을 입력해주세요."
-              value={formState.name}
-              onChange={(e) =>
-                setFormState((prevState) => ({
-                  ...prevState,
-                  name: e.target.value,
-                }))
-              }
-              onBlur={() =>
-                !formState.name.trim() &&
-                setErrors((prevErrors) => ({
-                  ...prevErrors,
-                  name: "필수 입력 사항입니다.",
-                }))
-              }
-            />
-          </S.InputWrapBig>
-          {errors.name && (
-            <S.ErrorMessageWrap>{errors.name}</S.ErrorMessageWrap>
-          )}
-
+          <S.InputTitle>이름</S.InputTitle>
+          <S.NoUpdate>{state.user.username}</S.NoUpdate>
           {/* 아이디 입력 */}
-          <S.InputTitleID
-            error={!!errors.id || idCheckStatus === "unavailable"}
-            success={idCheckStatus === "available"}
-          >
-            아이디
-          </S.InputTitleID>
-          <S.InputWrapIdBox>
-            <S.InputWrapId
-              error={!!errors.id || idCheckStatus === "unavailable"}
-              success={idCheckStatus === "available"}
-            >
-              <S.Input
-                type="text"
-                placeholder="아이디를 입력해주세요."
-                value={formState.id}
-                onChange={(e) =>
-                  setFormState((prevState) => ({
-                    ...prevState,
-                    id: e.target.value,
-                  }))
-                }
-                onBlur={() =>
-                  !regId.test(formState.id) &&
-                  setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    id: "아이디: 영문으로 시작하는 5~20자 길이의 영문자, 숫자를 사용해주세요.",
-                  }))
-                }
-              />
-            </S.InputWrapId>
-            <S.IdButton type="button" onClick={handleIdCheck}>
-              아이디 중복확인
-            </S.IdButton>
-          </S.InputWrapIdBox>
-          {errors.id && <S.ErrorMessageWrap>{errors.id}</S.ErrorMessageWrap>}
-          {idCheckMessage && (
-            <S.ErrorMessageWrap success={idCheckStatus === "available"}>
-              {idCheckMessage}
-            </S.ErrorMessageWrap>
-          )}
+          <S.InputTitleID>아이디</S.InputTitleID>
+          <S.NoUpdate>{state.user.userid}</S.NoUpdate>
 
           {/* 비밀번호 입력 */}
           <S.InputTitle error={!!errors.password}>비밀번호</S.InputTitle>

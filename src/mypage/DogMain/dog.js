@@ -1,16 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "./../../mypageDog/card/card";
 import MbtiLog from "./../../mypageDog/mbtiLog/mbtiLog";
 import style from "./dogMain.module.css";
 import AddSchedule from "./../../mypageDog/addSchedule";
 import UpdateDog from "./../../mypageDog/update/updateDog";
+import { useAuth } from "../../header/AuthContext";
 
 function DogMain() {
   const [selectDogpage, setSelectDogpage] = useState("check");
   const [selectedPetId, setSelectedPetId] = useState(null);
   const [dogUpdate, setDogUpdate] = useState(null);
   const [resetExpandedDog, setResetExpandedDog] = useState(false);
+  const { state, dispatch } = useAuth();
+  const navigate = useNavigate();
 
   const handleAddSchedule = (petId) => {
     setSelectDogpage("addSchedule");
@@ -43,6 +46,12 @@ function DogMain() {
     setSelectedPetId(petId);
     setResetExpandedDog(true);
   };
+
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    navigate("/login");
+  };
+
   return (
     <div id={style.flex}>
       <div id={style.left}>
@@ -58,7 +67,7 @@ function DogMain() {
         >
           멍BIT 기록보기
         </button>
-        <Link>로그아웃</Link>
+        <button onClick={handleLogout}>로그아웃</button>
       </div>
       <div id={style.right}>
         {selectDogpage === "check" && (

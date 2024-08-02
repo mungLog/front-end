@@ -29,8 +29,8 @@ export const StartButton = styled.button`
   width: 286px;
   hright: 80px
   font-weight: 800;
-  border: 1px solid dodgerblue;
-  background-color: dodgerblue;
+  border: 1px solid var(--color-blue);
+  background-color: var(--color-blue);
   color: white;
   padding: 10px 20px;
   cursor: pointer;

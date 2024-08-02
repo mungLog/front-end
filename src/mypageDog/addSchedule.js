@@ -3,6 +3,20 @@ import axios from "axios";
 import MealDetail from "./mealDetail";
 import WaterDetails from "./waterDetail";
 import WalkDetails from "./walkDetail";
+import food from "./card/img/cardIcon/food.svg";
+import bath from "./card/img/cardIcon/bath.svg";
+import ear from "./card/img/cardIcon/ear.svg";
+import foot from "./card/img/cardIcon/foot.svg";
+import hospital from "./card/img/cardIcon/hospital.svg";
+import injection from "./card/img/cardIcon/injection.svg";
+import medi from "./card/img/cardIcon/medi.svg";
+import snack from "./card/img/cardIcon/snack.svg";
+import tooth from "./card/img/cardIcon/tooth.svg";
+import walk from "./card/img/cardIcon/walk.svg";
+import water from "./card/img/cardIcon/water.svg";
+import { useAuth } from "../header/AuthContext";
+
+import style from "./addSchedule.module.css";
 
 function AddSchedule({ petId, onAddComplete }) {
   const [time, setTime] = useState("");
@@ -15,9 +29,8 @@ function AddSchedule({ petId, onAddComplete }) {
   const [customCalories, setCustomCalories] = useState("");
   const [waterAmount, setWaterAmount] = useState("");
   const [walkAmount, setWalkAmount] = useState("");
-
-  const author = "작성자 닉네임"; // 로그인한 사용자 가족내 닉네임 불러와야됨
-
+  const { state } = useAuth();
+  const author = state.user.nickname;
   const activities = [
     "밥",
     "물",
@@ -31,6 +44,21 @@ function AddSchedule({ petId, onAddComplete }) {
     "발톱",
     "귀청소",
   ];
+
+  const categoryIcons = {
+    밥: food,
+    물: water,
+    산책: walk,
+    "약/영양제": medi,
+    병원: hospital,
+    예방접종: injection,
+    간식: snack,
+    양치: tooth,
+    목욕: bath,
+    발톱: foot,
+    귀청소: ear,
+  };
+
   const awsIP = process.env.REACT_APP_BACKEND_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,39 +85,51 @@ function AddSchedule({ petId, onAddComplete }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>일정 추가 petId {petId}</h2>
-      <div>
-        작성자 :
-        <input type="hidden" value={author} />
-        {author}
+    <form id={style.wrapper} onSubmit={handleSubmit}>
+      <h2 id={style.title}>반려동물 일정추가</h2>
+      <div className={style.addTable}>
+        <span>작성자</span>
+        <div id={style.author}>
+          <input type="hidden" value={author} />
+          {author}
+        </div>
       </div>
-      <div>
-        <label>
-          활동 시간 (hh:mm):
+      <div className={style.addTable}>
+        <span>활동 시간</span>
+        <div id={style.time}>
           <input
-            type="time"
+            type="text"
             value={time}
             onChange={(e) => setTime(e.target.value)}
+            placeholder="18:00"
             required
           />
-        </label>
+        </div>
       </div>
-      <div>
-        <label>
-          활동명:
+      <div className={style.addTable} id={style.exercise}>
+        <span>활동명</span>
+        <div className={style.exerciseGrid}>
           {activities.map((activityName) => (
-            <label key={activityName}>
-              <input
-                type="radio"
-                value={activityName}
-                checked={activity === activityName}
-                onChange={(e) => setActivity(e.target.value)}
-              />
-              {activityName}
+            <label
+              key={activityName}
+              className={`${style.activityLabel} ${
+                activity === activityName ? style.selected : ""
+              }`}
+              onClick={() => setActivity(activityName)}
+            >
+              <img src={categoryIcons[activityName]} alt={activityName} />
+              <div>
+                <input
+                  type="radio"
+                  value={activityName}
+                  checked={activity === activityName}
+                  onChange={(e) => setActivity(e.target.value)}
+                />
+                <span>{activityName}</span>
+              </div>
             </label>
           ))}
-        </label>
+        </div>
       </div>
       {activity === "밥" && (
         <MealDetail
@@ -114,13 +154,21 @@ function AddSchedule({ petId, onAddComplete }) {
       {activity === "산책" && (
         <WalkDetails walkAmount={walkAmount} setWalkAmount={setWalkAmount} />
       )}
-      <div>
-        <label>
-          활동 내용:
-          <textarea value={memo} onChange={(e) => setMemo(e.target.value)} />
-        </label>
+      <div className={style.addTable} id={style.memoWrap}>
+        <span>활동내용</span>
+        <textarea
+          id={style.memo}
+          value={memo}
+          onChange={(e) => setMemo(e.target.value)}
+          placeholder="100자 이내로 작성해 주세요."
+        />
       </div>
-      <button type="submit">추가하기</button>
+      <div className={style.addTable}>
+        <span></span>
+        <button type="submit" id={style.addBtn}>
+          추가하기
+        </button>
+      </div>
     </form>
   );
 }

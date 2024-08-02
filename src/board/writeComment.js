@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import style from "./css/comment.module.css";
 
 const CreateComment = ({ postId }) => {
   const [content, setContent] = useState("");
@@ -29,15 +30,16 @@ const CreateComment = ({ postId }) => {
 
   return (
     <div>
-      <h2>댓글 작성</h2>
-      <form onSubmit={handleSubmit}>
+      <form id={style.writeComment} onSubmit={handleSubmit}>
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
           onKeyDown={clickEnter}
-          placeholder="댓글을 입력하세요"
+          placeholder="댓글을 입력하세요."
         />
-        <button type="submit">작성</button>
+        <div id={style.buttonRight}>
+          <button type="submit">작성</button>
+        </div>
       </form>
     </div>
   );
