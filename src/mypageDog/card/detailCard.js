@@ -22,6 +22,9 @@ import snack from "./img/cardIcon/snack.svg";
 import tooth from "./img/cardIcon/tooth.svg";
 import walk from "./img/cardIcon/walk.svg";
 import water from "./img/cardIcon/water.svg";
+import chu from "./img/시추.png";
+import pu from "./img/말티즈.png";
+import tiz from "./img/말티즈.png";
 
 function DetailCard({ petId, onClose, onAddSchedule }) {
   const [petDetails, setPetDetails] = useState(null);
@@ -40,21 +43,48 @@ function DetailCard({ petId, onClose, onAddSchedule }) {
     발톱: foot,
     귀청소: ear,
   };
-  const testPetDetails = {
-    name: "곰돌이",
-    imgUrl: "abc",
-    nowMetabolism: 1000,
-    maxMetabolism: 1500,
-    nowWater: 500,
-    maxWater: 800,
-    nowWalk: 30,
-    maxWalk: 50,
-    gender: "1",
-    birth: "20240105",
-    weight: 10,
-    breed: "시추",
-  };
-
+  const initialDogs = [
+    {
+      petId: 1,
+      name: "아추",
+      maxMetabolism: 1500,
+      nowMetabolism: 1000,
+      nowWater: 500,
+      maxWater: 800,
+      nowWalk: 30,
+      maxWalk: 50,
+      gender: "1",
+      weight: 14,
+      breed: "시추",
+      birth: "20150504",
+      neutered: "1",
+      imageUrl: chu,
+    },
+    {
+      petId: 2,
+      name: "밀크",
+      maxMetabolism: 2000,
+      nowMetabolism: 800,
+      gender: "0",
+      weight: 8,
+      breed: "푸들",
+      birth: "20180905",
+      neutered: "1",
+      imageUrl: pu,
+    },
+    {
+      petId: 3,
+      name: "하루",
+      maxMetabolism: 1000,
+      nowMetabolism: 300,
+      gender: "0",
+      weight: 3,
+      breed: "말티즈",
+      birth: "20240205",
+      neutered: "0",
+      imageUrl: tiz,
+    },
+  ];
   const testPetCareRecords = [
     {
       author: "엄마",
@@ -113,7 +143,8 @@ function DetailCard({ petId, onClose, onAddSchedule }) {
     try {
       // const response = await axios.get(`${awsIP}/pets/${petId}`);
       // setPetDetails(response.data);
-      setPetDetails(testPetDetails);
+      const matchedPetDetails = initialDogs.find((dog) => dog.petId === petId);
+      setPetDetails(matchedPetDetails);
     } catch (error) {
       console.error("반려견 정보 조회 에러", error);
     }
@@ -207,7 +238,11 @@ function DetailCard({ petId, onClose, onAddSchedule }) {
             <>
               <div className={style.avatarFlex}>
                 <div style={{ width: "123px" }}></div>
-                <div className={style.avatar}></div>
+                <img
+                  src={petDetails.imageUrl}
+                  alt=""
+                  className={style.avatar}
+                />
                 <button className={style.rotate} onClick={handleFlip}>
                   기록일지 보기 <img src={rotate} alt="" />
                 </button>
@@ -337,7 +372,11 @@ function DetailCard({ petId, onClose, onAddSchedule }) {
             <>
               <div className={style.avatarFlex}>
                 <div style={{ width: "123px" }}></div>
-                <div className={style.avatar}></div>
+                <img
+                  src={petDetails.imageUrl}
+                  alt=""
+                  className={style.avatar}
+                />
                 <button className={style.rotate} onClick={handleFlip}>
                   열량체크 하기 <img src={rotate} alt="" />
                 </button>

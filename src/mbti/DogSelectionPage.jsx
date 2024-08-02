@@ -1,18 +1,27 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./style/DogSelectionPage.style";
+import chu from "../mypageDog/card/img/시추.png";
+import tiz from "../mypageDog/card/img/말티즈.png";
+import pu from "../mypageDog/card/img/말티즈.png";
 
 // 예시 강아지 데이터 (하드코딩)
 const hardcodedDogs = [
   {
     id: 1,
-    name: "Buddy",
-    image: "https://example.com/buddy.jpg",
+    name: "아추",
+    image: chu,
+    mbti: "ISFP",
   },
   {
     id: 2,
-    name: "Max",
-    image: "https://example.com/max.jpg",
+    name: "하루",
+    image: tiz,
+  },
+  {
+    id: 3,
+    name: "밀크",
+    image: pu,
   },
 ];
 
@@ -36,7 +45,7 @@ const DogSelectionPage = ({ onSelectDog, dogs = [] }) => {
   };
 
   const handleRegisterClick = () => {
-    navigate("/"); // 아직 임시로 메인페이지 가게 설정
+    navigate("/mypage?mode=dog");
   };
 
   return (
@@ -69,9 +78,7 @@ const DogSelectionPage = ({ onSelectDog, dogs = [] }) => {
                   <S.DogInfo>
                     <S.DogImage src={dog.image} alt={dog.name} />
                     <S.DogName>{dog.name}</S.DogName>
-                    <S.Result>
-                      {selectedDog === dog.name ? mbtiResult || "-" : "-"}
-                    </S.Result>
+                    <S.Result>{dog.mbti || "-"}</S.Result>
                   </S.DogInfo>
                 </S.DogLabel>
               ))}

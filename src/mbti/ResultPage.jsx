@@ -23,10 +23,9 @@ const personalityTraits = {
 };
 
 const ResultPage = ({ result, dogName, answers }) => {
-  const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수를 얻습니다
-
+  const navigate = useNavigate();
   const handleExit = () => {
-    navigate("/mypage"); // /mypage로 이동합니다
+    navigate("/mypage");
   };
 
   // MBTI 데이터 계산

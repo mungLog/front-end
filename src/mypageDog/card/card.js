@@ -11,6 +11,10 @@ import line from "./img/yellowLine.svg";
 import left from "./img/leftArrow.svg";
 import right from "./img/rightArrow.svg";
 
+import chu from "./img/시추.png";
+import pu from "./img/말티즈.png";
+import tiz from "./img/말티즈.png";
+
 // 반려동물 추가하기 링크 추가
 
 function Card({
@@ -28,7 +32,7 @@ function Card({
     const initialDogs = [
       {
         petId: 1,
-        name: "곰돌이",
+        name: "아추",
         maxMetabolism: 1500,
         nowMetabolism: 1000,
         gender: "1",
@@ -36,10 +40,11 @@ function Card({
         breed: "시추",
         birth: "20150504",
         neutered: "1",
+        imageUrl: chu,
       },
       {
         petId: 2,
-        name: "토순이",
+        name: "밀크",
         maxMetabolism: 2000,
         nowMetabolism: 800,
         gender: "0",
@@ -47,6 +52,7 @@ function Card({
         breed: "푸들",
         birth: "20180905",
         neutered: "1",
+        imageUrl: pu,
       },
       {
         petId: 3,
@@ -58,6 +64,7 @@ function Card({
         breed: "말티즈",
         birth: "20240205",
         neutered: "0",
+        imageUrl: tiz,
       },
     ];
 
@@ -81,7 +88,7 @@ function Card({
   // }, []);
 
   useEffect(() => {
-    console.log(selectedPetId);
+    // console.log(selectedPetId);
     if (selectedPetId !== null && selectedPetId !== undefined) {
       const index = dogs.findIndex((dog) => dog.petId === selectedPetId);
       if (index !== -1) {
@@ -187,7 +194,8 @@ function Card({
                 onClick={() => handleCardClick(dog)}
               >
                 <div className={style.card}>
-                  <div className={style.avatar}></div>
+                  <img src={dog.imageUrl} alt="" className={style.avatar} />
+
                   <div id={style.nameFlex}>
                     <div style={{ width: "57px" }}></div>
                     <div className={style.name}>{dog.name}</div>
