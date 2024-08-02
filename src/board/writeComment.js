@@ -32,6 +32,7 @@ const CreateComment = ({ postId }) => {
     <div>
       <form id={style.writeComment} onSubmit={handleSubmit}>
         <textarea
+          className={style.writeTextarea}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           onKeyDown={clickEnter}

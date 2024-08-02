@@ -12,6 +12,7 @@ function LoginPage() {
   const [passwordError, setPasswordError] = useState("");
   const { state, dispatch } = useAuth();
   const navigate = useNavigate();
+  const awsIP = process.env.REACT_APP_BACKEND_URL;
 
   const handleUseridBlur = () => {
     if (!userid.trim()) {
@@ -48,7 +49,7 @@ function LoginPage() {
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/login", {
+      const response = await axios.post(`${awsIP}/login`, {
         userid,
         password,
       });

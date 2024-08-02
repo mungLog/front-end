@@ -6,7 +6,9 @@
 }
 #writeComment textarea {
   height: 50px;
+  width: 100%;
   margin-bottom: 0;
+  border: none;
 }
 #writeComment textarea:focus {
   outline: none;

@@ -19,20 +19,20 @@ function CommunityDetail() {
   const logId = state.user ? state.user.id : null;
   const token = state.accessToken;
   const awsIP = process.env.REACT_APP_BACKEND_URL;
-  useEffect(() => {
-    axios
-      .get(`${awsIP}/posts/${post_id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setPost(response.data);
-      })
-      .catch((error) => {
-        console.error("게시물 실패", error);
-      });
-  }, [post_id, token, awsIP]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${awsIP}/posts/${post_id}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setPost(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("게시물 실패", error);
+  //     });
+  // }, [post_id, token, awsIP]);
 
   const handleUpdateClick = () => {
     navigate(`/community/posts/${post_id}`, {
@@ -60,9 +60,9 @@ function CommunityDetail() {
         console.error("글 삭제 실패", error);
       });
   };
-  console.log(post);
-  const isAuthor = post?.userId === logId;
-
+  // console.log(post);
+  // const isAuthor = post?.userId === logId;
+  const isAuthor = true;
   return (
     <div id={style.whiteBack}>
       <div id={style.contentWrap}>
@@ -72,9 +72,11 @@ function CommunityDetail() {
             <div className={style.infoFlex}>
               <div className={style.infoWrap}>
                 <img src={user} alt="유저아이콘" />
-                <span>{post.author}</span>
+                {/* <span>{post.author}</span> */}
+                <span>정*수</span>
               </div>
-              <span>{post.timestamp}</span>
+              {/* <span>{post.timestamp}</span> */}
+              <span>2024.08.03</span>
             </div>
             {isAuthor && (
               <div id={style.updelBtn}>
@@ -88,10 +90,17 @@ function CommunityDetail() {
                 </>
               </div>
             )}
-            <div id={style.ctg}>{post.category}</div>
-            <div id={style.title}>{post.title}</div>
+            {/* <div id={style.ctg}>{post.category}</div> */}
+            <div id={style.ctg}>수다방</div>
+            {/* <div id={style.title}>{post.title}</div> */}
+            <div id={style.title}>오늘 산책 나갔는데 진짜 너무 더워요 ㅠㅠ</div>
             <hr id={style.line} />
-            <div className={style.content}>{post.content}</div>
+            {/* <div className={style.content}>{post.content}</div> */}
+            <div className={style.content}>
+              날씨가 너무 더워서 갈등하다가 그래도 곰돌이가 너무 가고싶어하는 것
+              같아서 맘 약해져서 나갔다가 1분만에 후회했어요...다들 산책
+              어떻게들 하고 계세요..?
+            </div>
             <CreateComment postId={post_id} />
             <CommentList postId={post_id} userId={logId} />
           </div>

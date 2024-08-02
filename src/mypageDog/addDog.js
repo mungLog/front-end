@@ -42,7 +42,7 @@ const AddDog = () => {
     // 파일 입력 필드를 클릭하여 파일 선택 대화상자를 열기
     fileInputRef.current.click();
   };
-
+  const awsIP = process.env.REACT_APP_BACKEND_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
@@ -59,7 +59,7 @@ const AddDog = () => {
       }
 
       try {
-        const response = await axios.post("http://localhost:8080/pets", data, {
+        const response = await axios.post(`${awsIP}/pets`, data, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${state.accessToken}`,
