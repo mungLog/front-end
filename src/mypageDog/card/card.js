@@ -13,7 +13,13 @@ import right from "./img/rightArrow.svg";
 
 // 반려동물 추가하기 링크 추가
 
-function Card({ onAddSchedule, selectedPetId, onUpdateDog, resetExpandedDog }) {
+function Card({
+  onAddSchedule,
+  selectedPetId,
+  onUpdateDog,
+  resetExpandedDog,
+  onAddDog,
+}) {
   const [dogs, setDogs] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [expandedDog, setExpandedDog] = useState(null);
@@ -151,10 +157,10 @@ function Card({ onAddSchedule, selectedPetId, onUpdateDog, resetExpandedDog }) {
   return (
     <div className={style.wrapper}>
       <h2 className={style.title}>열량체크/기록일지</h2>
-      <Link to="/addDog" className={style.addDog}>
+      <button onClick={() => onAddDog()} className={style.addDog}>
         <img src={addDog} alt="반려동물 추가 아이콘" />
         반려동물 추가하기
-      </Link>
+      </button>
       {dogs.length === 0 ? (
         <div className={style.noPetsMessage}>
           등록된 반려견이 없습니다. <br />

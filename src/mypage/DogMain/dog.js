@@ -6,6 +6,7 @@ import style from "./dogMain.module.css";
 import AddSchedule from "./../../mypageDog/addSchedule";
 import UpdateDog from "./../../mypageDog/update/updateDog";
 import { useAuth } from "../../header/AuthContext";
+import AddDog from "./../../mypageDog/addDog";
 
 function DogMain() {
   const [selectDogpage, setSelectDogpage] = useState("check");
@@ -76,6 +77,7 @@ function DogMain() {
             selectedPetId={selectedPetId}
             onUpdateDog={handleUpdate}
             resetExpandedDog={resetExpandedDog}
+            onAddDog={() => setSelectDogpage("addDog")}
           />
         )}
         {selectDogpage === "mbtiLog" && <MbtiLog />}
@@ -92,6 +94,7 @@ function DogMain() {
             onCancel={handleCancelUpdate}
           />
         )}
+        {selectDogpage === "addDog" && <AddDog />}
       </div>
     </div>
   );
